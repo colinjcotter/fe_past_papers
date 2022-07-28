@@ -1,0 +1,512 @@
+\documentclass[11pt]{article}
+\usepackage{graphicx, amssymb}
+\usepackage{amsfonts}
+\usepackage{epsfig}
+\usepackage{amssymb,amsmath,bm}
+%\usepackage{subfig}
+\usepackage{amsthm}
+\usepackage{mathrsfs,mathtools}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Fill in these details
+\newcommand{\coursenum}{XXX} %{M2S1}
+\newcommand{\coursename}{XXX (Solutions)} 
+\renewcommand{\pagetotal}{\pageref{pagetot}}     % adjust after viewing draft 
+\newcommand{\examyear}{2021}%Please update 
+\newcommand{\exammonth}{May} %Please update
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pretolerance=100000
+ \setlength{\topmargin}{-3mm}
+ \setlength{\textheight}{250mm}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%Added the following
+\setlength{\footskip}{0mm}
+\setlength{\headsep}{0mm}
+\setlength{\headheight}{0mm}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\textwidth}{150mm}
+\addtolength{\oddsidemargin}{-20mm}
+\addtolength{\evensidemargin}{40mm}
+\setlength{\marginparwidth}{2cm}
+\setlength{\parskip}{1.1ex}
+\setlength{\parindent}{0ex}
+\renewcommand{\baselinestretch}{1.1}
+
+% seen, unseen and similar seen commands; add in your own as appropriate
+\newcommand{\marb}[1]{\marginpar{~~\fbox{\,\mathstrut #1\,}}}  
+\newcommand{\marbup}[1]{\vspace*{-4mm} \par \marb{#1}} 
+\newcommand{\seen}{\marbup{{\small seen $\Downarrow$}}} 
+\newcommand{\unseen}{\marbup{{\small unseen $\Downarrow$}}} 
+\newcommand{\simseen}{\marbup{{\small sim. seen $\Downarrow$}}} 
+\newcommand{\seensim}{\marbup{{\small seen/sim.seen $\Downarrow$}}} 
+\newcommand{\partseen}{\marbup{{\small part seen $\Downarrow$}}} 
+\newcommand{\methodseen}{\marbup{{\small meth seen $\Downarrow$}}} 
+
+\pagestyle{empty}
+\newcommand{\vect}[1]{\mbox{\boldmath{$#1$}}}
+
+\newcommand{\pp}[2]{\frac{\partial #1}{\partial #2}} 
+\newcommand{\dede}[2]{\frac{\delta #1}{\delta #2}}
+\newcommand{\dd}[2]{\frac{\diff#1}{\diff#2}}
+\newcommand{\dt}[1]{\diff\!#1}
+\def\MM#1{\boldsymbol{#1}}
+\DeclareMathOperator{\diff}{d}
+
+
+% setup a counters to count up marks in a question
+\newcounter{count_marks}
+\setcounter{count_marks}{0}
+\newcounter{count_amarks}
+\setcounter{count_amarks}{0}
+\newcounter{count_bmarks}
+\setcounter{count_bmarks}{0}
+\newcounter{count_cmarks}
+\setcounter{count_cmarks}{0}
+\newcounter{count_dmarks}
+\setcounter{count_dmarks}{0}
+\newcounter{count_mmarks} %Mastery marks
+\setcounter{count_mmarks}{0} %Mastery marks
+% Define the command for formatting the marks available for the question
+\newcommand{\amarks}[1]{\addtocounter{count_marks}{#1} \addtocounter{count_amarks}{#1}\marginpar{~~\fbox{\,\mathstrut #1, A}}}  
+
+\newcommand{\bmarks}[1]{\addtocounter{count_marks}{#1} \addtocounter{count_bmarks}{#1}\marginpar{~~\fbox{\,\mathstrut #1, B}}}  
+
+\newcommand{\cmarks}[1]{\addtocounter{count_marks}{#1} \addtocounter{count_cmarks}{#1}\marginpar{~~\fbox{\,\mathstrut #1, C}}}  
+
+\newcommand{\dmarks}[1]{\addtocounter{count_marks}{#1} \addtocounter{count_dmarks}{#1}\marginpar{~~\fbox{\,\mathstrut #1, D}}}  
+
+\newcommand{\mmarks}[1]{\addtocounter{count_marks}{#1} \addtocounter{count_mmarks}{#1}\marginpar{~~\fbox{\,\mathstrut #1, M}}}  %Mastery marks
+
+
+% define a total marks command for the end of the question
+\newcommand{\totamarks}{\hfill{Total A marks: \arabic{count_amarks} of 
+%24 %3 questions
+%48 %6 questions
+32 %4 questions
+ marks}}
+\newcommand{\totbmarks}{\hfill{Total B marks: \arabic{count_bmarks} of 
+%15 %3 questions
+% 30 % 6 questions
+20 %4 questions
+%Please adjust the number accordingly
+marks}}
+\newcommand{\totcmarks}{\hfill{Total C marks: \arabic{count_cmarks} of 
+%9 %3 questions
+% 18 %6 questions
+12 %4 questions
+%Please adjust the number accordingly
+marks}}
+\newcommand{\totdmarks}{\hfill{Total D marks: \arabic{count_dmarks} of 
+%12 % 3 questions
+% 24 % 6 questions
+16 % 4 questions
+%Please adjust the number accordingly
+marks}}
+
+\newcommand{\totmarks}{\hfill{Total marks: \arabic{count_marks} of 
+%60 % 3 questions
+%120 % 6 questions
+80 %4 questions
+%Please adjust the number accordingly
+marks}}
+
+\newcommand{\totMmarks}{\hfill{Total Mastery marks: \arabic{count_mmarks} of 
+20  marks}}
+
+\newenvironment{Question}[1] 
+ {\begin{itemize} \item[\large #1.~~]}{\end{itemize}\vfill
+} 
+%\makeatletter
+\newenvironment{Part}[1] 
+ {\begin{itemize} \item[(#1)~~]}{\end{itemize}}
+%\makeatother
+\newcommand{\EndPage}{\vfill \coursenum ~ \coursename ~
+ (\examyear) \hfill Page \thepage\/ of \pagetotal \newpage}
+
+%\newcommand{\ICLOGO}{\begin{figure}[!t]
+%  \includegraphics[totalheight= 1.1cm] {imperial.eps} 
+%  \end{figure} \par }
+%%%%
+% This requires imperial.eps in the graphics input path eg 
+% h:/images/imperial.eps 
+%%%% 
+
+
+\newcommand{\draft}{\begin{flushright} \begin{tabular}{ll}
+  Course:   & \coursenum\\ Setter:   & \setter \\
+  Checker:  & \checker \\  Editor:   & \editor \\
+  External: & \external \\ Date:     & \today
+  \end{tabular} \end{flushright} \vfill \par}
+
+\newcommand{\sigs}{\vfill \par
+  \fbox{\begin{minipage}{0.98\textwidth}{~ \\[4mm]
+  \hspace*{3mm} Setter's signature \hfill
+  Checker's signature \hfill
+  Editor's signature~~~~ \\[4mm]
+  \hspace*{3mm} \dotfill \hfill \dotfill \hfill \dotfill ~~~~
+  \\[2mm] ~} \end{minipage}}}
+
+\newcommand{\fpageDraft}  % FOR DRAFT FRONT PAGE
+{\sf % \ICLOGO
+ \begin{center} IMPERIAL COLLEGE LONDON \par
+ \draft
+ BSc and MSci EXAMINATIONS (MATHEMATICS) \par 
+ \exammonth~ \examyear \vfill \par
+ \Large \coursenum \bigskip \par
+ \coursename \bigskip \par
+ \end{center} \vfill \par \normalsize
+ \sigs  \par \EndPage}
+
+\newcommand{\fpage}
+{\sf %\ICLOGO
+  \begin{center} %UNIVERSITY OF LONDON \par
+  BSc and MSci EXAMINATIONS (MATHEMATICS) \par
+  \exammonth~ \examyear \bigskip \par
+  This paper is also taken for the relevant examination
+  for the Associateship. 
+  \vfill \par
+  \Large \coursenum \bigskip \par
+  \coursename  \normalsize \bigskip \par \vfill
+  \sigs\end{center}
+  \par \vfill \vfill
+  \copyright ~\examyear~ Imperial College London
+  \hfill \coursenum \hfill Page 1 of \pagetotal
+  \newpage}
+
+% Personally entered commands:
+
+
+% use \begin{Question}{1} ... \end{Question} and
+%     \begin{Part}{a} ... \end{Part} 
+% use \marb{} to allocate marks and \seen \unseen etc. 
+% manually put in \EndPage for correct footers.
+
+% document text starts here
+\begin{document}
+
+\setcounter{page}{1}
+
+ \fpage
+ 
+
+ \sf
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{Question}{1}
+\begin{Part}{a}\simseen
+  The Vandermonde matrix and its inverse are
+  \begin{equation}
+    V=
+    \begin{pmatrix}
+      1 & 1 & 1 & 1 \\
+      0 & 1 & 0 & 1 \\
+      0 & 0 & 1 & 1 \\
+      0 & 0 & 0 & 1 \\
+    \end{pmatrix},\quad
+    V^{-1}=
+    \begin{pmatrix}
+      1 & -1 & -1 & 1 \\
+      0 & 1 & 0 & -1 \\
+      0 & 0 & 1 & -1 \\
+      0 & 0 & 0 & 1 \\
+    \end{pmatrix},
+  \end{equation}
+  which can be computed by hand by e.g. doing back-substitution on the
+  columns of the identity matrix. The basis is then
+  \begin{align}
+    \psi_1(x,y) &= 1-x-y+xy = (1-x)(1-y), \\
+    \psi_2(x,y) &= x-xy = x(1-y), \\
+    \psi_3(x,y) &= y-xy = y(1-x), \\
+    \psi_4(x,y) &= xy.
+  \end{align}
+  \amarks{8}
+\end{Part}
+
+\begin{Part}{b}\unseen
+  \begin{Part}{i}
+    Suitable nodal variables are $N_i(p)=p(z_i)$ where $z_1=(1,0)$,
+    $z_2=(0,1)$, $z_3=(0,0)$, $z_4(1/3,1/3)$.\\ We can check that the
+    basis is a nodal one for these nodes by noticing that the spanning
+    set for $P$ is the linear functions plus a cubic ``bubble''
+    function that vanishes on the triangle vertices (and the edges).
+    Thus to make a nodal basis for our nodal variables, the basis
+    functions 1 to 3 can just be the usual linear basis functions
+    (that are equal to 1 on the corresponding vertex and 0 at all the
+    others) plus a scalar multiple of the bubble function so that they
+    vanish at $z_4$. The bubble vanishes at all the vertices
+    so it just needs to be scaled appropriately to take the value 1 at
+    $z_4$ as required.
+    \amarks{6}\\
+  \end{Part}
+\begin{Part}{ii}\simseen
+  We assign $N_i$ to vertex $z_i$ for $i=1,2,3$, and the bubble
+  function the entire cell. This is a C0 geometric decomposition
+  because: (1) the value at each vertex can be obtained from the nodal
+  variable assigned to that vertex (since it is just point evaluation
+  at the vertex), (2) the value at each edge can be obtained from the
+  nodal variables assigned to the closure of the edge, which is just
+  vertex values at each end in this case, and the function is linear
+  when restricted to an edge.
+  \bmarks{6}
+\end{Part}
+\end{Part}
+\end{Question}
+	
+
+
+\EndPage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{Question}{2}
+  \begin{Part}{a}\unseen
+    The theorem is insufficient because $|u|_{H^{3}(K_1)}$ is
+    unbounded, so it doesn't provide any bound on the error.
+    \bmarks{6}
+  \end{Part}
+\begin{Part}{b}\simseen
+  The appropriate statement is (under the same conditions as
+  5.28 but with $u\in H^2(K_1)$, $k=3$),
+  \begin{equation}
+    |\mathcal{I}_{K_1}u-u|_{H^1(K_1)} \leq C_1|u|_{H^2(K_1)}.
+  \end{equation}
+  To prove it,
+  \begin{align}
+    |\mathcal{I}_{K_1}u-u|_{H^1(K_1)} &\leq \|Q_{3,B}u-u\|^2_{H^1(K_1)}
+    + \|\mathcal{I}_{K_1}(u-Q_{3,B}u)\|^2_{H^1(K_1)} \\
+    & \leq (1+C^2)|u|^2_{H^2(K_1)},
+  \end{align}
+  where $Q_{3,B}$ is the degree $k$ averaged Taylor polynomial over
+  a ball $B$ inside $K_1$ but as large as possible, and where
+  we used Lemmas 3.22 and Corollary 3.16.
+\bmarks{7}
+\end{Part}
+\begin{Part}{c}
+  The appropriate statement is (under the same conditions
+  as 5.30 but with $u\in H^2(\Omega)$)
+  \begin{equation}
+    |\mathcal{I}_Ku-u|_{H^1(\Omega)} \leq Ch|u|_{H^2(\Omega)}.
+  \end{equation}
+  To show this, note that we can obtain the local estimate
+  \begin{equation}
+    |\mathcal{I}_Ku-u|_{H^1(K)} \leq C_Kd|u|_{H^{k+1}(K)},
+  \end{equation}
+  by following the steps in the proof but with $k$ replaced by 1.
+  Then the same technique of summing over all the cells gives
+  the global result.
+  \cmarks{7}
+ \end{Part}
+\end{Question}
+\EndPage
+
+\begin{Question}{3}
+  \begin{Part}{a} \simseen
+    To derive the variational form, we multiply by a test function $v$
+    and integrate by parts as usual to get
+    \begin{equation}
+      \int_{\Omega}\nabla v \cdot \nabla u \diff x
+      - \int_{\partial\Omega} v\underbrace{\pp{u}{n}}_{=g}\diff S = 0,
+    \end{equation}
+    so a suitable variational form is to find $v\in \bar{V}_h$ such that
+    \begin{equation}
+      \int_{\Omega} \nabla v \cdot \nabla u \diff x
+      = \int_{\partial\Omega} vg\diff S, \quad \forall v \in \bar{V}_h,
+    \end{equation}
+    where $\bar{V}_h$ is the subspace of $V_h$ of functions that
+    integrate to zero, and $V_h$ is some choice of $C^0$ finite element
+    space.
+ \amarks{6}
+\end{Part}
+
+\begin{Part}{b} \unseen
+  The issue is that the integrals are not tractable in general, so we
+  can't evaluate the RHS of the problem. A possible modification is
+  to interpolate $g$ to $V_h$ in the boundary resulting in $g_h$, and solve the perturbed
+  problem
+  \begin{equation}
+    \int_{\Omega} \nabla v \cdot \nabla u \diff x
+    = \int_{\partial\Omega} vg_h\diff S, \quad \forall v \in \bar{V}_h.
+  \end{equation}
+ \dmarks{6}
+\end{Part}
+\begin{Part}{c} \unseen
+  The modification to C\'ea's Lemma is
+  \begin{align}
+    \|u-u_h\|_{H^1(\Omega)} &\leq
+    (1+M/\gamma)\sup_{v\in V_h}\|u-v\|_{H^1(\Omega)} +
+    \frac{C}{\gamma}\|g-g_h\|_{L^2(\partial\Omega)},
+  \end{align}
+  so there are now two terms, a best approximation term of $u$ in $V_h$,
+  and an approximation error term for $g_h$.
+
+  
+  To prove it, following the steps of C\'ea's Lemma, we take a test
+  function $v\in V_h$ in both the exact and approximate equation, and
+  compute the difference, to yield
+  \begin{equation}
+    a(u-u_h,v) = \int_{\partial \Omega} v(g-g_h) \diff S, \,
+    \forall v \in V_h.
+  \end{equation}
+  Then we use coercivity to write (for any $v\in V_h$)
+  \begin{align}
+    \gamma\|u_h-v\|_{H^1(\Omega)} &\leq
+    a(u_h-v,u_h-v), \\
+    &= a(u_h-u,u_h-v) + a(u-v,u_h-v), \\
+    &= \int_{\partial\Omega}(u_h-v)(g_h-g)\diff S
+    + a(u-v,u_h-v), \\
+    &\leq C\|u_h-v\|_{H^1(\Omega)}\|g_h-g\|_{L^2(\partial\Omega)}
+    + M\|u-v\|_{H^1(\Omega)}\|u_h-v\|_{H^1(\Omega)},
+  \end{align}
+  where $C$ is the constant in the trace inequality and $M$
+  is the continuity constant of the bilinear form $a(u,v)$.
+  Then, dividing by $\|u_h-v\|_{H^1(\Omega)}$ gives
+  \begin{equation}
+    \gamma\|u_h-v\|_{H^1(\Omega)}^2 \leq C\|g_h-g\|_{L^2(\partial\Omega)}
+    + M\|u-v\|_{H^1(\Omega)}.
+  \end{equation}
+  Then, combining with the triangle inequality, we get
+  \begin{align}
+    \|u-u_h\|_{H^1(\Omega)} &\leq \|u-v\|_{H^1(\Omega)} +
+    \|u_h-v\|_{H^1(\Omega)}, \\ &\leq
+    (1+M/\gamma)\|u-v\|_{H^1(\Omega)} +
+    \frac{C}{\gamma}\|g-g_h\|_{L^2(\partial\Omega)},
+  \end{align}
+  and minimisation over $v$ gives the result.
+ \dmarks{8}
+\end{Part}
+
+\end{Question}
+\EndPage
+
+%%%%%%%%%%%%%%%%%%%%%%%
+\begin{Question}{4}
+\begin{Part}{a} \unseen
+  Multiplying by a test function $v$ that vanishes on the exterior
+  boundary and integrating by parts separately in $\Omega_1$ and $\Omega_2$
+  gives
+  \begin{equation}
+    \int_{\Omega} \nabla v\cdot \nabla u \diff x
+    - \int_{\Gamma}    v\left(\frac{\partial u}{\partial n}|_{\partial\Omega_1}
+    + \frac{\partial u}{\partial n}|_{\partial\Omega_2\cap \Gamma}\right)\diff S
+    = 0,
+  \end{equation}
+  and substitution of the boundary condition gives the variational
+  problem: find $u_h\in V_h$ such that
+  \begin{equation}
+      \int_{\Omega} \nabla v\cdot \nabla u_h \diff x
+      = 2\int_{\Gamma}v\diff S, \quad \forall v\in V_h.
+  \end{equation}
+    \amarks{6}
+\end{Part}
+
+\begin{Part}{b} \simseen
+  We are in the case of Theorem 4.38, so we just need to check continuity
+  of the linear form according to
+  \begin{equation}
+    F[v] = 2\int_{\Gamma} v \diff S
+    \leq \|v\|_{L^2(\Gamma)}2|\Gamma|
+    \leq \|v\|_{H^1(\Omega_0)}2|\Gamma|
+    \leq \|v\|_{H^1(\Omega)}2|\Gamma|.
+  \end{equation}
+  where we have used the trace theorem for continuous finite elements
+  (Theorem 4.4), and $|\Gamma|=\int_{\Gamma}\diff S$. Hence $F$ is continuous.
+  \amarks{8}
+\end{Part}
+
+\begin{Part}{c} \unseen
+  The bound studied in the course is
+  \begin{equation}
+    \|u_h-u\|_{H^1(\Omega)} \leq h|u|_{H^2(\Omega)},
+  \end{equation}
+  but the solution has a jump in the first derivative across $\Gamma$,
+  so $|u|_{H^2(\Omega)}$ is not finite, so the bound does not
+  imply convergence of the numerical solution as $h\to 0$.
+\end{Part}
+    \cmarks{6}
+\end{Question}
+
+\EndPage
+
+%%%%%%%%%%%%%%%%%%%%%%%
+\begin{Question}{5}
+  \begin{Part}{a} \unseen
+    The map is surjective, so there exists
+    $v\in V$ such that $q=\nabla\cdot v$ for all $q\in Q$.
+    Hence, using the Riesz Representation Theorem, for all
+    $F\in Q'$, there exists $q_F$ such that
+    \begin{equation}
+      F[p] = \int_{\Omega} pq_F\diff x, \quad \forall p\in Q.
+    \end{equation}
+    So, for all $F\in Q'$, there exists $v\in V$ such that
+    \begin{equation}
+      b(v,p) = \int_{\Omega}\nabla \cdot v p\diff x
+      = F[p], \quad \forall p\in Q.
+    \end{equation}
+    In other words, for all $F\in Q'$ there exists $v$
+    such that $Bv=F$, which means that $B$ is surjective.
+    Then, from the notes, this implies the inf-sup condition.
+    \mmarks{5}
+  \end{Part}
+
+  \begin{Part}{b} \unseen
+    Let $q\in \mathrm{Ker}(\delta)$, i.e. $\delta q=0$. Taking
+    $w$ such that $\nabla\cdot w=q$, we have
+    \begin{equation}
+      0 = \int_\Omega \nabla\cdot wq\diff x
+      = \int_\Omega q^2 \diff x \implies q = 0.
+    \end{equation}
+    \mmarks{5}
+  \end{Part}
+
+  \begin{Part}{c} \unseen
+    Let $q\in \mathrm{Ker}(\delta_h)$. Then for $w\in V$,
+    \begin{align}
+      \int_\Omega w\cdot \delta q \diff x &=
+      b(w,q) = b(\Pi_hw,q), \\
+      & = \int_\Omega \Pi_hw\cdot \delta_h q\diff x = 0,
+    \end{align}
+    so $q\in \mathrm{Ker}(\delta)$ as required.
+    \mmarks{5}
+  \end{Part}
+
+  \begin{Part}{d} \unseen
+    Considering $p\in Q_h$ having a pattern of the type given in Figure
+    2, it suffices to consider $b(w,p)$ for $w$ being basis functions
+    associated with vertices in the interior of the mesh, which
+    span $V_h$ (because of the zero boundary condition).
+    The support of $w$ consists of 6 triangles with symmetry about
+    a diagonal line from top-left to bottom-right. The divergence
+    of $w$ is antisymmetric about that line, whilst $p$ is symmetric,
+    so the integral $b(w,p)$ vanishes. Hence, $p\in \ker(\delta_h)$.
+    The previous result says that the Fortin Trick assumptions imply
+    that the $\ker(\delta_h)$ is empty, $V_h,Q_h$ must fail to satisfy
+    the Fortin Trick assumptions.
+        \mmarks{5}
+  \end{Part}
+\end{Question}
+
+\EndPage
+{\bf Review of mark distribution:}\\ 
+\totamarks\\
+ \totbmarks\\
+ \totcmarks\\
+ \totdmarks\\
+  \totmarks
+  \\  \totMmarks %Include Mastery marks
+ \label{pagetot}
+\EndPage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+
+
+
+

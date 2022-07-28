@@ -1,0 +1,493 @@
+
+\documentclass[12pt]{article}
+
+\usepackage{graphicx,amssymb,amsmath,nicefrac,ifthen,calc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Fill in the following details  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\coursenum}{MATH97095} %{e.g: MATH50001, or: MATH96057/MATH97006/MATH97171 for multiple year courses}
+\newcommand{\coursename}{Finite Elements} %{e.g: Mathematical Logic} 
+\newcommand{\setter}{Cotter}     % Insert surname(s) of exam setter(s) 
+\newcommand{\checker}{Ham} % Insert surname of exam checker 
+\newcommand{\editor}{Wu} % Insert surname of exam editor
+\newcommand{\external}{external} % Insert surname of external examiner
+\newboolean{tables}
+\setboolean{tables}{false} %set to true if statistical tables are provided and attach require tables
+
+% Choose an option for time allowed and number of questions %
+
+\newcommand{\examlength}%Uncomment one of the following 4 options, or adjust.
+%{2~Hours}
+%{2.5~Hours}
+{2 Hours for MATH96 paper; 2.5 Hours for MATH97 papers}
+%{3~Hours} %For 2-term modules
+
+\newcommand{\numQ}%Uncomment one of the following 4 options, or adjust.
+%{4~Questions}
+%{5~Questions}
+{4~Questions (MATH96 version); 5~Questions (MATH97~versions)}
+%{6~Questions} %For 2-term modules
+
+\newcommand{\version}% Uncomment one of the following, or adjust
+{Draft Version}
+%{Version for External Examiner}
+%{Final version}
+
+
+\newcommand{\suitability}% Uncomment one of the options below
+{Is the paper suitable for resitting students from previous years:
+  Yes, but only from 2020/21, because in years before that the mastery
+  content was different.
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%The following details about the difficulty level of the questions must be completed; also include this information on your mark-scheme.
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\CatA}% Indicate, with marks, the most straightforward 40 percent of the marks available in the non-mastery questions
+           {
+1a:7, 1b:7, 1c:6, 2a:6, 2b:6 [Total 32]
+}
+\newcommand{\CatB}% Indicate the next most challenging 25 percent of the marks in the non-mastery questions
+           {
+4a:6, 4b:6, 2c:8 [Total 20]
+}
+\newcommand{\CatC}%Indicate the next most challenging 15 percent of the marks in the non-mastery questions
+           {
+             3a:6, 3c:6 [Total 12]
+
+}
+\newcommand{\CatD}% Indicate the most challenging 20 percent of marks on the paper in the non-mastery questions
+           {
+             4c:8, 3b:8 [Total 16]
+           }
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Insert your macros %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\pp}[2]{\frac{\partial #1}{\partial #2}} 
+\newcommand{\dede}[2]{\frac{\delta #1}{\delta #2}}
+\newcommand{\dd}[2]{\frac{\diff#1}{\diff#2}}
+\newcommand{\dt}[1]{\diff\!#1}
+\def\MM#1{\boldsymbol{#1}}
+\DeclareMathOperator{\diff}{d}
+\DeclareMathOperator{\div0}{div}
+
+% Go to `Exam text starts from here' below to type in your questions. %
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ignore the following details     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\examyear}{2021}
+\newcommand{\exammonth}{May -- June} 
+\newcommand{\examdate}{Wednesday, 5th May 2021} %{Tuesday, 26th May 2021} 
+\newcommand{\examtime}{09:30 -- 11:30} 
+\newboolean{onebook}
+\setboolean{onebook}{true} %set to true if all answers should be in one answer book
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% setup a counter to count up marks in a question
+\newcounter{tmarks}
+\setcounter{tmarks}{0}
+
+% Define the command for formatting the marks available for the question
+
+
+\newcommand{\qmarks}[1]{\addtocounter{tmarks}{#1}\ifthenelse{\equal{#1}{1}}{\parbox{0.1in}{\ }\hfill{(#1 mark)}}{\parbox{0.1in}{\ }\hfill{(#1 marks)}}}
+
+\newcommand{\qqmarks}[1]{\addtocounter{tmarks}{#1}\ifthenelse{\equal{#1}{1}}{\newline\parbox{0.1in}{\ }\hfill{(#1 mark)}}{\newline\parbox{0.1in}{\ }\hfill{(#1 marks)}}}
+
+% define a total marks command for the end of the question
+\newcommand{\totmarks}{\ifthenelse{\equal{\value{tmarks}}{1}}{\parbox{0.1in}{\ }\hfill{(Total: \arabic{tmarks} mark)}}{\parbox{0.1in}{\ }\hfill{(Total: \arabic{tmarks} marks)}}}
+
+
+
+
+
+\pretolerance=100000
+\setlength{\topmargin}{-15mm}
+\setlength{\textheight}{245mm}
+\setlength{\textwidth}{178mm}
+\setlength{\oddsidemargin}{-10mm}
+\setlength{\evensidemargin}{-10mm}
+\setlength{\marginparwidth}{1cm}
+\setlength{\parskip}{1.1ex}
+\setlength{\parindent}{0ex}
+\renewcommand{\baselinestretch}{1.1}
+
+\pagestyle{empty}
+
+\newenvironment{Question}[1] 
+ {\begin{itemize} \item[\large #1.~~]}{\end{itemize}\totmarks\setcounter{tmarks}{0} \medskip}
+ 
+\newcommand{\EndPage}{
+	\vfill \coursenum ~ \coursename ~
+	(\examyear) \hfill Page \thepage \newpage
+	}
+
+%\newcommand{\ICLOGO}{
+%	\begin{minipage}{0.7\textwidth}
+%  \includegraphics[height= 1.4cm]{imperial.pdf} 
+%  \end{minipage}\hfill \parbox[r][1.4cm][t]{0.2\textwidth}{\hfill \coursenum} \par 
+%	}
+	
+\newcommand{\BeginParts}{\begin{itemize}} 
+\newcommand{\Part}[1]{\item [(#1)~~]} 
+\newcommand{\EndParts}{\end{itemize}} 
+
+%%%%
+% This requires imperial.pdf in the graphics input path eg 
+% h:/images/imperial.pdf 
+%%%% 
+
+\newcommand{\draft}{
+	\begin{flushleft} 
+	\begin{tabular}{ll}
+  Module:   & \coursenum\\ Setter:   & \setter \\
+  Checker:  & \checker \\  Editor:   & \editor \\
+  External: & \external \\ Date:     & \today\\
+  Version: & \version
+  \end{tabular} 
+  \end{flushleft} 
+  \vfill \par
+	}
+
+
+\newcommand{\fpagedraft}{  % FOR DRAFT FRONT PAGE with SIGS
+%	\ICLOGO
+	\begin{center} 
+	\draft
+	BSc, MSci and MSc EXAMINATIONS (MATHEMATICS) \par 
+	\exammonth~ \examyear 
+	
+	\medskip
+	
+	\large \coursenum \quad
+	\coursename 
+	\end{center}
+	\medskip
+	
+	\textit{The following information must be completed:}
+	
+	\medskip
+	
+	\textbf{\suitability}
+	
+	\medskip
+	
+	\textbf{Category A marks: available for basic, routine material (excluding any mastery question)\\(40 percent = 32/80 for 4 questions):}\newline
+	\CatA
+	
+	\medskip
+	
+	\textbf{Category B marks: Further 25 percent of marks (20/ 80 for  4 questions) for demonstration of a sound knowledge of a 
+	good part of the material and the solution of straightforward problems and examples with reasonable accuracy (excluding mastery question):} \newline
+	\CatB
+	
+	\medskip
+	
+	\textbf{Category C marks: the next 15 percent of the marks (= 12/80 for 4 questions)  for parts of questions at the high 2:1  or 1st class level (excluding mastery question):}\newline
+	\CatC
+	
+	\medskip
+	
+	\textbf{Category D marks: Most challenging 20 percent (16/80 marks for 4 questions) of the paper (excluding mastery question):}\newline
+	\CatD	
+	
+	
+	
+	 \vfill \par \normalsize
+	 
+	
+	
+	\textit{Signatures are required for the final version:}
+		\sigs  \par \vfill 
+	\copyright ~\examyear~ Imperial College London
+	\hfill \coursenum \hfill Temporary cover page
+	\newpage
+	}
+
+
+	
+	
+\newcommand{\sigs}{ % Signatures
+	\vfill \par 
+  \fbox{\begin{minipage}{0.98\textwidth}{~ \\[4mm]
+  \hspace*{3mm} Setter's signature \hfill
+  Checker's signature \hfill
+  Editor's signature~~~~ \\[4mm]
+  \hspace*{3mm} \dotfill \hfill \dotfill \hfill \dotfill ~~~~
+  \\[2mm] ~} \end{minipage}}
+	}
+	
+
+
+	
+\newcommand{\fpage}{ % FRONT PAGE 
+%	\ICLOGO
+%  
+\newlength{\myl}
+\settowidth{\myl}{\sc Temporary front page}
+\newlength{\myll}
+\setlength{\myll}{\textwidth - \myl}
+\begin{center}
+ \large{\sc \rule[4pt]{0.45\myll}{0.5pt}~Temporary front page~\rule[4pt]{0.45\myll}{0.5pt}}
+ \end{center}
+ %
+ \bigskip
+  \begin{center}
+  BSc, MSc and MSci EXAMINATIONS (MATHEMATICS) \par
+  \exammonth~ \examyear \bigskip \par
+  This paper is also taken for the relevant examination
+  for the Associateship of the \\ Royal College of Science. 
+	\end{center}
+	\begin{center}
+	\coursename
+	\end{center}
+	\renewcommand{\arraystretch}{1.3}
+	\vfill \par
+	\fbox{\parbox{\textwidth}{
+	\begin{tabular}{l}
+	Date: \examdate \\ 
+	Time: \examtime \\
+	Time Allowed: \examlength \\
+	This paper has {\em \numQ}. \\
+	%\ifthenelse{\boolean{onebook}}
+	%{Candidates should use ONE main answer book.}
+	%{Candidates should start their solutions to each question in a new main answer book.}\\
+	%Candidates should use ONE main answer book.\\
+	%Supplementary books may only be used after the relevant main book(s) are full. \\
+	\ifthenelse{\boolean{tables}}{Statistical tables are provided.}{Statistical tables will not be provided.}\\
+	\end{tabular}}}
+	\renewcommand{\arraystretch}{1.5}
+	\begin{itemize}
+	%\item DO NOT OPEN THIS PAPER UNTIL THE INVIGILATOR TELLS YOU TO.
+	%\item Affix one of the labels provided to each answer book that you use, 
+	%but DO NOT USE THE LABEL WITH YOUR NAME ON IT.
+	\item	Credit will be given for all questions attempted.
+	\item Each question carries equal weight.
+	%\item Calculators may not be used.
+	\end{itemize}
+	\vfill 
+	\copyright ~\examyear~ Imperial College London
+	\hfill \coursenum \hfill Page 1 of \pageref{ptotal}
+	\newpage
+	}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Exam text starts from here
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Use \begin{Question}{1} ... \end{Question} and
+%     \BeginParts \Part{a} \EndParts
+%
+% Avoid splitting a question across two pages
+%
+% Insert number of marks for each part or sub-part using \qmarks{}. Use \qqmarks{} if this results in a bad line break.
+%
+% Manually put in \EndPage at the end of every page for the correct footers.
+
+\begin{document}
+\sffamily
+\fpagedraft % this produces the signature page 
+\setcounter{page}{1}
+\fpage % this produces the front page with rubric
+
+
+\begin{Question}{1}
+  Consider the following finite element
+    \begin{itemize}
+    \item $K$ is a triangle,
+    \item $P$ is the space of polynomials of degree $\leq 2$,
+    \item $N$ is the set of six nodal variables given by evaluation
+      at the vertices and edge centres of $K$.
+    \end{itemize}
+    \BeginParts
+  \Part{a} Show that $N$ determines $P$.
+  \qmarks{7}
+  \Part{b} Give a $C^0$ geometric decomposition of this finite element,
+  showing that it is $C^0$.
+  \qmarks{7}
+  \Part{c} Show that finite element spaces built from this element are
+  not necessarily $C^1$.
+  \qmarks{6}
+  \EndParts
+\end{Question}
+
+\EndPage
+
+\begin{Question}{2}
+  \BeginParts
+\Part{a}
+Write a $C^0$ finite element variational problem for the following equation,
+\begin{equation}
+ \epsilon u -\nabla^2 u = \exp(xy), \quad \frac{\partial u}{\partial n}=0 \mbox{ on } \partial\Omega,
+\end{equation}
+where $\Omega=\{x,y:0\leq x\leq 1,\, 0\leq y\leq 1\}$ with boundary
+$\partial\Omega$, and $0<\epsilon<1$.
+\qqmarks{6}
+\Part{b}
+Show that the bilinear form for the variational problem is continuous
+and coercive, and give bounds for the continuity and coercivity
+constants $M$ and $\gamma$ for this problem.\\ (You may make use of
+the inequality $ab \leq \frac{a^2}{2}+\frac{b^2}{2}$.)  \qqmarks{6}
+\Part{c}
+Assuming Ce\'a's Lemma and standard interpolation error estimates,
+derive an error bound for the $H^1$ error $\|u-u_h\|$ where $u_h$ is
+the solution obtained by a linear Lagrange finite element approximation with maximum
+mesh size $h$, and $u$ is the exact solution. What is happening to
+this error bound when $\epsilon$ is very small?  \qqmarks{8} \EndParts
+\end{Question}
+
+ \EndPage
+ \begin{Question}{3}
+     \begin{figure}
+    \centerline{\includegraphics[width=6cm]{BDM1_DOFs}}
+    \caption{\label{fig:BDM1} Nodal variables diagram for Question 4.}
+  \end{figure}
+   In this question we consider the following finite element.
+   \begin{itemize}
+   \item $K$ is a triangle.
+   \item $P$ are vector-valued linear functions (i.e. the $x$- and $y$-
+     components of the function are both polynomials of degree $\leq 1$).
+   \item The six nodal variables are the components of the function
+     tangential to the edges at the locations indicated by the arrows
+     in Figure \ref{fig:BDM1}.
+   \end{itemize}
+     \BeginParts
+   \Part{a} Describe how this element can be used to construct a finite
+     element space $V$ where the functions are continuous in the tangential
+     component across each edge. Show that the finite element space
+     does indeed have this property.
+     \qmarks{6}
+     \Part{b} Consider the quadratic Lagrange finite element space $P_2$.
+   Show that $\phi \in P_2 \implies \nabla \phi \in V$.
+   \qmarks{8}
+   \Part{c} Provide a formula for the weak curl $\nabla^\perp\cdot u=-\partial u_1/\partial y + \partial u_2/\partial x$
+   for a function $u=(u_1,u_2)\in V$, and show that it is indeed the
+   weak curl.  \qmarks{6} \EndParts
+\end{Question}
+\EndPage
+ \begin{Question}{4}
+  Let $\Omega$ be a convex polygonal domain. Assume that you have a fast and
+  efficient code for solving the variational problem: find $u \in V$
+  such that
+  \begin{equation}
+    \int_\Omega uv + \nabla u \cdot \nabla v \diff x = F[v], \quad
+    \forall v \in V,
+  \end{equation}
+  for arbitrary linear functionals $F[v]$, where $V$ is a $C^0$ finite
+  element space. However, you want to solve a different variational
+  problem: find $u \in V$ such that
+  \begin{equation}
+    \label{eq:actual}
+    \int_\Omega a(x) uv + b(x)\nabla u \cdot \nabla v \diff x = G[v], \quad
+    \forall v \in V,
+  \end{equation}
+  where $a(x)$ and $b(x)$ are some known functions that satisfy
+  $0<\alpha< a(x) < \beta < \infty$, $0<\alpha< b(x) < \beta <
+  \infty$, for all $x\in \Omega$. One possible approach is to apply
+  the following iterative scheme,
+  \begin{equation}
+    \int_\Omega u^{k+1}v + \nabla u^{k+1} \cdot \nabla v \diff x =
+    F_k[v],
+    \label{eq:it}
+  \end{equation}
+  where
+  \begin{equation}
+    F_k[v] = \int_\Omega u^{k}v + \nabla u^{k} \cdot \nabla v \diff x
+    + \mu\left(
+    G[v] -
+    \int_\Omega a(x) u^kv + b(x)\nabla u^k \cdot \nabla v \diff x\right)
+    , \quad
+    \forall v \in V,
+  \end{equation}
+  where $\mu>0$, for an iterative sequence $u^0,u^1,u^2,\ldots$
+  of guesses at the solution.  To implement this, we choose an initial
+  guess $u^0$, and then iteratively generate the sequence by solving
+  \eqref{eq:it} for $u^{k+1}$ given $u^k$ (which enables us to
+  construct $F_k[v]$).  \BeginParts
+  \Part{a} Show that if the sequence converges to a limit $u_k \to u^*$ as
+  $k\to \infty$, then $u^*$ solves Equation \eqref{eq:actual}.
+  \qmarks{6}
+  \Part{b}
+  Defining the error $\epsilon^k = u - u^k$, where $u$ solves
+  \eqref{eq:actual}, derive a variational problem that relates
+  $\epsilon^{k+1}$ to $\epsilon^k$ (without explicitly involving
+  $u^{k+1}$ or $u^k$).  \qmarks{6}
+  \Part{c} 
+  Find a
+  value of $\mu$ such that
+  $\|\epsilon^{k+1}\|_{H^1}<\|\epsilon^k\|_{H^1}$, concluding that
+  the iterative procedure converges.
+  You may make use of the stability bound from Lax-Milgram, i.e.
+  the solution $u$ to a variational problem satisfies
+  \begin{equation}
+    \|u\|_{H^1} \leq \frac{1}{\gamma}\|F\|_{(H^1)^*},
+  \end{equation}
+  where $\gamma$ is the coercivity constant of the bilinear form and
+  $F$ is the linear form appearing on the right hand side.
+  \qmarks{8}
+  \EndParts
+\end{Question}
+
+%% If you have a Mastery Question, then this should be included as an additional question 
+%% on a new page. Otherwise, comment out the following three lines:
+\EndPage
+\begin{Question}{5}
+ \BeginParts
+ \Part{a} Let $V$ and $Q$ be Hilbert spaces. Let $b:V\times Q \to \mathbb{R}$ be a bilinear form.
+ We define the operator $B:V\to Q'$ as follows. For each $v\in V$,
+ $Bv$ is an element of $Q'$, defined by
+ \begin{equation}
+   (Bv)[p] = b(v,p), \, \forall p \in Q.
+ \end{equation}
+ For an operator $T:X\to Y'$, we define the transpose operator
+ $X^*:Y\to X'$ as
+ \begin{equation}
+   (T^*y)[x] = (Tx)[y], \quad \forall x\in X,\,y\in Y.
+ \end{equation}
+ Use these definitions to derive a formula for $B^*$.
+ \qmarks{6}
+ \Part{b} Assuming the inf-sup condition
+ \begin{equation}
+   \inf_{0\neq q\in Q}\sup_{0\neq v\in V}
+   \frac{b(v,q)}{\|v\|_V\|q\|_Q} \geq \beta,
+ \end{equation}
+ for some $\beta>0$, show that $B^*$ is injective.
+ \qmarks{7}
+ \Part{c}
+ Let
+ \begin{equation}
+   b(u,p) = \int_{\Omega} p \nabla\cdot u \diff x,
+ \end{equation}
+ for some chosen problem domain $\Omega$ such that
+ $b$ satisfies the inf-sup condition for some given finite
+ element spaces $V_h$ and $Q_h$. We define the ``weak gradient''
+ operator $\tilde{\nabla}:Q_h\to V_h$ such that
+ \begin{equation}
+   \int_\Omega w\cdot \tilde{\nabla}p\diff x
+   = \int_\Omega p\nabla\cdot u \diff x.
+ \end{equation}
+ What does the inf-sup condition imply about the operator
+ $\tilde{\nabla}$?
+ \qmarks{7}
+ \EndParts
+ \end{Question}
+
+
+\label{ptotal}
+\EndPage
+\end{document}

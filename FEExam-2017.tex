@@ -1,0 +1,628 @@
+\documentclass[12pt]{article}
+
+\usepackage{graphicx,amssymb,amsmath,nicefrac,ifthen}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Fill in the following details  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\coursenum}{M4MA47} %{e.g: M1S, or: M3S14/M4S14/M5S15 for multiple year courses}
+\newcommand{\coursename}{Finite elements: numerical analysis and implementation} %{e.g: Probability and Statistics} 
+\newcommand{\examyear}{2017}
+\newcommand{\exammonth}{May -- June} 
+\newcommand{\examdate}{??} %{Tuesday, 26th May 2017} 
+\newcommand{\examtime}{??} %{09:30 -- 11:30} 
+\newcommand{\examlength}{??} %{2} length of exam in hours
+\newcommand{\numQ}{??} %{Four} number of questions
+\newcommand{\setter}{Colin Cotter}     % Insert surname of exam setter 
+\newcommand{\checker}{David Ham} % Insert surname of exam checker 
+\newcommand{\editor}{Andrew Walton} % Insert surname of exam editor
+\newcommand{\external}{external} % Insert surname of external examiner
+\newboolean{tables}
+\setboolean{tables}{false} %set to true if statistical tables are provided
+\newboolean{onebook}
+\setboolean{onebook}{false} %set to true if all answers should be in one answer book
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pretolerance=100000
+\setlength{\topmargin}{-15mm}
+\setlength{\textheight}{245mm}
+\setlength{\textwidth}{178mm}
+\setlength{\oddsidemargin}{-10mm}
+\setlength{\evensidemargin}{-10mm}
+\setlength{\marginparwidth}{1cm}
+\setlength{\parskip}{1.1ex}
+\setlength{\parindent}{0ex}
+\renewcommand{\baselinestretch}{1.1}
+
+\pagestyle{empty}
+
+\newenvironment{Question}[1] 
+ {\begin{itemize} \item[\large #1.~~]}{\end{itemize} \medskip}
+ 
+\newcommand{\EndPage}{
+	\vfill \coursenum ~ \coursename ~
+	(\examyear) \hfill Page \thepage \newpage
+	}
+
+\newcommand{\ICLOGO}{
+	\begin{minipage}{0.7\textwidth}
+  \includegraphics[height= 1.4cm]{imperial.pdf} 
+  \end{minipage}\hfill \parbox[r][1.4cm][t]{0.2\textwidth}{\hfill \coursenum} \par 
+	}
+	
+\newcommand{\BeginParts}{\begin{itemize}} 
+\newcommand{\Part}[1]{\item [(#1)~~]} 
+\newcommand{\EndParts}{\end{itemize}} 
+
+%%%%
+% This requires imperial.pdf in the graphics input path eg 
+% h:/images/imperial.pdf 
+%%%% 
+
+
+\newcommand{\fpagedraft}{  % FOR DRAFT FRONT PAGE with SIGS
+	\ICLOGO
+	\begin{center} 
+	\draft
+	BSc, MSci and MSc EXAMINATIONS (MATHEMATICS) \par 
+	\exammonth~ \examyear \vfill \par
+	\Large \coursenum \bigskip \par
+	\coursename \bigskip \par
+	\end{center} \vfill \par \normalsize
+	\sigs  \par \vfill 
+	\copyright ~\examyear~ Imperial College London
+	\hfill \coursenum \hfill draft cover 
+	\newpage
+	}
+
+\newcommand{\draft}{
+	\begin{flushright} \begin{tabular}{ll}
+  Course:   & \coursenum\\ Setter:   & \setter \\
+  Checker:  & \checker \\  Editor:   & \editor \\
+  External: & \external \\ Date:     & \today
+  \end{tabular} \end{flushright} \vfill \par
+	}
+	
+\newcommand{\sigs}{ % Signatures
+	\vfill \par
+  \fbox{\begin{minipage}{0.98\textwidth}{~ \\[4mm]
+  \hspace*{3mm} Setter's signature \hfill
+  Checker's signature \hfill
+  Editor's signature~~~~ \\[4mm]
+  \hspace*{3mm} \dotfill \hfill \dotfill \hfill \dotfill ~~~~
+  \\[2mm] ~} \end{minipage}}
+	}
+	
+	
+\newcommand{\fpage}{ % FRONT PAGE 
+	\ICLOGO
+  \begin{center}
+  BSc, MSc and MSci EXAMINATIONS (MATHEMATICS) \par
+  \exammonth~ \examyear \bigskip \par
+  This paper is also taken for the relevant examination
+  for the Associateship of the \\ Royal College of Science. 
+	\end{center}
+	\begin{center}
+	\coursename
+	\end{center}
+	\renewcommand{\arraystretch}{1.3}
+	\vfill \par
+	\fbox{\parbox{\textwidth}{
+	\begin{tabular}{l}
+	Date: \examdate \\ 
+	Time: \examtime \\
+	Time Allowed: \examlength~Hours \\
+	This paper has {\em \numQ} Questions. \\
+	\ifthenelse{\boolean{onebook}}
+	{Candidates should use ONE main answer book.}
+	{Candidates should start their solutions to each question in a new main answer book.}\\
+	%Candidates should use ONE main answer book.\\
+	Supplementary books may only be used after the relevant main book(s) are full. \\
+	\ifthenelse{\boolean{tables}}{Statistical tables are provided.}{Statistical tables will not be provided.}\\
+	\end{tabular}}}
+	\renewcommand{\arraystretch}{1.5}
+	\begin{itemize}
+	\item DO NOT OPEN THIS PAPER UNTIL THE INVIGILATOR TELLS YOU TO.
+	\item Affix one of the labels provided to each answer book that you use, 
+	but DO NOT USE THE LABEL WITH YOUR NAME ON IT.
+	\item	Credit will be given for all questions attempted, but extra credit will be given for complete or
+	nearly complete answers to each question as per the table below.
+	\begin{center}
+	\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|} \hline
+	Raw Mark & Up to 12 & 13&14&15&16&17&18&19&20 \\ \hline 
+	Extra Credit & 0 & $\nicefrac{1}{2}$ & 1 & $1 \nicefrac{1}{2}$ & 2 & $2 \nicefrac{1}{2}$ & 3 & 
+	$3 \nicefrac{1}{2}$ & 4 \\ \hline
+	\end{tabular}
+	\end{center}
+	\item Each question carries equal weight.
+	\item Calculators may not be used.
+	\end{itemize}
+	\vfill 
+	\copyright ~\examyear~ Imperial College London
+	\hfill \coursenum \hfill Page 1 of \pageref{ptotal}
+	\newpage
+	}
+
+% Macros for this exam
+\DeclareMathOperator{\diff}{d}
+\newcommand{\pp}[2]{\frac{\partial #1}{\partial #2}} 
+%uncomment \solnsfalse to remove solution set
+\newif\ifsolns
+%\solnstrue
+\solnsfalse
+\ifsolns
+% with solutions
+\usepackage{color}
+\newcommand{\soln}[1]{\newline \noindent {\bfseries Solution:} {\itshape \color{blue} #1}}
+\else
+% without solutions
+\newcommand{\soln}[1]{}
+\fi
+% Exam text starts from here
+%
+% use \begin{Question}{1} ... \end{Question} and
+%     \BeginParts \Part{a} \EndParts
+%
+% manually put in \EndPage at the end of every page for the correct footers.
+
+\begin{document}
+\sffamily
+\fpagedraft % this produces the signature page 
+\setcounter{page}{1}
+\fpage % this produces the front page with rubric
+
+\begin{Question}{1}
+\BeginParts
+\Part{a} Let $(K,\mathcal{P},\mathcal{N})$ be such that:
+\begin{enumerate}
+\item $K$ is a (non-degenerate) triangle,
+\item $\mathcal{P}$ is the space of polynomials of degree $\leq 1$.
+\item $\mathcal{N}$ is the set of nodal variables with
+\[
+N_1(u) = \int_K u \diff x, \quad 
+N_2(u) = \pp{u}{x}, \quad N_3(u) = \pp{u}{y}.
+\]
+\end{enumerate}
+Find the nodal basis for $\mathcal{P}$ corresponding to $\mathcal{P}$
+by expanding in the monomial basis
+\[
+\psi_1(x) = 1, \quad \psi_2(x) = x, \quad \psi_3(x) = y. 
+\]
+(Hint: to make calculation easier, you may make use of the fact that
+matrices of the form
+\[
+\begin{pmatrix}
+a & 0 & 0 \\
+b & 1 & 0 \\
+c & 0 & 1 \\
+\end{pmatrix}
+\]
+form a group.)
+\soln{
+We expand $\phi_i(x)=\sum_{j=1}^3 a_{ij}\psi_j(x)$. Then,
+\[
+\delta_{ik} = N_k(\phi_i) = \sum_{j=1}^3 a_{ij}N_k(\psi_j) =
+(AV)_{ik},
+\]
+where $A$ is the matrix with coefficients $a_{ij}$, and
+$V$ is the matrix with coefficients $v_{ij}=N_j(\psi_i)$, given by
+\[
+V = \begin{pmatrix}
+  |K| & 0 & 0 \\
+  \bar{x}|K| & 1 & 0 \\
+  \bar{y}|K| & 0 & 1 \\
+\end{pmatrix},
+\quad |K|=\int_K\diff x, \, \bar{f} = \frac{\int_K f(x)\diff x}{|K|}.
+\]
+Using the hint, we write
+\[
+V^{-1} = 
+\begin{pmatrix}
+a & 0 & 0 \\
+b & 1 & 0 \\
+c & 0 & 1 \\
+\end{pmatrix},
+\]
+so
+\[
+V^{-1}V = 
+\begin{pmatrix}
+a|K| & 0 & 0 \\
+|K|(b + \bar{x}) & 1 & 0 \\
+|K|(c + \bar{y}) & 0 & 1 \\
+\end{pmatrix}
+=
+\begin{pmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1 \\
+\end{pmatrix}
+\implies 
+V^{-1}
+=
+\begin{pmatrix}
+\frac{1}{|K|} & 0 & 0 \\
+-\bar{x} & 1 & 0 \\
+-\bar{y} & 0 & 1 \\
+\end{pmatrix},
+\]
+hence we obtain the basis
+\[
+\phi_1(x) = \frac{1}{|K|}, \, \phi_2(x) = x - \bar{x},
+\phi_3(x) = y - \bar{y}.
+\]
+}
+\Part{b} Use this calculation to explain why $\mathcal{N}$ determines
+$\mathcal{P}$.  \soln{The functions $\{\phi_i\}_{i=1}^3$ satisfies the
+  requirements of the dual basis and are written as an invertible
+  transformation from the monomial basis, hence they are linearly
+  independent and span $\mathcal{P}$.}  
+\Part{c} Comment on the relative sizes of the basis functions as the triangle area goes to zero, and suggest a rescaling of the nodal variables that
+remedies this.
+\soln{
+As $|K|$ goes to zero, $\phi_1\to 0$ whilst $\phi_2$ and $\phi_3$ stay finite.
+This can be fixed by replacing $N_1$ with $\tilde{N}_1=\bar{u}$, in which
+case $V$ becomes
+\[
+V = \begin{pmatrix}
+  1 & 0 & 0 \\
+  \bar{x} & 1 & 0 \\
+  \bar{y} & 0 & 1 \\
+\end{pmatrix},
+\]
+so
+\[
+\psi_1(x) = 1, \, \psi_2(x) = x-\bar{x}, \, \psi_3(x) = y-\bar{y}.
+\]
+}
+\EndParts
+\end{Question}
+\EndPage
+\begin{Question}{2} 
+We consider the finite element $(K,\mathcal{P},\mathcal{N})$ where
+\begin{enumerate}
+\item $K$ is a (non-degenerate) triangle,
+\item $\mathcal{P}$ is the space $(P_1)^2$ of vector-valued polynomials
+(i.e. each vector component is in $P_1$).
+\item Elements of $\mathcal{N}$ are dual functions that return the
+  normal component of vector fields at the end of each edge (2
+  evaluations per edge, one at each end, and 3 edges, makes 6 dual
+  functions in total).
+\end{enumerate}
+The geometric decomposition of $(K,\mathcal{P},\mathcal{N})$ is defined
+by associating each dual basis function with the edge where the normal
+component is evaluated.\\
+We consider the finite element space $V$ defined on a triangulation
+$\mathcal{T}$ of a polygonal domain $\Omega$, constructed from the
+element above, so that dual basis evaluations agree for triangles
+on either side of each interior edge.
+\BeginParts
+\Part{a} Show that the weak divergence $\nabla_w\cdot u$ exists for
+$u\in V$, defined by
+\[
+\int_\Omega \phi \nabla_w\cdot u \diff x = -\int_\Omega \nabla \phi\cdot u 
+\diff x, \quad \forall \phi \in C_0^\infty(\Omega).
+\]
+\soln{
+First we note that the normal components of $u\in V$ agree on both
+sides of each interior edge, since $u.n$ restricted to the edge is 
+a linear scalar function. Since the values of $u.n$ on each side agree
+at two points, the difference $u^+.n^+ + u^-\cdot n^-$ is a linear function
+that vanishes at two points, and hence is zero.
+
+We define
+\[
+\nabla_w\cdot u|_K = \nabla\cdot u|_K,
+\]
+for all triangles $K\in\mathcal{T}$. Then 
+\begin{align*}
+\int_\Omega \phi \nabla_w \cdot u \diff x & = \sum_K \int_K \phi \nabla\cdot u\diff x, \\
+& = \sum_K \left(-\int_K \nabla\phi \cdot u\diff x + \int_{\partial K}
+\phi n\cdot u \diff S\right), \\
+& = -\int_\Omega \nabla\phi \cdot u \diff x,
+\end{align*}
+as required, since the normal components agree.
+}
+\Part{b} Develop a variational formulation for the problem
+\[
+u - c\nabla(\nabla\cdot u) = f, \mbox{ for }x\in \Omega,
+\quad u.n=0 \mbox{ on }\partial\Omega,
+\]
+using the finite element space $V$, for $c$ a positive
+constant. Develop an inner product that gives coercivity and continuity for the
+corresponding bilinear form with respect to the corresponding normed space.
+\soln{
+Taking inner product with test function $w$, integration by parts and 
+application of the boundary condition gives
+\[
+a(u,v) = F(v), \, \forall v\in V, \quad a(u,v) = \int_\Omega u.v 
++ c\nabla\cdot u\nabla\cdot v \diff x, \quad F(v)=\int_\Omega f\cdot v 
+\diff x.
+\]
+$a(u,v)$ is symmetric, bilinear, positive-definite in $L^2$, thus we 
+may use it as an inner product. $a$ therefore has continuity and coercivity
+constants equal to 1 with respect to the corresponding norm.
+}
+\Part{c} Show that $u\in V$ does not have a weak curl $\nabla^\perp_w \cdot u$
+in general, where
+\[
+\int_\Omega \Phi \cdot \nabla^\perp_w \cdot u \diff x = \int_\Omega \nabla^\perp
+\Phi \cdot u \diff x, \quad \forall \Phi \in C_0^\infty(\Omega),
+\]
+where $\nabla^\perp=(-\pp{}{y},\pp{}{x})$. [Hint: show this by
+  counter-example.  First choose a function $u\in V$ that you think
+  does not have a weak curl. Then consider a suitable limit of smooth
+  test functions that contradicts the above definition of a weak
+  curl.]  \soln{ Let $f_1$ be an interior edge joining two triangles
+  $e_1$ and $e_2$, and let $f_2$ be one of the other edges of
+  $e_2$. Take $u.n=1$ on $f_2$, and $u.n=0$ on all other edges. Then,
+  on the $e_1$ side of $f_1$, $u.t=0$, where $t$ is the unit tangent
+  to $f_1$, oriented so that $n_1^\perp=t$, where $n_1$ is the unit
+  normal pointing from $e_1$ to $e_2$. On the $e_2$ side, $u.t\neq 0$
+  (because otherwise $u.n=0$ at the $f_1$ end of $f_2$).  Define
+  $g=u.t|_{e_2}$ on $f_1$.  Then, pick a sequence of $C^\infty_0$ test
+  functions $\phi_k$ such that
+\[
+\phi_k|_{f_2}  \to 1, \, \phi_k|_{e_1} \to 0\, \phi_k|_{e_2} \to 0,
+\]
+and $\phi_k \to 0$ in all triangles other than $e_1$, $e_2$. We have
+\begin{align*}
+\int_\Omega \nabla^\perp \Phi \cdot u \diff x & = 
+\sum_K\int_K \nabla^\perp \Phi \cdot u \diff x, \\
+& = \sum_K\left(-\int_K \nabla^\perp \Phi \cdot u \diff x
++ \int_{\partial K} \Phi n^\perp \cdot u \diff S\right), \\
+& \to \int_f g \Phi \diff S \neq 0.
+\end{align*}
+On the other hand, if $\nabla^\perp_wu$ exists, then
+\[
+0 \neq \int_f g \Phi \diff S = \int_\Omega \Phi \nabla^\perp_w\cdot u \diff S
+= \sum_K \int_\Omega \Phi|_K \nabla^\perp_w \cdot u \diff S \to 0,
+\]
+which is a contradiction.
+}
+\EndParts
+\end{Question}
+\EndPage
+
+\begin{Question}{3}
+  We consider the following boundary value problem in one dimension.
+  \[
+  -u'' + (2+\sin(x))u = f(x), \quad u(0) = 0, \, u'(1)=1.
+  \]
+    \BeginParts
+    \Part{a} Construct a formulation of this problem describing
+    a weak solution $u$ in $H^1([0,1])$.
+    \soln{
+      Multiplication by test function $v$ satisfying $v(0)=0$, and integration by parts, using the boundary condition gives
+      \[
+      \int_0^1 v'u' + (2+\sin(x))vu \diff x = \int_0^1 vf \diff x
+      + v(1),
+      \quad \forall v\in H^1_0([0,1]),
+      \]
+      where $H^1_0([0,1])$ is the subspace of $H^1([0,1])$ such that
+      $v(0)$.
+      }
+    \Part{b} Show that the corresponding bilinear form is continuous
+    and coercive in $H^1([0,1])$, and compute the continuity and
+    coercivity constants.
+    \soln{
+      Continuity:
+      \begin{align*}
+        a(u,v) & \leq \|v'\|_{L^2(\Omega)}\|u'\|_{L^2(\Omega)}
+        + 3\|v\|_{L^2(\Omega)}\|u\|_{L^2(\Omega)}, \\
+        & \leq 3\|u\|_{H^1(\Omega)}\|v\|_{H^1(\Omega)}.
+      \end{align*}
+      Constant is 3.\\
+      Coercivity:
+      \begin{align*}
+        a(u,u) & = \int_0^1 (u')^2 + (2+\sin(x))u^2 \diff x, \\
+        & \geq \int_0^1 (u')^2 + u^2 \diff x = \|u\|^2_{H^1(\Omega)}.
+      \end{align*}
+      Constant is 1.
+    }
+    \Part{c} What is the required property of $f$ for a unique solution
+    $u$ to exist?
+    \soln{
+      The RHS functional is
+      \[
+      L[v] = \int_0^1 fv \diff x + v(1).
+      \]
+      We have
+      \[
+      |L[v]| \leq \|f\|_{L^2([0,1])}\|v\|_{L^2([0,1])} + C\|v\|_{H^1([0,1])}
+      \leq (\|f\|_{L^2([0,1])} + C)\|v\|_{H^1([0,1])},
+      \]
+      where $C$ is the trace constant for $H^1([0,1])$. Hence we need
+      $f\in L^2([0,1])$ for $L$ to be bounded/continuous and hence
+      the conditions of Lax-Migram to be satisfied.
+      }
+    \Part{d} Describe the piecewise linear $C^0$ finite element discretisation
+    of this equation with mesh vertices $[x_0=0,x_1,x_2,\ldots,x_n,x_{n+1}=1]$.
+    \soln{
+      Let $V_h$ be the finite element space of continuous, piecewise linear
+      functions defined on this mesh, with subspace $\mathring{V}_h$ containing
+      only the functions that satisfy $v_h(0)=0$. The Galerkin finite
+      element discretisation seeks $u_h\in \mathring{V}_h$ such that
+      \[
+      a(u_h,v) = L[v], \quad \forall v\in \mathring{V}_h.
+      \]      
+      }
+    \Part{e} Given an arbitrary basis of the finite element space $V_h$,
+    show that the resulting matrix $A$ is symmetric ($A^T=A$) and positive
+    definite, i.e. $x^TAx > 0$ for all $x$ with $\|x\|>0$.
+    \soln{
+      Given a basis $\{\phi_i\}_{i=1}^n$, $A$ is defined by
+      \[
+      A_{ij} = \int_0^1 \phi'_i\phi'_j + (2+\sin(x))\phi_i\phi_j\diff x.
+      \]
+      $A$ is symmetric, since exchanging $i$ and $j$ returns the same answer.\\
+      $A$ is PD since if we take
+      \[
+      u = \sum_{i=1}^n x_i \phi_i,
+      \]
+      then
+      \begin{align*}
+      x^TAx &= \sum_{ij}x_iA_{ij}x_j
+      = \int_0^1 \sum_ix_i\phi'_i\sum_j x_j\phi'_j +
+      (2+\sin(x))\sum_ix_i\phi_i\sum_j x_j\phi_j \diff x, \\
+      & = \int_0^1 (u')^2 + (2+sin(x))u^2 \diff x,
+      \end{align*}
+      which is positive due to the coercivity result.
+      }
+    \Part{f} Show that the numerical solution $u_h$ satisfies
+    $\|u-u_h\|_{H^1([0,1])}=\mathcal{O}(h)$ as $h\to 0$. [You may
+      quote any properties of the interpolation operator
+      $\mathcal{I}_h$ without proof, but must show the other steps.]
+    \soln{ Since $\mathring{V}_h\in H^1([0,1])$, we have
+      \[
+      a(v,u-u_h) = 0, \quad \forall v \in \mathring{V}_h.
+      \]
+      Then, taking $v\in \mathring{V}_h$,
+      \begin{align*}
+        \|u-u_h\|_{H^1([0,1])}^2 & \leq a(u-u_h,u-u_h), \\
+        & = \underbrace{a(u-u_h,v-u_h)}_{=0} + a(u-u_h,u-v), \\
+        & \leq 3\|u-u_h\|_{H^1}\|u-v\|_{H^1}.
+      \end{align*}
+      Dividing by $\|u-u_h\|_{H^1}$ and taking $v=\mathcal{I}_hu$ gives
+      \[
+      \|u-u_h\|_{H^1} \leq 3\|u-\mathcal{I}_hu\|
+      \leq 3h\|u\|_{H^1},
+      \]
+      where we quoted the property of $\mathcal{I}_h$ in the last inequality.
+    }
+    \EndParts
+\end{Question}
+
+\EndPage
+
+%% \begin{Question}{3}
+%% The scalar advection diffusion equation
+%% \[
+%% b.\nabla u = \epsilon \nabla^2 u + f, \quad \mbox{ for }x\in \Omega,
+%% \quad u=0 \mbox{ on }\partial\Omega,
+%% \]
+%% for constant $\epsilon>0$, and a divergence-free vector field $b$
+%% satisfying $b\cdot n=0$ on $\partial \Omega$,
+%% has variational form
+%% \[
+%% \int_\Omega v b\cdot\nabla u + \epsilon \nabla v \cdot \nabla u \diff x
+%% = \int_\Omega f v \diff x,
+%% \quad \forall v \in H^1(\Omega),
+%% \]
+%% for $u \in H^1(\Omega)$.
+%% \BeginParts
+%% \Part{a} Determine continuity and coercivity constants for the corresponding 
+%% bilinear form; under what conditions for $b$ are they finite?
+%% You may make use of the Poincar\'e estimate
+%% \[
+%% \int_\Omega u^2 \diff x \leq C_\Omega \int_\Omega |\nabla u|^2 \diff x.
+%% \]
+%% \soln{
+%% For continuity we have
+%% \begin{align*}
+%% \int_\Omega v b\cdot\nabla u + \epsilon \nabla v \cdot \nabla u \diff x
+%%  & \leq \|v\|_{L^2(\Omega)}\|\nabla u\|_{L^2(\Omega)}\|b\|_{L^\infty(\Omega)}
+%%  + \epsilon \|\nabla v\|_{L^2(\Omega)}\|\nabla u\|_{L^2{\Omega}}, \\
+%%  & \leq (\|b\|_{L^\infty(\Omega)}+\epsilon)\|v\|_{H^1(\Omega)}\|u\|_{H^1(\Omega)},
+%% \end{align*}
+%% so the continuity constant $M=(\|b\|_{L^\infty(\Omega)}+\epsilon)$. Hence
+%% we require $\|b\|_{L^\infty(\Omega)}<\infty$. \\
+%% For coercivity, note that
+%% \[
+%% \int_\Omega u b\cdot \nabla u \diff x = \int_\Omega b\cdot \nabla
+%% \frac{1}{2}u^2 \diff x = -\int_\Omega \frac{1}{2}u^2\nabla\cdot b\diff x
+%% = 0.
+%% \]
+%% Thus,
+%% \[
+%% a(u,u) = \int_{\Omega} \epsilon |\nabla u|^2 \diff x.
+%% \]
+%% The Poincar\'e inequality gives
+%% \[
+%% \|u\|_{H^1(\Omega)}^2=\|u\|^2_{L^2(\Omega)} + \|\nabla u\|^2_{L^2(\Omega)} \leq \frac{C^2+1}{\epsilon}a(u,u),
+%% \]
+%% hence the coercivity constant $\gamma = \sqrt{\epsilon/(C^2+1)}$.
+%% }
+%% \Part{b} The advection diffusion equation is discretised using continuous 
+%% finite element methods. Using C\'ea's Theorem, comment on the bounds on
+%% the error as $\epsilon \to 0$. 
+%% \soln{
+%% C\'ea's Theorem says that 
+%% \[
+%% \|u-u_h\|_V \leq \frac{M}{\gamma}\min_{v\in V_h}\|u-v\|_V.
+%% \]
+%% The constant $M/\gamma\to \infty$ as $\epsilon\to 0$, and hence
+%% C\'ea's Theorem provides no bounds on the error in this limit.  }
+%% \EndParts
+%% \end{Question} 
+
+\begin{Question}{4}
+Consider the finite element $(K,\mathcal{P},\mathcal{N})$, with 
+\begin{enumerate}
+\item $K$ is a non-degenerate triangle,
+\item $\mathcal{P}$ is the space of polynomials on $K$ of degree $\leq 2$.
+\item $\mathcal{N}=(N_{1,1},N_{1,2},N_{2,1},N_{2,2},N_{3,1},N_{3,2})$,
+where 
+\[
+N_{i,j}(u)= \int_{f_i}\phi_{i,j} u\diff x,
+\]
+where $(f_1,f_2,f_3)$ are the edges of $K$, with $f_1$ joining
+vertices $1$ and $2$, $f_2$ joining vertices $2$ and $3$, and $f_3$
+joining vertices 3 and 1. The edge test functions $\phi_{i,j}$ define
+a basis for linear functions restricted to $f_i$ such that $\phi_{1,1}=1$
+on vertex $1$ and 0 on vertex $2$, \emph{etc.}
+ \BeginParts
+ \Part{a} Show that $\mathcal{N}$ determines $\mathcal{P}$. 
+ \soln{It suffices to show that if $u \in P$, then
+ $N_{i,j}(u)=0$ for all $i,j$ $\implies u=0$. Under this assumption,
+ we may expand $u|_{f_1} = u_1\phi_{1,1}+u_2\phi_{1,2}$, hence
+ \[
+ \int_{f_i}u^2 \diff x = 0, \implies u|_{f_1}=0.
+ \]
+Similarly we obtain $u|_{f_2}=0$, $u|_{f_3}=0$.
+If $u|_{f_1}=0$, then $u(x)=L_1(x)Q_1(x)$ where $L_1$ is a non-degenerate
+ linear polynomial with $L_1|_{f_1}=0$.
+Since $L_1|_{f_2}\ne 0$, we
+ conclude that $Q_1(x)|_{f_2}=0$, so that $Q_1(x)=cL_2(x)$, where $c$
+ is a constant, and $L_2|_{f_2}=0$. Finally since $L_2|_{f_3}\ne 0$, 
+ we conclude that $c=0$, hence the result.}
+ \Part{b} We take a geometric decomposition such that $N_{i,j}$ is 
+associated with $f_i$, $i=1,2,3$, $j=1,2$. What is the continuity of the
+corresponding finite element space $V$ defined on a triangulation $\mathcal{T}$
+of a polygonal domain $\Omega$? Explain your answer.
+\soln{ There exist discontinuous functions in $V$, so functions are
+  not even in $C^0(\Omega)$. To see this, pick two neighbouring
+  triangles $e_1$, $e_2$ with common face $f_1$, and another face
+$f_2$ in $e_1$. We pick $u=1$ on $f_2$ and $u=0$ when restricted to 
+all other faces. This function is equal to zero on the $e_1$ side of $f_1$,
+and is a linear function going from 1 to 0 on the $e_2$ side, hence
+discontinuous.
+}
+\Part{c} We assume that $u\in H^k(\Omega)$ for some non-negative integer $k$.
+What is the minimum value of $k$ such that the global interpolator
+$\mathcal{I}_hu$ is well-defined? Explain your answer.
+\soln{
+We require that $u|_f \in L^2(f)$ for each edge in $\mathcal{T}$. This
+is guaranteed if $u \in H^1(\Omega)$ via the trace theorem. On the other
+hand $u\in L^2(\Omega)$ is not enough to guarantee that $u|_f\in L^2(f)$.
+So $k=1$.
+}
+ \EndParts
+\end{enumerate}
+
+\end{Question}
+
+%% If you have a Mastery Question, then this should be included as an additional question 
+%% on a new page, uncomment the following three lines:
+% \EndPage
+% \begin{Question}{5}
+% \end{Question}
+
+
+\label{ptotal}
+\EndPage
+\end{document}

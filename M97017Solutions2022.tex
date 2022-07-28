@@ -1,0 +1,506 @@
+\documentclass[11pt]{article}
+\usepackage{graphicx, amssymb}
+\usepackage{amsfonts}
+\usepackage{epsfig}
+\usepackage{amssymb,amsmath,bm}
+%\usepackage{subfig}
+\usepackage{amsthm}
+\usepackage{mathrsfs,mathtools}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Fill in these details
+\newcommand{\coursenum}{MATH97095} %{M2S1}
+\newcommand{\coursename}{MATH97095 (Solutions)} 
+\renewcommand{\pagetotal}{\pageref{pagetot}}     % adjust after viewing draft 
+\newcommand{\examyear}{2022}%Please update 
+\newcommand{\exammonth}{May} %Please update
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pretolerance=100000
+ \setlength{\topmargin}{-3mm}
+ \setlength{\textheight}{250mm}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%Added the following
+\setlength{\footskip}{0mm}
+\setlength{\headsep}{0mm}
+\setlength{\headheight}{0mm}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\textwidth}{150mm}
+\addtolength{\oddsidemargin}{-20mm}
+\addtolength{\evensidemargin}{40mm}
+\setlength{\marginparwidth}{2cm}
+\setlength{\parskip}{1.1ex}
+\setlength{\parindent}{0ex}
+\renewcommand{\baselinestretch}{1.1}
+
+% seen, unseen and similar seen commands; add in your own as appropriate
+\newcommand{\marb}[1]{\marginpar{~~\fbox{\,\mathstrut #1\,}}}  
+\newcommand{\marbup}[1]{\vspace*{-4mm} \par \marb{#1}} 
+\newcommand{\seen}{\marbup{{\small seen $\Downarrow$}}} 
+\newcommand{\unseen}{\marbup{{\small unseen $\Downarrow$}}} 
+\newcommand{\simseen}{\marbup{{\small sim. seen $\Downarrow$}}} 
+\newcommand{\seensim}{\marbup{{\small seen/sim.seen $\Downarrow$}}} 
+\newcommand{\partseen}{\marbup{{\small part seen $\Downarrow$}}} 
+\newcommand{\methodseen}{\marbup{{\small meth seen $\Downarrow$}}} 
+
+\pagestyle{empty}
+\newcommand{\vect}[1]{\mbox{\boldmath{$#1$}}}
+
+\newcommand{\pp}[2]{\frac{\partial #1}{\partial #2}} 
+\newcommand{\dede}[2]{\frac{\delta #1}{\delta #2}}
+\newcommand{\dd}[2]{\frac{\diff#1}{\diff#2}}
+\newcommand{\dt}[1]{\diff\!#1}
+\def\MM#1{\boldsymbol{#1}}
+\DeclareMathOperator{\diff}{d}
+
+
+% setup a counters to count up marks in a question
+\newcounter{count_marks}
+\setcounter{count_marks}{0}
+\newcounter{count_amarks}
+\setcounter{count_amarks}{0}
+\newcounter{count_bmarks}
+\setcounter{count_bmarks}{0}
+\newcounter{count_cmarks}
+\setcounter{count_cmarks}{0}
+\newcounter{count_dmarks}
+\setcounter{count_dmarks}{0}
+\newcounter{count_mmarks} %Mastery marks
+\setcounter{count_mmarks}{0} %Mastery marks
+% Define the command for formatting the marks available for the question
+\newcommand{\amarks}[1]{\addtocounter{count_marks}{#1} \addtocounter{count_amarks}{#1}\marginpar{~~\fbox{\,\mathstrut #1, A}}}  
+
+\newcommand{\bmarks}[1]{\addtocounter{count_marks}{#1} \addtocounter{count_bmarks}{#1}\marginpar{~~\fbox{\,\mathstrut #1, B}}}  
+
+\newcommand{\cmarks}[1]{\addtocounter{count_marks}{#1} \addtocounter{count_cmarks}{#1}\marginpar{~~\fbox{\,\mathstrut #1, C}}}  
+
+\newcommand{\dmarks}[1]{\addtocounter{count_marks}{#1} \addtocounter{count_dmarks}{#1}\marginpar{~~\fbox{\,\mathstrut #1, D}}}  
+
+\newcommand{\mmarks}[1]{\addtocounter{count_marks}{#1} \addtocounter{count_mmarks}{#1}\marginpar{~~\fbox{\,\mathstrut #1, M}}}  %Mastery marks
+
+
+% define a total marks command for the end of the question
+\newcommand{\totamarks}{\hfill{Total A marks: \arabic{count_amarks} of 
+%24 %3 questions
+%48 %6 questions
+32 %4 questions
+ marks}}
+\newcommand{\totbmarks}{\hfill{Total B marks: \arabic{count_bmarks} of 
+%15 %3 questions
+% 30 % 6 questions
+20 %4 questions
+%Please adjust the number accordingly
+marks}}
+\newcommand{\totcmarks}{\hfill{Total C marks: \arabic{count_cmarks} of 
+%9 %3 questions
+% 18 %6 questions
+12 %4 questions
+%Please adjust the number accordingly
+marks}}
+\newcommand{\totdmarks}{\hfill{Total D marks: \arabic{count_dmarks} of 
+%12 % 3 questions
+% 24 % 6 questions
+16 % 4 questions
+%Please adjust the number accordingly
+marks}}
+
+\newcommand{\totmarks}{\hfill{Total marks: \arabic{count_marks} of 
+%60 % 3 questions
+%120 % 6 questions
+80 %4 questions
+%Please adjust the number accordingly
+marks}}
+
+\newcommand{\totMmarks}{\hfill{Total Mastery marks: \arabic{count_mmarks} of 
+20  marks}}
+
+\newenvironment{Question}[1] 
+ {\begin{itemize} \item[\large #1.~~]}{\end{itemize}\vfill
+} 
+%\makeatletter
+\newenvironment{Part}[1] 
+ {\begin{itemize} \item[(#1)~~]}{\end{itemize}}
+%\makeatother
+\newcommand{\EndPage}{\vfill \coursenum ~ \coursename ~
+ (\examyear) \hfill Page \thepage\/ of \pagetotal \newpage}
+
+%\newcommand{\ICLOGO}{\begin{figure}[!t]
+%  \includegraphics[totalheight= 1.1cm] {imperial.eps} 
+%  \end{figure} \par }
+%%%%
+% This requires imperial.eps in the graphics input path eg 
+% h:/images/imperial.eps 
+%%%% 
+
+
+\newcommand{\draft}{\begin{flushright} \begin{tabular}{ll}
+  Course:   & \coursenum\\ Setter:   & \setter \\
+  Checker:  & \checker \\  Editor:   & \editor \\
+  External: & \external \\ Date:     & \today
+  \end{tabular} \end{flushright} \vfill \par}
+
+\newcommand{\sigs}{\vfill \par
+  \fbox{\begin{minipage}{0.98\textwidth}{~ \\[4mm]
+  \hspace*{3mm} Setter's signature \hfill
+  Checker's signature \hfill
+  Editor's signature~~~~ \\[4mm]
+  \hspace*{3mm} \dotfill \hfill \dotfill \hfill \dotfill ~~~~
+  \\[2mm] ~} \end{minipage}}}
+
+\newcommand{\fpageDraft}  % FOR DRAFT FRONT PAGE
+{\sf % \ICLOGO
+ \begin{center} IMPERIAL COLLEGE LONDON \par
+ \draft
+ BSc and MSci EXAMINATIONS (MATHEMATICS) \par 
+ \exammonth~ \examyear \vfill \par
+ \Large \coursenum \bigskip \par
+ \coursename \bigskip \par
+ \end{center} \vfill \par \normalsize
+ \sigs  \par \EndPage}
+
+\newcommand{\fpage}
+{\sf %\ICLOGO
+  \begin{center} %UNIVERSITY OF LONDON \par
+  BSc and MSci EXAMINATIONS (MATHEMATICS) \par
+  \exammonth~ \examyear \bigskip \par
+  This paper is also taken for the relevant examination
+  for the Associateship. 
+  \vfill \par
+  \Large \coursenum \bigskip \par
+  \coursename  \normalsize \bigskip \par \vfill
+  \sigs\end{center}
+  \par \vfill \vfill
+  \copyright ~\examyear~ Imperial College London
+  \hfill \coursenum \hfill Page 1 of \pagetotal
+  \newpage}
+
+% Personally entered commands:
+
+
+% use \begin{Question}{1} ... \end{Question} and
+%     \begin{Part}{a} ... \end{Part} 
+% use \marb{} to allocate marks and \seen \unseen etc. 
+% manually put in \EndPage for correct footers.
+
+% document text starts here
+\begin{document}
+
+\setcounter{page}{1}
+
+ \fpage
+ 
+
+ \sf
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{Question}{1}
+  \begin{Part}{a}\seen
+    Label the triangle vertices $v_1$, $v_2$, $v_3$, with edges
+    $\Pi_1$ joining $v_1$ and $v_2$, $\Pi_2$ joining $v_2$ and $v_3$,
+    and $\Pi_3$ joining $v_3$ and $v_1$. Let $L_i$ be the
+    non-degenerate affine function that vanishes on $\Pi_i$, for
+    $i=1,2,3$. Now let $v$ be the quadratic polynomial that vanishes
+    on all of the vertices and edge centres. If we can show that
+    $v\equiv 0$, then we can conclude that $\mathcal{N}$ determines
+    $P$. Consider $v$ restricted to $\Pi_1$. Since $v$ vanishes at 3
+    points on $\Pi_1$ (two vertices and an edge centre), then by
+    the fundamental theorem of algebra, $v$ vanishes on the entire of $\Pi_1$.
+    Hence, $v(x)=L_1(x)Q_1(x)$ where $Q_1$ is a polynomial of degree at
+    most 1. Similarly, $v$ vanishes everywhere on $\Pi_2$, so $Q_1$ must
+    vanish everywhere on $\Pi_2$, except possibly where $\Pi_2$ intersects
+    $\Pi_1$, since $L_1(x)$ is zero there. However, $Q_1$ is continuous
+    so must vanish everywhere on $\Pi_2$. Hence, $Q_1=L_2c$, where $c$ is a
+    constant, and so $v=L_1L_2c$. Neither $L_1$ nor $L_2$ vanish
+    on the edge centre of $\Pi_3$, but $v$ vanishes there, so $c$ must be
+    zero, and so $v\equiv 0$ as required.
+    \amarks{7}
+  \end{Part}
+  \begin{Part}{b}\simseen
+    To each vertex we associate the nodal variable corresponding to
+    point evaluation at that vertex. To each edge we associate the nodal
+    variable corresponding to point evaluation at the centre of that edge.
+
+    To check it is $C^0$, we need to check that we can (a) recover the
+    value of the function at each vertex using nodal variables from
+    that vertex, and (b) recover the value of the function at each
+    edge using nodal variables from the closure of that edge.  Showing
+    (a) is immediate. For (b), on the closure of each edge we have two
+    vertex values and an edge value. That is enough to recover the
+    value of the quadratic function restricted to the edge.
+    \amarks{7}
+  \end{Part}
+  \begin{Part}{c}\unseen
+    To give a counter example, consider the unit square subdivided into
+    two triangles by the diagonal line $x=y$. We consider the finite
+    element function equal to $x-y$ in the top-left triangle, and
+    equal to zero in the bottom right. This is a piecewise polynomial
+    of degree at most 2 (even though it is only degree 1). The derivative
+    is equal to $(1,-1)$ in the top-left and $(0,0)$ in the bottom right,
+    and hence it is discontinuous. Hence, the function is only in $C^0$
+    and not in $C^1$, as required.
+    \amarks{6}
+  \end{Part}
+\end{Question}
+\EndPage
+
+\begin{Question}{2}
+  \begin{Part}{a}\simseen
+    Multiplication by test function, and integration by parts gives
+    \begin{equation}
+      \int_{\Omega} \epsilon uv + \nabla u \cdot \nabla v \diff x
+      - \int_{\partial\Omega} v\pp{u}{n}\diff S
+      = \int_{\Omega}v\exp(xy)\diff x.
+    \end{equation}
+    Then, application of the boundary condition leads to the
+    variational problem: find $u\in V$ such that
+    \begin{equation}
+      a(u,v) := \int_{\Omega} \epsilon uv + \nabla u \cdot \nabla v \diff x
+      = F(v) := \int_{\Omega}v\exp(xy)\diff x, \quad \forall v \in V,
+    \end{equation}
+    where $V\subset H^1$ is a continuous finite element space.
+    \amarks{6}
+  \end{Part}
+  \begin{Part}{b}\simseen
+    The Schwarz inequality gives
+    \begin{align}
+      a(u,v) \leq & \epsilon \|u\|_{L^2}\|v\|_{L^2} + |u|_{H^1}|v|_{H^1}, \\
+      \leq & \|u\|_{L^2}\|v\|_{L^2} + |u|_{H^1}|v|_{H^1}, \\
+      \leq & 2\|u\|_{H^1}\|v\|_{H^1},
+    \end{align}
+    so the continuity constant is bounded above by 2 (it is actually
+    1 from Young's inequality), but we don't require sharper estimates
+    here.
+
+    For coercivity,
+    \begin{equation}
+      u(v,v) = \epsilon \|v\|_{L^2}^2 + |v|_{H^1}^2
+      \geq \epsilon\|v\|_{H^1}^2,
+    \end{equation}
+    so the continuity constant is $\epsilon$.
+    \amarks{6}
+  \end{Part}
+  \begin{Part}{c}\unseen
+    Combining Ce\'a's lemma and the interpolation error
+    estimate, we get
+    \begin{equation}
+      \|u-u_h\|_{H^1}\leq \frac{2}{\epsilon}h\|u\|_{H^1}.
+    \end{equation}
+    As $\epsilon\to 0$, the error estimate becomes unbounded.
+    \bmarks{8}
+  \end{Part}
+\end{Question}
+\EndPage
+
+%%%%%%%%%%%%%%%%%%%%%%%
+\begin{Question}{3}
+  \begin{Part}{a}\unseen
+    We work with the geometric decomposition, assigning
+    the two tangential components on each edge to that edge.
+    Then, we require that neighbouring cells have the same
+    nodal variable values from that edge (taking care
+    of orientation). Since the tangential component of the
+    function is a linear scalar function restricted to the edge,
+    and the nodal variables give two values of that function on the
+    edge, the tangential component is determined from those values
+    and will be continuous across the edge.
+    \cmarks{6}
+  \end{Part}
+  \begin{Part}{b}\unseen
+    If we have $\phi\in P_2$, then $\phi$ is continuous across an edge.
+    Therefore the tangential component of the derivative is the same
+    on either side of the edge. Further, the derivative is a linear
+    vector field, so $\nabla\phi\in V$.
+    \dmarks{8}
+  \end{Part}
+  \begin{Part}{c}\simseen
+    For $u\in V$, the weak curl is $Du\in L^2$ such that
+    \begin{equation}
+      Du|_K = \nabla^{\perp}\cdot u|_K,
+    \end{equation}
+    for each triangle $K$ in the mesh. To check that this is indeed
+    the weak curl, take a $C^\infty_0$ function (infinitely
+    differentiable and all derivatives vanish on the boundary) $\phi$,
+    and compute
+    \begin{align}
+      -\int_\Omega \phi Du \diff x & = -\sum_K \int_K
+      \phi Du \diff x, \\
+      & = \sum_K \int_K \phi \nabla^\perp\cdot u \diff x
+      - \sum_K \int_{\partial K} \phi u\cdot n_K^\perp \diff S, \\
+     & = \int_\Omega \phi \nabla^\perp\cdot u \diff x
+      - \sum_K \int_{\partial K} \phi (u^+\cdot (n^+)^{\perp} + u^-\cdot (n^-)^{\perp}) \diff S, \\
+      & = \int_\Omega \phi \nabla^\perp\cdot u \diff x
+      - \int_{\partial \Omega} \underbrace{\phi=0}
+      (u^+\cdot (n^+)^{\perp} + u^-\cdot (n^-)^{\perp}) \diff S, \\
+      - \int_{\Gamma} \phi \underbrace{(u^+\cdot (n^+)^{\perp} + u^-\cdot (n^-)^{\perp})}_{=0} \diff S, \\
+      & = \int_\Omega \phi \nabla^\perp\cdot u \diff x,
+    \end{align}
+    where $n_K$ is the outward pointing normal to each triangle $K$,
+    and the facet integrals vanish due to continuity of the tangential
+    component. This matches the definition of the weak curl.
+    \cmarks{6}
+  \end{Part}
+\end{Question}
+
+\EndPage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{Question}{4}
+  \begin{Part}{a}\unseen
+    We have
+    \begin{align}
+      \nonumber
+    \int_\Omega u^{k+1}v + \nabla u^{k+1} \cdot \nabla v \diff x = & 
+    \int_\Omega u^{k}v + \nabla u^{k} \cdot \nabla v \diff x \\
+& \qquad    + \mu\left(
+    G[v] -
+    \int_\Omega a(x) u^kv + b(x)\nabla u^k \cdot \nabla v \diff x\right)
+    , \quad
+    \forall v \in V,
+    \end{align}
+    Assuming that the limit exists, we take the limit,
+    and get
+        \begin{align}
+      \nonumber
+    \int_\Omega u^*v + \nabla u^* \cdot \nabla v \diff x = & 
+    \int_\Omega u^*v + \nabla u^* \cdot \nabla v \diff x \\
+& \qquad    + \mu\left(
+    G[v] -
+    \int_\Omega a(x) u^*v + b(x)\nabla u^* \cdot \nabla v \diff x\right)
+    , \quad
+    \forall v \in V,
+        \end{align}
+        which reduces to
+        \begin{equation}
+          \mu\left(
+          G[v] -
+          \int_\Omega a(x) u^*v + b(x)\nabla u^* \cdot \nabla v \diff x\right)
+          =0, \quad
+          \forall v \in V,
+        \end{equation}
+        which implies $u^*$ solves our equation for $\mu>0$.
+  \bmarks{6}
+  \end{Part}
+  \begin{Part}{b}\unseen
+  First we use that
+          \begin{equation}
+          G[v] =
+          \int_\Omega a(x) uv + b(x)\nabla u \cdot \nabla v \diff x
+          , \quad
+          \forall v \in V,
+          \end{equation}
+          so
+          \begin{align}
+            \begin{split}
+            \mu\left(
+            G[v] -
+            \int_\Omega a(x) u^{k}v + b(x)\nabla u^k\cdot \nabla v \diff x\right) \\
+            =
+            \mu\left(
+            \int_\Omega a(x) uv + b(x)\nabla u\cdot \nabla v \diff x      
+            -\int_\Omega a(x) u^{k}v + b(x)\nabla u^k\cdot \nabla v \diff x\right) \\
+            =
+            \mu\left(
+            \int_\Omega a(x) (u-u^k)v + b(x)\nabla (u-u^k)\cdot \nabla v \diff x\right)
+            , \quad
+            \forall v \in V.
+            \end{split}
+          \end{align}
+          Then we get
+          \begin{equation}
+    \int_\Omega \epsilon^{k+1}v + \nabla \epsilon^{k+1} \cdot \nabla v \diff x = 
+\mu
+\int_\Omega a(x) \epsilon^kv + b(x)\nabla \epsilon^k \cdot \nabla v \diff x
+    , \quad
+\forall v \in V.
+\label{eq:error}
+          \end{equation}
+  \bmarks{6}
+\end{Part}
+  \begin{Part}{c}\unseen
+    Equation \eqref{eq:error} is of the form $a(u,v) = F(v)$,
+    with
+    \begin{equation}
+      a(u,v) = \int_\Omega uv + \nabla u\cdot\nabla v \diff x,
+      \quad F(v) = \mu\int_\Omega a(x)\epsilon^k v + b(x)\nabla\epsilon^k
+      \cdot \nabla v \diff x.
+    \end{equation}
+    In this case, $a(\cdot,\cdot)$ \emph{is} the $H^1$ inner product,
+    so the continuity and coercivity constants are both 1.
+    We have
+    \begin{equation}
+      |F(v)| \leq \mu\beta \|\epsilon^k\|_{L^2}\|v\|_{L^2}
+      + \mu\beta |\epsilon^k|_{H^1}|v|_{L^2}
+      \leq 2\mu\beta\|\epsilon^k\|_{H^1}\|v\|_{H^1},
+    \end{equation}
+    (sharper estimates are possible but the question doesn't require them).
+    Hence, from Lax-Milgram, we have
+    \begin{equation}
+      \|\epsilon^{k+1}\|_{H^1} < 2\mu\beta x\|\epsilon^k\|_{H^1},
+    \end{equation}
+    and so the norm of the error is guaranteed to reduce if $0<\mu<1/(2\beta)$.
+  \dmarks{8}
+\end{Part}
+\end{Question}
+	
+
+
+\EndPage
+
+%%%%%%%%%%%%%%%%%%%%%%%
+\begin{Question}{5}
+  \begin{Part}{a}\unseen
+    \begin{equation}
+      (B^*p)[v] = (Bv)[p] = b(v,p).
+    \end{equation}
+    \mmarks{6}
+  \end{Part}
+  \begin{Part}{b}\seen
+    We have
+    \begin{equation}
+      \|B^*p\|_{V'} = \sup_{0\neq v\in V}\frac{(B^*p)[v]}{\|v\|_V}
+      = \sup_{0\neq v\in V}\frac{b(v,p)}{\|v\|_V} \geq \beta\|p\|_Q,
+    \end{equation}
+    by the inf-sup condition. Assume
+    that there exists $p,q$ such that $B^*p=B^*q$. Linearity means that
+    $B^*(p-q)=0$. Then,
+    \begin{equation}
+      0 = \|B^*(p-q)\|_{V'} \geq \beta\|p-q\|_Q \implies p=q.
+    \end{equation}
+    Hence $B^*$ maps each element of $Q$ to a different element of $V'$,
+    i.e. it is injective.
+        \mmarks{7}
+  \end{Part}
+  \begin{Part}{c}
+    $\tilde{\nabla}$ corresponds to the operator $B^*$, followed by
+    the Riesz map back into $V$. Since $B^*$ is injective, and the Riesz
+    map is invertible, therefore $\tilde{\nabla}$ is also injective.
+    \mmarks{7}
+  \end{Part}
+\end{Question}
+
+\EndPage
+{\bf Review of mark distribution:}\\ 
+\totamarks\\
+ \totbmarks\\
+ \totcmarks\\
+ \totdmarks\\
+  \totmarks
+  \\  \totMmarks %Include Mastery marks
+ \label{pagetot}
+\EndPage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+
+
+
+

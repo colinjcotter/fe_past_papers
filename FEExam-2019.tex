@@ -1,0 +1,709 @@
+
+\documentclass[12pt]{article}
+
+\usepackage{graphicx,amssymb,amsmath,nicefrac,ifthen,calc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Fill in the following details  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\coursenum}{M3A47, M4A47, M5A47} %{e.g: M1S, or: M3S14/M4S14/M5S15 for multiple year courses}
+\newcommand{\coursename}{Finite elements: analysis and implementation} %{e.g: Probability and Statistics} 
+\newcommand{\setter}{Cotter}     % Insert surname of exam setter 
+\newcommand{\checker}{Ham} % Insert surname of exam checker 
+\newcommand{\editor}{Walton} % Insert surname of exam editor
+\newcommand{\external}{external} % Insert surname of external examiner
+\newboolean{tables}
+\setboolean{tables}{false} %set to true if statistical tables are provided and attach require tables
+
+% Choose an option for time allowed and number of questions %
+
+\newcommand{\examlength}%Uncomment one of the following 3 options, or adjust.
+%{2~Hours}
+%{2.5~Hours}
+{2 Hours for M3 paper; 2.5 Hours for M4/5 paper}
+
+\newcommand{\numQ}%Uncomment one of the following 3 options, or adjust.
+%{4~Questions}
+%{5~Questions}
+{4~Questions (M3 version); 5~Questions (M4/5~version)}
+
+\newcommand{\version}% Uncomment one of the following, or adjust
+{Draft version for checking}
+%{Version for External Examiner}
+%{Final version}
+
+
+\newcommand{\suitability}% Uncomment one of the options below
+{Is the paper suitable for resitting students from previous years:
+  Yes (they will need notification that the format has changed from
+  4 to 5 questions as we previously had no mastery question as only
+  offered to 4th years/MSc/MRes)
+%No (provide details)
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%The following details about the difficulty level of the questions must be completed; also include this information on your mark-scheme.
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\CatA}% Indicate, with marks, the most straightforward 40 percent of the marks available in the non-mastery questions
+{1(a) 10 marks; 2(a) 10 marks; 2(b) 10 marks. (total 30)}
+\newcommand{\CatB}% Indicate the next most challenging 25 percent of the marks in the non-mastery questions
+{1(b) 3 marks; 1(c,i)  2 marks;  3(a) 10 marks;  4(b) 5 marks. (total 20)}
+\newcommand{\CatC}%Indicate the next most challenging 15 percent of the marks in the non-mastery questions
+{3(b) 10 marks; 4(a) 5 marks (total 15)}
+\newcommand{\CatD}% Indicate the most challenging 20 percent of marks on the paper in the non-mastery questions
+{1(c,ii) 5 marks; 4(c) 5 marks; 4(d) 5 marks. (total 15)
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Insert your macros %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\seen}{{\bfseries SEEN\\}}
+\newcommand{\similar}{{\bfseries SEEN SIMILAR\\}}
+\newcommand{\unseen}{{\bfseries UNSEEN\\}}
+\newcommand{\exammarks}[1]{\begin{flushright}[#1 marks]\end{flushright}}%
+\newcommand{\pp}[2]{\frac{\partial #1}{\partial #2}} 
+\newcommand{\dede}[2]{\frac{\delta #1}{\delta #2}}
+\newcommand{\dd}[2]{\frac{\diff#1}{\diff#2}}
+\newcommand{\dt}[1]{\diff\!#1}
+\def\MM#1{\boldsymbol{#1}}
+\DeclareMathOperator{\diff}{d}
+
+
+%uncomment \solnsfalse to remove solution set
+\newif\ifsolns
+%\solnstrue
+\solnsfalse
+\ifsolns
+% with solutions
+\usepackage{color}
+\newcommand{\soln}[1]{{\bfseries Solution:} {\itshape \color{blue} #1}}
+\else
+% without solutions
+\newcommand{\soln}[1]{}
+\fi
+
+
+% Go to `Exam text starts from here' below to type in your questions. %
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ignore the following details     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\examyear}{2019}
+\newcommand{\exammonth}{May -- June} 
+\newcommand{\examdate}{??} %{Tuesday, 26th May 2018} 
+\newcommand{\examtime}{??} %{09:30 -- 11:30} 
+\newboolean{onebook}
+\setboolean{onebook}{false} %set to true if all answers should be in one answer book
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pretolerance=100000
+\setlength{\topmargin}{-15mm}
+\setlength{\textheight}{245mm}
+\setlength{\textwidth}{178mm}
+\setlength{\oddsidemargin}{-10mm}
+\setlength{\evensidemargin}{-10mm}
+\setlength{\marginparwidth}{1cm}
+\setlength{\parskip}{1.1ex}
+\setlength{\parindent}{0ex}
+\renewcommand{\baselinestretch}{1.1}
+
+\pagestyle{empty}
+
+\newenvironment{Question}[1] 
+ {\begin{itemize} \item[\large #1.~~]}{\end{itemize} \medskip}
+ 
+\newcommand{\EndPage}{
+	\vfill \coursenum ~ \coursename ~
+	(\examyear) \hfill Page \thepage \newpage
+	}
+
+%\newcommand{\ICLOGO}{
+%	\begin{minipage}{0.7\textwidth}
+%  \includegraphics[height= 1.4cm]{imperial.pdf} 
+%  \end{minipage}\hfill \parbox[r][1.4cm][t]{0.2\textwidth}{\hfill \coursenum} \par 
+%	}
+	
+\newcommand{\BeginParts}{\begin{itemize}} 
+\newcommand{\Part}[1]{\item [(#1)~~]} 
+\newcommand{\EndParts}{\end{itemize}} 
+
+%%%%
+% This requires imperial.pdf in the graphics input path eg 
+% h:/images/imperial.pdf 
+%%%% 
+
+\newcommand{\draft}{
+	\begin{flushleft} 
+	\begin{tabular}{ll}
+  Module:   & \coursenum\\ Setter:   & \setter \\
+  Checker:  & \checker \\  Editor:   & \editor \\
+  External: & \external \\ Date:     & \today\\
+  Version: & \version
+  \end{tabular} 
+  \end{flushleft} 
+  \vfill \par
+	}
+
+
+\newcommand{\fpagedraft}{  % FOR DRAFT FRONT PAGE with SIGS
+%	\ICLOGO
+	\begin{center} 
+	\draft
+	BSc, MSci and MSc EXAMINATIONS (MATHEMATICS) \par 
+	\exammonth~ \examyear 
+	
+	\medskip
+	
+	\large \coursenum \quad
+	\coursename 
+	\end{center}
+	\medskip
+	
+	\textit{The following information must be completed:}
+	
+	\medskip
+	
+	\textbf{\suitability}
+	
+	\medskip
+	
+	\textbf{Category A marks: available for basic, routine material (excluding any mastery question)\\(40 percent = 32/80 for 4 questions):}\newline
+	\CatA
+	
+	\medskip
+	
+	\textbf{Category B marks: Further 25 percent of marks (20/ 80 for  4 questions) for demonstration of a sound knowledge of a 
+	good part of the material and the solution of straightforward problems and examples with reasonable accuracy (excluding mastery question):} \newline
+	\CatB
+	
+	\medskip
+	
+	\textbf{Category C marks: the next 15 percent of the marks (= 12/80 for 4 questions)  for parts of questions at the high 2:1  or 1st class level:}\newline
+	\CatC
+	
+	\medskip
+	
+	\textbf{Category D marks: Most challenging 20 percent (16/80 marks for 4 questions) of the paper (excluding mastery question):}\newline
+	\CatD	
+	
+	
+	
+	 \vfill \par \normalsize
+	 
+	
+	
+	\textit{Signatures are required for the final version:}
+		\sigs  \par \vfill 
+	\copyright ~\examyear~ Imperial College London
+	\hfill \coursenum \hfill Temporary cover page
+	\newpage
+	}
+
+
+	
+	
+\newcommand{\sigs}{ % Signatures
+	\vfill \par 
+  \fbox{\begin{minipage}{0.98\textwidth}{~ \\[4mm]
+  \hspace*{3mm} Setter's signature \hfill
+  Checker's signature \hfill
+  Editor's signature~~~~ \\[4mm]
+  \hspace*{3mm} \dotfill \hfill \dotfill \hfill \dotfill ~~~~
+  \\[2mm] ~} \end{minipage}}
+	}
+	
+
+
+	
+\newcommand{\fpage}{ % FRONT PAGE 
+%	\ICLOGO
+%  
+\newlength{\myl}
+\settowidth{\myl}{\sc Temporary front page}
+\newlength{\myll}
+\setlength{\myll}{\textwidth - \myl}
+\begin{center}
+ \large{\sc \rule[4pt]{0.45\myll}{0.5pt}~Temporary front page~\rule[4pt]{0.45\myll}{0.5pt}}
+ \end{center}
+ %
+ \bigskip
+  \begin{center}
+  BSc, MSc and MSci EXAMINATIONS (MATHEMATICS) \par
+  \exammonth~ \examyear \bigskip \par
+  This paper is also taken for the relevant examination
+  for the Associateship of the \\ Royal College of Science. 
+	\end{center}
+	\begin{center}
+	\coursename
+	\end{center}
+	\renewcommand{\arraystretch}{1.3}
+	\vfill \par
+	\fbox{\parbox{\textwidth}{
+	\begin{tabular}{l}
+	Date: \examdate \\ 
+	Time: \examtime \\
+	Time Allowed: \examlength \\
+	This paper has {\em \numQ}. \\
+	\ifthenelse{\boolean{onebook}}
+	{Candidates should use ONE main answer book.}
+	{Candidates should start their solutions to each question in a new main answer book.}\\
+	%Candidates should use ONE main answer book.\\
+	Supplementary books may only be used after the relevant main book(s) are full. \\
+	\ifthenelse{\boolean{tables}}{Statistical tables are provided.}{Statistical tables will not be provided.}\\
+	\end{tabular}}}
+	\renewcommand{\arraystretch}{1.5}
+	\begin{itemize}
+	\item DO NOT OPEN THIS PAPER UNTIL THE INVIGILATOR TELLS YOU TO.
+	\item Affix one of the labels provided to each answer book that you use, 
+	but DO NOT USE THE LABEL WITH YOUR NAME ON IT.
+	\item	Credit will be given for all questions attempted.
+	\item Each question carries equal weight.
+	\item Calculators may not be used.
+	\end{itemize}
+	\vfill 
+	\copyright ~\examyear~ Imperial College London
+	\hfill \coursenum \hfill Page 1 of \pageref{ptotal}
+	\newpage
+	}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Exam text starts from here
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% use \begin{Question}{1} ... \end{Question} and
+%     \BeginParts \Part{a} \EndParts
+%
+% manually put in \EndPage at the end of every page for the correct footers.
+
+\begin{document}
+\sffamily
+\fpagedraft % this produces the signature page 
+\setcounter{page}{1}
+\fpage % this produces the front page with rubric
+
+\begin{Question}{1}
+This question is about the equation  
+\begin{equation}
+  \label{eq:Poisson}
+  -\nabla^2 u = f \mbox{ on }\Omega, \quad
+  \pp{u}{n} = 0 \mbox{ on }\partial\Omega,
+\end{equation}
+where $\Omega$ is a polygonal domain with boundary $\partial\Omega$.
+\BeginParts
+\Part{a} Let $V$ be a continuous Lagrange finite element space
+defined on a triangulation of $\Omega$.
+Describe how the finite element discretisation
+of \eqref{eq:Poisson} using $V$
+results in a matrix-vector equation
+\begin{equation}
+  \label{eq:Ax=b}
+  A\MM{u} = \MM{b}.
+\end{equation}
+\exammarks{10}
+\soln{\seen
+  First we develop the weak form by multiplying by a test function $v$,
+  integrating by parts and removing the boundary integral due the Neumann
+  boundary condition. The finite element discretisation is then:
+  find $u\in V$ such that
+  \[
+    \int_{\Omega} \nabla v\cdot \nabla u \diff x
+    - \int_{\Omega} vf \diff x = 0, \quad \forall v \in V.
+  \]
+  Let $\{\phi_i(x)\}_{i=1}^N$ be the nodal basis for $V$. Then expansion
+  of $v$ and $u$ in the basis leads to
+  \[
+  \sum_{i=1}^N v_i
+  \left(\sum_{j=1}^N\int_{\Omega} \phi_i(x)\phi_j(x) \diff x u_j
+  - \int_{\Omega} \phi_i(x) f \diff x\right)= 0,
+  \]
+  but the $v$ coefficients are arbitrary, so we have \eqref{eq:Ax=b}
+  with
+  \[
+  A_{ij} = \int_{\Omega} \nabla\phi_i\cdot\nabla \phi_j \diff x,\,
+  x_i = u_i, \\
+  b_i = \int_{\Omega}\phi_i f \diff x .
+  \]
+  }
+\Part{b}
+\BeginParts
+\Part{i}
+Show that the matrix $A$ satisfies
+\begin{equation}
+  \label{eq:A1=0}
+  A\MM{1} = \MM{0},
+\end{equation}
+where $\MM{1}$ is the vector with all entries equal to 1, and
+$\MM{0}$ is the zero vector.
+\exammarks{2}
+\soln{\unseen
+  \[
+  (A\MM{1})_i = \int_{\Omega} \nabla\phi_i(x)\sum_{j=1}^N
+  \nabla\phi_j(x).1\diff x = \int_\Omega \nabla\phi_i(x)
+  \underbrace{\nabla(1)}_{=0}\diff x = 0.
+  \]
+  }
+\Part{ii}
+Explain why this means that $A$ is not invertible.
+\exammarks{1}
+\soln{\unseen
+  $A$ is not invertible because it has a zero eigenvalue i.e. a nullspace.
+}
+\EndParts
+\Part{c}
+\BeginParts
+\Part{i}
+Describe how to add an extra condition to Equation \ref{eq:Poisson},
+and correspondingly to your finite element formulation, so that this
+issue is removed.  \exammarks{2}
+\soln{\seen We add an extra
+  condition, that
+  \[
+  \bar{u} = \int_{\Omega} u \diff x = 0.
+  \]
+  Then, we replace $V$ with $\mathring{V}$ which is the subspace
+  of $V$ such that $\bar{u}=0$ for all $u\in V$.
+  }
+\Part{ii}
+Using the ``mean estimate'',
+\[
+  \|u-\bar{u}\|_{L^2(\Omega)} \leq C |u|_{H^1(\Omega)},
+\]
+where $u\in V$ and $\bar{u}$ is the mean value of $u$, explain why
+Equation \eqref{eq:A1=0} cannot hold after modification.
+\exammarks{5}
+\soln{\unseen Let
+  $A$ be the new matrix after reformulating with $\mathring{V}$
+  instead of $V$, under some basis.  By contradiction: let $\MM{x}_0$
+  be a non-zero vector such that $A\MM{X}_0=\MM{0}$.  Then there
+  exists a corresponding non-zero $u\in \mathring{V}$ such that
+  \[
+  \int_{\Omega} \nabla v \cdot \nabla u\diff x = 0, \quad
+  \forall v \in V.
+  \]
+  Taking $v=u$, we have
+  \[
+  0 = \int_{\Omega} |\nabla u|^2 \diff x := |u|^2_{H^1(\Omega)}.
+  \]
+  Since $u$ is non-zero, we have $\|u\|_{L^2} > 0$. Since
+  $u \in \mathring{V}$, we have $\bar{u}=0$. Hence we have
+  \[
+  \|u-\bar{u}\|_{L^2(\Omega)} = \|u\|_{L^2(\Omega)} > 0.
+  \]
+  This contradicts the mean estimate.
+  }
+\EndParts
+\EndParts
+\end{Question}
+\EndPage
+
+\begin{Question}{2}
+  \BeginParts
+  \Part{a}
+  Consider the finite element $(K,P,N)$, where
+  \begin{itemize}
+  \item $K$ is a triangle with vertices $(z_1,z_2,z_3)$.
+  \item $P$ is the space of polynomials of degree 1 or less,
+  \item $N=(N_1,N_2,N_3)$, where $N_i(p)=p(z_i)$, $i=1,2,3$.
+  \end{itemize}
+  Show that $N$ determines $P$. \exammarks{10}
+        \soln{\seen We make use of the result
+      that if $p(x)$ is a degree $k$ polynomial that vanishes on the
+      line defined by $L(x)=0$ and $L$ is a non-degenerate affine
+      polynomial, then $p(x)=L(x)q(x)$ where $q$ is a polynomial of
+      degree $k-1$. \\ Let $p \in P$ such that $N_i(p)=0$,
+      $i=1,2,3$. Let $L_1$ be a non-degenerate affine polynomial
+      that vanishes on the line joining $z_1$ and $z_2$. Then
+      the restriction of $p$ to $L_1$ vanishes at 2 points and therefore
+      is zero everywhere on $L_1$ by the fundamental theorem of algebra.
+      Thus $p(x)=L_1(x)q(x)$ where $q$ is a degree 0 polynomial, i.e.
+      $p(x) = cL_1(x)$. We also have that $p(z_3)=0$, and $L_1(x)$
+      does not vanish at $z_3$, so $c=0$ i.e. $p=0$ everywhere, hence
+      $N$ determines $P$.
+    }
+
+    \Part{a}
+  Consider the finite element $(K',Q,N')$, where
+  \begin{itemize}
+  \item $K'$ is a square with vertices $(z_1,z_2,z_3,z_4)$ (enumerated
+    clockwise around the square, starting at the bottom left).
+  \item $Q=\mbox{Span}\{P,xy\}$, where $P$ is the space of polynomials
+    of degree 1 or less.
+  \item $N'=(N_1,N_2,N_3,N_4)$, where $N_i(p)=p(z_i)$, $i=1,2,3,4$.
+  \end{itemize}
+  Show that $N'$ determines $Q$.
+\exammarks{10}
+  \soln{\similar We make use of the result
+    that if $p(x)$ is a degree $k$ polynomial that vanishes on the
+    line defined by $L(x)=0$ and $L$ is a non-degenerate affine
+    polynomial, then $p(x)=L(x)q(x)$ where $q$ is a polynomial of
+    degree $k-1$. \\ Let $p \in P$ such that $N_i(p)=0$,
+    $i=1,2,3,4$. Let $L_1$ be a non-degenerate affine polynomial that
+    vanishes on the line joining $z_1$ and $z_2$. Restricted to $L_1$,
+    $p$ is a degree 1 polynomial, since all elements of $R$ are
+    constant on $L_1$. Hence, $p(x) = L_1(x)q_1(x)$, where $q_1(x)$
+    has degree 1. Similarly, let $L_2$ be the non-degenerate affine
+    polynomials vanishing on the line joining $z_2$ and $z_3$. The
+    restriction of $q_1$ to that line vanishes at two points and is
+    therefore equal to zero everywhere on that line, and hence
+    $p(x)=cL_1(x)L_2(x)$. However, $p(z_4)=0$, so $c=0$ i.e. $p:=0$
+    i.e. $Q$ determines $N'$.}
+  \EndParts
+\end{Question}
+\EndPage
+
+\begin{Question}{3}
+  Consider the interval $[a,b]$, with points
+  $a=x_0,x_1,x_2,\ldots,x_{n-1}, x_n=b$.  Let $\mathcal{T}$ be a
+  subdivision (i.e. a 1D mesh) of the interval $[a,b]$ into
+  subintervals $I_k=[x_k,x_{k+1}]$, $k=0,\ldots,N-1$.\\
+  Consider the following three elements.
+  \begin{enumerate}
+  \item $(K,P,N)$ where $K=I_k$, $P$ are polynomials of degree $\leq
+    3$, and $N=(N_1,N_2,N_3,N_4)$ with $N_1[u]=u(x_k)$, $N_2[u]=u(x_{k+1})$,
+    $N_3[u]=\int_{x_k}^{x_{k+1}} u \diff x$,
+    $N_4[u]=u'((x_{k+1}+x_k)/2)$.
+  \item $(K,P,N)$ where $K=I_k$, $P$ are polynomials of degree $\leq
+    3$, and $N=(N_1,N_2,N_3,N_4)$ with $N_1[u]=u(x_k)$, $N_2[u]=u(x_{k+1})$,
+    $N_3[u]=u'(x_k)$, $N_4[u]=u'(x_{k+1})$.
+  \item $(K,P,N)$ where $K=I_k$, $P$ are polynomials of degree $\leq
+    3$, and $N=(N_1,N_2,N_3,N_4)$ with $N_1[u]=u((x_{k+1}+x_k)/2)$,
+    $N_2[u]=u'((x_{k+1}+x_k)/2)$, $N_3[u]=u''((x_{k+1}+x_k)/2)$,
+    $N_4[u]=u'''((x_{k+1}+x_k)/2)$.
+  \end{enumerate}
+  \BeginParts
+  \Part{a} Which of the three elements above are suitable
+  for the following variational problem?\\
+  Find $u\in H^1([a,b])$ such that
+  \[
+    \int_a^b uv + u'v'\diff x = \int_a^b fv \diff x, \quad \forall v \in
+    H^1([a,b]).
+  \]
+  Justify your answer.
+  \exammarks{10}
+  \soln{\similar
+    This equation requires the finite element space to be in
+    $H^1([a,b])$ which requires $C^0$ finite elements. Elements 1 and
+    2 can be used to make $C^0$ elements, because you can assign
+    $N_1$ and $N_2$ to vertices $a$ and $b$ respectively in both cases,
+    so vertex-assigned nodal variables determine the value of the function
+    there. Element 3 cannot be used, as there is no $C^1$ geometric
+    decomposition for it (all four
+    nodal variables to determine values at $a$ and $b$ in both cases).
+  }
+  \Part{b}  Which of the three elements above are suitable
+  for the following variational problem?\\
+  Find $u\in H^2([a,b])$ such that
+  \[
+    \int_a^b uv + u'v' + u''v''\diff x
+    = \int_a^b fv \diff x, \quad \forall v \in
+    H^2([a,b]).
+  \]
+  Justify your answer.  \exammarks{10} \soln{\similar This equation requires the finite
+    element space to be in $H^2([a,b])$ which requires $C^1$ finite
+    elements. Element 2 can be used to make $C^1$ elements, because
+    you can assign $N_1, N_3$ and $N_2,N_4$ to vertices $a$ and $b$
+    respectively in both cases, so vertex-assigned nodal variables
+    determine the value of the function and the derivative
+    there.\\ Elements 1 and 3 cannot be used because the value of the
+    derivatives at $a$ and $b$ require three nodal variables for each, so
+    a $C^1$ geometric decomposition is not possible.
+  } \EndParts
+\end{Question}
+\EndPage
+
+\begin{Question}{4}
+  \BeginParts
+  \Part{a}  For $f \in L^2(\Omega)$, where $\Omega$ is some convex
+  polygonal domain, the $L^2$ projection of $f$ into a degree $k$
+  Lagrange finite element space $V$ is the function $u \in V$ such
+  that
+  \[
+  \int_\Omega uv \diff x = \int_\Omega vf \diff x, \quad \forall
+  v \in V.
+  \]
+  Show that $u$ exists and is unique from this definition, with
+  \[
+  \|u\|_{L^2} \leq \|f\|_{L^2}.
+  \]
+  \exammarks{5}
+  \soln{\similar
+    This variational problem has a bilinear form which is just the
+    $L^2$ inner product. Hence it is trivially continuous and coercive
+    with scaling constants equal to 1. From the Lax-Milgram theorem,
+    the solution exists and is unique. Taking $v=u$, we have
+    \[
+    \|u\|_{L^2}^2 = \langle u, f \rangle_{L^2} \leq \|u\|_{L^2}\|f\|_{L^2},
+    \]
+    from Cauchy-Schwarz, and dividing both sides by $\|u\|_{L^2}$
+    gives the result.
+  }
+  \Part{b} Show that the $L^2$ projection is mean-preserving, i.e.
+  \[
+  \int_{\Omega} u \diff x = \int_{\Omega} f \diff x.
+  \]
+  \exammarks{5}
+  \soln{\unseen
+    Since $V$ is a Lagrange finite element space of degree $k$, it contains
+    the function $v=1$, from which we obtain the result.
+  }
+  \Part{c} Show that the $L^2$ projection $u$ into $V$ of $f$ is the
+  minimiser over $v \in V$ of the functional
+  \[
+  J[v] = \int_{\Omega} (v-f)^2 \diff x.
+  \]
+  \exammarks{5}
+  \soln{\unseen
+    Method 1: solve by computing variational derivative,
+    \[
+    \delta J[v; \delta v] = 2\int_\Omega \delta v(v-f)\diff x = 0,
+    \quad \forall \delta v \in V,
+    \]
+    which gives $v=u$.\\
+    Method 2: by contradiction. If $u$ is not the minimiser, then
+    there exists $v\in V$ with
+    $J[v] \leq J[u]$.
+    Then
+    \begin{align*}
+      J[v] = \int_\Omega (v-f)^2 \diff x &
+      = \int_\Omega ((v-u) + (u-f))^2 \diff x,\\
+      & = \int_\Omega (v-u)^2\diff x + \underbrace{\int_\Omega 2(v-u)(u-f)
+        \diff x}_{=0\mbox{ by defn of }u} + \int_\Omega (u-f)^2\diff x,\\
+      & = \|v-u\|^2_{L^2} + J[u],
+    \end{align*}
+    and we conclude that $\|v-u\|^2_{L^2} \leq 0$, 
+    a contradiction.
+  }
+  \Part{d} Hence, show that
+  \[
+  \|u-f\|_{L^2(\Omega)} < Ch |f|_{H^1(\Omega)},
+  \]
+  where $h$ is the maximum triangle diameter in the triangulation used
+  to construct $V$.
+  \exammarks{5}
+  \soln{\similar
+    Since $u$ minimises the functional $J$, we have
+    \begin{align*}
+      \|u-f\|_{L^2(\Omega)} & = \sup_{\|v\|_{L^2(\Omega)}>0}
+      \|v-f\|_{L^2(\Omega)}, \\
+      & \leq \|I_hf -f\|_{L^2(\Omega)}, \\
+      & \leq Ch|f|_{H^1(\Omega)},
+    \end{align*}
+    where $I_h$ is the nodal interpolation operator into $V$, and
+    we used  the standard approximation result for $I_h$.
+  }
+  \EndParts
+\end{Question}
+
+%% If you have a Mastery Question, then this should be included as an additional question 
+%% on a new page. Otherwise, comment out the following three lines:
+ \EndPage
+ 
+\begin{Question}{5 (Mastery)} 
+  We quote the following result from lectures.  Let $K_1$ be a
+  triangle with diameter $1$, containing a ball $B$. There exists a
+  constant $C$ such that for $0\leq |\beta| \leq k+1$ and all $f \in
+  H^{k+1}(\Omega)$,
+  \begin{equation}
+    \label{eq:bh}
+\|D^\beta(f-Q_{k,B}f)\|_{L^2(K_1)} \leq C\|\nabla^{k+1}f\|_{L^2(K_1)},
+\end{equation}
+where $Q_{k,B}$ is the degree-$k$ ball-averaged Taylor polynomial of $f$.
+\BeginParts
+\Part{a}
+Let $\mathcal{I}_{K_1}$ be the nodal interpolation operator on $K_1$
+for the Lagrange finite element of degree $k$. Using the following
+stability estimate
+\[
+  \|\mathcal{I}_Ku\|_{H^k(K_1)} \leq C\|u\|_{H^k(K_1)},
+\]
+when $k>1$,
+together with the estimate in Equation \eqref{eq:bh},
+show that when $i \leq k$, we have
+\[
+|\mathcal{I}_{K_1}u-u|_{H^i(K_1)} \leq C_1|u|_{H^{k+1}(K_1)}.
+\]
+  \exammarks{5}
+\soln{\seen
+  \begin{align*}
+  |\mathcal{I}_{K_1}u-u|_{H^i(K_1)}^2 &\leq \|\mathcal{I}_{K_1}u-u\|_{H^{k+1}(K_1)}^2 \\
+  & =
+  \|\mathcal{I}_{K_1}u-Q_{k,B}u + Q_{k,B}u - u\|_{H^{k+1}(K_1)}^2 \\
+  & \leq \|Q_{k,B}u-u\|_{H^{k+1}(K_1)}^2 + \|\mathcal{I}(u-Q_{k,B}u)\|_{H^{k+1}(K_1)}^2, \\
+  & \leq \|Q_{k,B}u-u\|_{H^{k+1}(K_1)}^2 + C^2\|Q_{k,B}u-u\|_{H^{k+1}(K_1)}^2, \\
+  & \leq (1+C^2)|u|_{H^{k+1}(K_1)}^2.
+\end{align*}
+}
+\Part{b}
+Let $K$ be a triangle with diameter $d$.
+When $k>1$ and $i \leq k$, show that
+\[
+|\mathcal{I}_{K}u-u|_{H^i(K)} \leq d^{k+1-i}C_1|u|_{H^{k+1}(K)},
+\]
+where $C_1$ is a constant that depends on the shape of $K$ but
+not the size.
+  \exammarks{5}
+\soln{\seen
+Consider the change of variables $x \to \phi(x)=x/d$. This map takes
+$K$ to $K_1$ with diameter 1. Then
+\begin{align*}
+\int_K |D^\beta(I_Ku-u)|^2 \diff x & = d^{-2|\beta|+1}\int_{K_1}|D^\beta(I_{K_1}
+u\circ \phi - u\circ \phi)|^2 \diff x, \\
+& \leq C_1^2d^{-2|\beta+1}\sum_{|\alpha|=k+1}\int_{K_1} |D^\alpha u\circ \phi|^2
+\diff x, \\
+& \leq C_1^2d^{-2|\beta+2(k+1)}\sum_{|\alpha|=k+1}\int_{K} |D^\alpha u|^2
+\diff x, \\
+& = C_1^2d^{2(-|\beta| + k + 1)}|u|^2_{H^{k+1}(K)},
+\end{align*}
+and taking the square root gives the result.
+}
+\Part{c} Let $\mathcal{T}$ be a triangulation such that the minimum aspect
+ratio $r$ of the triangles $K_i$ satisfies $r>0$. Let $V$ be the
+degree $k$ Lagrange finite element space.  Let $u\in H^{k+1}(\Omega)$.
+Let $h$ be the maximum over all of the triangle diameters, assuming that with $0\leq
+h<1$. Show that for $i\leq k$ and $i < 2$, the global interpolation
+operator satisfies
+\begin{equation}
+\|\mathcal{I}_{h}u-u\|_{H^i(\Omega)} \leq Ch^{k+1-i}|u|_{H^{k+1}(\Omega)}.
+\end{equation}
+  \exammarks{5}
+\soln{\seen
+  The Lagrange finite element space is $C^0$, so the first derivatives
+of $I_hu$ are defined in the finite element sense.
+Then we may write (for $i< 2$)
+\vspace{-3mm}
+\begin{align*}
+\|\mathcal{I}_{h}u-u\|_{H^i(\Omega)}^2 &=
+\sum_{K\in\mathcal{T}}\|\mathcal{I}_{K}u-u\|_{H^i(K)}^2,\\
+&\leq \sum_{K\in\mathcal{T}}C_Kd_K^{2(k+1-i)}|u|_{H^{k+1}(K)}^2,\\
+&\leq C_{\max}h^{2(k+1-i)}\sum_{K\in\mathcal{T}}|u|_{H^{k+1}(K)}^2,\\
+& = C_{\max}h^{2(k+1-i)}|u|_{H^{k+1}(\Omega)}^2,
+\end{align*}
+where the existence of the $C_{\max}=\max_KC_K<\infty$ is due to the
+lower bound in the aspect ratio.
+}
+\Part{d} 
+Why does this estimate not hold for $i \geq 2$?
+  \exammarks{5}
+\soln{\unseen
+  This is because the weak second derivatives of $I_hu$ are
+  not in $L^2(\Omega)$, we only have $I_hu\in H^1(\Omega)$.
+  }
+\EndParts
+\end{Question}
+
+\label{ptotal}
+\EndPage
+\end{document}

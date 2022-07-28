@@ -1,0 +1,739 @@
+
+\documentclass[12pt]{article}
+
+\usepackage{graphicx,amssymb,amsmath,nicefrac,ifthen,calc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Fill in the following details  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\coursenum}{M3A47, M4A47, M5A47} %{e.g: M1S, or: M3S14/M4S14/M5S15 for multiple year courses}
+\newcommand{\coursename}{Finite elements: analysis and implementation} %{e.g: Probability and Statistics} 
+\newcommand{\setter}{Cotter}     % Insert surname of exam setter 
+\newcommand{\checker}{Ham} % Insert surname of exam checker 
+\newcommand{\editor}{Wu} % Insert surname of exam editor
+\newcommand{\external}{external} % Insert surname of external examiner
+\newboolean{tables}
+\setboolean{tables}{false} %set to true if statistical tables are provided and attach require tables
+
+% Choose an option for time allowed and number of questions %
+
+\newcommand{\examlength}%Uncomment one of the following 3 options, or adjust.
+%{2~Hours}
+%{2.5~Hours}
+{2 Hours for M3 paper; 2.5 Hours for M4/5 paper}
+
+\newcommand{\numQ}%Uncomment one of the following 3 options, or adjust.
+%{4~Questions}
+%{5~Questions}
+{4~Questions (M3 version); 5~Questions (M4/5~version)}
+
+\newcommand{\version}% Uncomment one of the following, or adjust
+{Draft version for checking}
+%{Version for External Examiner}
+%{Final version}
+
+
+\newcommand{\suitability}% Uncomment one of the options below
+{Is the paper suitable for resitting students from previous years:
+Yes
+  %No (provide details)
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%The following details about the difficulty level of the questions must be completed; also include this information on your mark-scheme.
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\CatA}% Indicate, with marks, the most straightforward 40 percent of the marks available in the non-mastery questions
+{1a (5 marks), 2a (5 marks), 2b.i (5 marks), 2b.ii (5 marks), 3b (5 marks), 4a (5 marks) = 35 marks = 43.75\%}
+\newcommand{\CatB}% Indicate the next most challenging 25 percent of the marks in the non-mastery questions
+{1a 2b (8 marks), 4b+c (10 marks) = 18 marks = 22.5\%}
+\newcommand{\CatC}%Indicate the next most challenging 15 percent of the marks in the non-mastery questions
+{1b (10 marks), 2a (8 marks) = 18 marks = 22.5\%}
+\newcommand{\CatD}% Indicate the most challenging 20 percent of marks on the paper in the non-mastery questions
+{1c (5 marks), 4d (5 marks), 2c (4 marks) = 14 marks = 17.5\%}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Insert your macros %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\seen}{{\bfseries SEEN\\}}
+\newcommand{\similar}{{\bfseries SEEN SIMILAR\\}}
+\newcommand{\unseen}{{\bfseries UNSEEN\\}}
+\newcommand{\exammarks}[1]{\begin{flushright}[#1 marks]\end{flushright}}%
+\newcommand{\pp}[2]{\frac{\partial #1}{\partial #2}} 
+\newcommand{\dede}[2]{\frac{\delta #1}{\delta #2}}
+\newcommand{\dd}[2]{\frac{\diff#1}{\diff#2}}
+\newcommand{\dt}[1]{\diff\!#1}
+\def\MM#1{\boldsymbol{#1}}
+\DeclareMathOperator{\diff}{d}
+
+
+%uncomment \solnsfalse to remove solution set
+\newif\ifsolns
+%\solnstrue
+%\solnsfalse
+\input{flags}
+\ifsolns
+% with solutions
+\usepackage{color}
+\newcommand{\soln}[1]{{\bfseries Solution:} {\itshape \color{blue} #1}}
+\else
+% without solutions
+\newcommand{\soln}[1]{}
+\fi
+
+
+% Go to `Exam text starts from here' below to type in your questions. %
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ignore the following details     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\examyear}{2020}
+\newcommand{\exammonth}{May -- June} 
+\newcommand{\examdate}{??} %{Tuesday, 26th May 2018} 
+\newcommand{\examtime}{??} %{09:30 -- 11:30} 
+\newboolean{onebook}
+\setboolean{onebook}{false} %set to true if all answers should be in one answer book
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pretolerance=100000
+\setlength{\topmargin}{-15mm}
+\setlength{\textheight}{245mm}
+\setlength{\textwidth}{178mm}
+\setlength{\oddsidemargin}{-10mm}
+\setlength{\evensidemargin}{-10mm}
+\setlength{\marginparwidth}{1cm}
+\setlength{\parskip}{1.1ex}
+\setlength{\parindent}{0ex}
+\renewcommand{\baselinestretch}{1.1}
+
+\pagestyle{empty}
+
+\newenvironment{Question}[1] 
+ {\begin{itemize} \item[\large #1.~~]}{\end{itemize} \medskip}
+ 
+\newcommand{\EndPage}{
+	\vfill \coursenum ~ \coursename ~
+	(\examyear) \hfill Page \thepage \newpage
+	}
+
+%\newcommand{\ICLOGO}{
+%	\begin{minipage}{0.7\textwidth}
+%  \includegraphics[height= 1.4cm]{imperial.pdf} 
+%  \end{minipage}\hfill \parbox[r][1.4cm][t]{0.2\textwidth}{\hfill \coursenum} \par 
+%	}
+	
+\newcommand{\BeginParts}{\begin{itemize}} 
+\newcommand{\Part}[1]{\item [(#1)~~]} 
+\newcommand{\EndParts}{\end{itemize}} 
+
+%%%%
+% This requires imperial.pdf in the graphics input path eg 
+% h:/images/imperial.pdf 
+%%%% 
+
+\newcommand{\draft}{
+	\begin{flushleft} 
+	\begin{tabular}{ll}
+  Module:   & \coursenum\\ Setter:   & \setter \\
+  Checker:  & \checker \\  Editor:   & \editor \\
+  External: & \external \\ Date:     & \today\\
+  Version: & \version
+  \end{tabular} 
+  \end{flushleft} 
+  \vfill \par
+	}
+
+
+\newcommand{\fpagedraft}{  % FOR DRAFT FRONT PAGE with SIGS
+%	\ICLOGO
+	\begin{center} 
+	\draft
+	BSc, MSci and MSc EXAMINATIONS (MATHEMATICS) \par 
+	\exammonth~ \examyear 
+	
+	\medskip
+	
+	\large \coursenum \quad
+	\coursename 
+	\end{center}
+	\medskip
+	
+	\textit{The following information must be completed:}
+	
+	\medskip
+	
+	\textbf{\suitability}
+	
+	\medskip
+	
+	\textbf{Category A marks: available for basic, routine material (excluding any mastery question)\\(40 percent = 32/80 for 4 questions):}\newline
+	\CatA
+	
+	\medskip
+	
+	\textbf{Category B marks: Further 25 percent of marks (20/ 80 for  4 questions) for demonstration of a sound knowledge of a 
+	good part of the material and the solution of straightforward problems and examples with reasonable accuracy (excluding mastery question):} \newline
+	\CatB
+	
+	\medskip
+	
+	\textbf{Category C marks: the next 15 percent of the marks (= 12/80 for 4 questions)  for parts of questions at the high 2:1  or 1st class level:}\newline
+	\CatC
+	
+	\medskip
+	
+	\textbf{Category D marks: Most challenging 20 percent (16/80 marks for 4 questions) of the paper (excluding mastery question):}\newline
+	\CatD	
+	
+	
+	
+	 \vfill \par \normalsize
+	 
+	
+	
+	\textit{Signatures are required for the final version:}
+		\sigs  \par \vfill 
+	\copyright ~\examyear~ Imperial College London
+	\hfill \coursenum \hfill Temporary cover page
+	\newpage
+	}
+
+
+	
+	
+\newcommand{\sigs}{ % Signatures
+	\vfill \par 
+  \fbox{\begin{minipage}{0.98\textwidth}{~ \\[4mm]
+  \hspace*{3mm} Setter's signature \hfill
+  Checker's signature \hfill
+  Editor's signature~~~~ \\[4mm]
+  \hspace*{3mm} \dotfill \hfill \dotfill \hfill \dotfill ~~~~
+  \\[2mm] ~} \end{minipage}}
+	}
+	
+
+
+	
+\newcommand{\fpage}{ % FRONT PAGE 
+%	\ICLOGO
+%  
+\newlength{\myl}
+\settowidth{\myl}{\sc Temporary front page}
+\newlength{\myll}
+\setlength{\myll}{\textwidth - \myl}
+\begin{center}
+ \large{\sc \rule[4pt]{0.45\myll}{0.5pt}~Temporary front page~\rule[4pt]{0.45\myll}{0.5pt}}
+ \end{center}
+ %
+ \bigskip
+  \begin{center}
+  BSc, MSc and MSci EXAMINATIONS (MATHEMATICS) \par
+  \exammonth~ \examyear \bigskip \par
+  This paper is also taken for the relevant examination
+  for the Associateship of the \\ Royal College of Science. 
+	\end{center}
+	\begin{center}
+	\coursename
+	\end{center}
+	\renewcommand{\arraystretch}{1.3}
+	\vfill \par
+	\fbox{\parbox{\textwidth}{
+	\begin{tabular}{l}
+	Date: \examdate \\ 
+	Time: \examtime \\
+	Time Allowed: \examlength \\
+	This paper has {\em \numQ}. \\
+	\ifthenelse{\boolean{onebook}}
+	{Candidates should use ONE main answer book.}
+	{Candidates should start their solutions to each question in a new main answer book.}\\
+	%Candidates should use ONE main answer book.\\
+	Supplementary books may only be used after the relevant main book(s) are full. \\
+	\ifthenelse{\boolean{tables}}{Statistical tables are provided.}{Statistical tables will not be provided.}\\
+	\end{tabular}}}
+	\renewcommand{\arraystretch}{1.5}
+	\begin{itemize}
+	\item DO NOT OPEN THIS PAPER UNTIL THE INVIGILATOR TELLS YOU TO.
+	\item Affix one of the labels provided to each answer book that you use, 
+	but DO NOT USE THE LABEL WITH YOUR NAME ON IT.
+	\item	Credit will be given for all questions attempted.
+	\item Each question carries equal weight.
+	\item Calculators may not be used.
+	\end{itemize}
+	\vfill 
+	\copyright ~\examyear~ Imperial College London
+	\hfill \coursenum \hfill Page 1 of \pageref{ptotal}
+	\newpage
+	}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Exam text starts from here
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% use \begin{Question}{1} ... \end{Question} and
+%     \BeginParts \Part{a} \EndParts
+%
+% manually put in \EndPage at the end of every page for the correct footers.
+
+\begin{document}
+\sffamily
+\fpagedraft % this produces the signature page 
+\setcounter{page}{1}
+\fpage % this produces the front page with rubric
+
+\begin{Question}{1}
+This question is about the equation  
+\begin{equation}
+  \label{eq:adv-diff}
+  c\phi + \MM{u}\cdot\nabla \phi-\epsilon\nabla^2 \phi = f \mbox{ on }\Omega, \quad
+  \pp{\phi}{n} = 0 \mbox{ on }\partial\Omega,
+\end{equation}
+where:
+\begin{itemize}
+\item $\Omega$ is a $d$-dimensional polygonal domain with boundary $\partial\Omega$,
+\item $c>0$,
+\item $f$ is a known function,
+\item $\MM{u}\in C^{1,\infty}(\Omega)^d$ is a known vector-valued
+  function satisfying $\nabla\cdot\MM{u}=0$, and $\MM{u}\cdot\MM{n}=0$
+  on $\partial\Omega$.
+\item $|\MM{u}|_{\infty} = \max_{\MM{x}\in \Omega}|\MM{u}(\MM{x})| = C_0 < \infty$.
+\end{itemize}
+
+\BeginParts
+\Part{a} Derive a weak formulation of this equation for a solution
+$\phi\in H^1(\Omega)$ of the form
+\begin{equation}
+  a(q,\phi) = F(\phi), \quad \forall H^1(\Omega).
+\end{equation}
+\exammarks{5}
+\soln{\unseen
+  Multiplying by a test function $q$ and integrating by parts, we obtain
+  \[
+  \int_{\Omega} cq\phi -\nabla\cdot (\MM{u}q)\phi + \epsilon \nabla q\cdot\nabla\phi
+  \diff x = \int_{\Omega} fq\diff x, \quad \forall q\in H^1(\Omega).
+  \]
+  Equal credit for the formulation without integrating by parts in the
+  advection term (they are equivalent).
+}
+\Part{b} Obtain estimates for the continuity and coercivity constants
+of $a(\cdot,\cdot)$.
+\exammarks{10}
+\soln{\unseen
+  From Cauchy-Schwarz, 
+  \begin{align*}
+    |a(q,\phi)| & = \int_{\Omega} cq\phi -q\phi\nabla\cdot\MM{u} - \phi\MM{u}\cdot
+    \nabla q + \epsilon \nabla q \cdot \nabla \phi \diff x, \\
+    & \leq c\|q\|_{L^2(\Omega)}\|\phi\|_{L^2(\Omega)}
+    + C_0\|\nabla q\|_{L^2(\Omega)}\|\phi\|_{L^2(\Omega)}
+    + \epsilon \|\nabla q \|_{L^2(\Omega)}\|\nabla \phi\|_{L^2(\Omega)}, \\
+    & \leq \left(c + C_0 + \epsilon\right)\|q\|_{H^1(\Omega)}
+    \|\phi\|_{H^1(\Omega)}, 
+  \end{align*}
+  so the continuity constant is $c + C_0  + \epsilon$.\\
+  To compute the coercivity constant, first note that the advection term
+  is skew-symmetric, since
+  \begin{align*}
+    \int_{\Omega} \nabla\cdot (\MM{u}q)\phi \diff x & =
+    \int_{\Omega} \underbrace{\nabla\cdot \MM{u}}_{=0} q\phi
+    + (\MM{u}\cdot\nabla q) \phi\diff x, \\
+    & = -\int_{\Omega} \nabla\cdot(\MM{u}\phi) q \diff x,
+  \end{align*}
+  after integrating by parts. Hence,
+  \begin{align*}
+    a(\phi,\phi) & = \int_{\Omega} c\phi^2 + \epsilon|\nabla \phi|^2
+    \diff x, \\
+    & > \min(c,\epsilon) \|\phi\|_{H^1(\Omega)},
+  \end{align*}
+  so the coercivity constant is $\min(c,\epsilon)$.
+}
+\Part{c} What happens to the $H^1$ norm of the error in the $P^1$ finite element approximation
+of this problem as $\epsilon \to 0$? Justify your answer.
+\exammarks{5}
+\soln{\unseen From C\'ea's Lemma, we have
+  \[
+  \|\phi_h - \phi\|_{H^1(\Omega)} \leq
+  \frac{c + C_0+\epsilon}{\epsilon}
+  \|\phi\|^2_{H^1(\Omega)},
+  \]
+  (assuming that $c>\epsilon)$, which tends to infinity as $\epsilon
+  \to 0$. Hence the error can be arbitrarily large in that limit.}
+\EndParts
+\end{Question}
+\EndPage
+
+\begin{Question}{2}
+  \BeginParts
+  \Part{a}
+  For a ball $B$ in a triangle $K$, the averaged Taylor polynomial of
+  a function $u \in H^{k}(K)$ of degree $k$ is defined by
+  \begin{equation}
+    Q_{k,B}u(x) = \frac{1}{|B|}\int_{B}\sum_{|\alpha|\leq k} D^\alpha u(y)
+    \frac{(x-y)^\alpha}{\alpha!} \diff y.
+  \end{equation}
+  For $|\beta|\leq k$ show that
+  \begin{equation}
+    D^\beta Q_{k,B}u(\MM{x}) = Q_{k-|\beta|,B}D^\beta u(\MM{x}).
+  \end{equation}
+  \exammarks{8}
+  \soln{\seen
+    For continuous functions $u\in C^k(K)$, we have
+    \[
+    T_{k,y} u (x) = \sum_{|\alpha|\leq k}D^\alpha u(y)
+    \frac{(x-y)^\alpha}{\alpha!}.
+    \]
+    Then,
+    \begin{align*}
+      D^\beta T_{k,y} u (x) &= D^\beta
+      \sum_{|\alpha|\leq k}D^\alpha u(y)
+      \frac{(x-y)^\alpha}{\alpha!}, \\
+      &=
+      \sum_{|\beta|\leq |\alpha|\leq k}D^\alpha u(y)
+      \frac{(x-y)^{\alpha-\beta}}{(\alpha-\beta)!}, \\
+      &=
+      \sum_{|\alpha|\leq k-|\beta|}D^{\alpha+\beta} u(y)
+      \frac{(x-y)^\alpha}{(\alpha)!}, \\
+      &=
+      \sum_{|\alpha|\leq k-|\beta|}D^{\alpha}D^{\beta} u(y)
+    \frac{(x-y)^\alpha}{(\alpha)!}, \\
+    = T_{k-|\beta|y} D^\beta u(x).
+    \end{align*}
+    Then,
+    \begin{align*}
+      D^\beta Q_{k,B} u(x) & =
+      D^\beta \frac{1}{|\beta|}\int_B T_{k,y} u\diff x, \\
+      & = \frac{1}{|\beta|}\int_B T_{k-|\beta|,y} D^\beta u\diff x, \\
+      & = Q_{k-|\beta|,B} D^\beta u (x).
+    \end{align*}
+  }
+  \Part{b} For the rest of the question we assume that $K$ has radius 1.
+  Let $u\in H^{k+1}(K)$. 
+  Assuming
+  that, for $i\leq k$, 
+  \begin{equation}
+    \|Q_{i,B}u - u\|_{L^2(K)} \leq
+    C|u|_{H^{k+1}(K)}, 
+  \end{equation}
+  show that
+  \begin{equation}
+    \|D^\beta (Q_{i,B}u - u) \|_{L^2(K)}
+    \leq C|u|_{H^{k+1}(K)},
+  \end{equation}
+  for $|\beta| \leq i \leq k$.
+  \exammarks{8}
+  \soln{\seen From the previous result
+    \[
+      D^\beta (Q_{i,B}u - u)
+        = Q_{i-|\beta|,B}D^\beta u - D^\beta u,
+    \]
+    so
+    \[
+      \|D^\beta (Q_{i,B}u - u)\|_{L^2(K)} = 
+      \|Q_{i-|\beta|,B}D^\beta u - D^\beta u\|_{L^2(K)}
+      \leq C|D^\beta u|_{H^{k-|\beta|+1}(K)}
+      =C|u|_{H^{k+1}(K)}.
+    \]
+  }
+  \Part{c} Using the property
+  \begin{equation}
+    \|I_Ku\|_{H^k(K)} \leq C_1\|u\|_{H^k(K)},
+  \end{equation}
+  for the nodal interpolation operator $I_K$ corresponding
+  to a finite element $(K,\mathcal{P},\mathcal{N})$,
+  show that
+  \begin{equation}
+    |I_Ku - u|_{H^k(K)} \leq C_2|u|_{H^{k+1}(K)},
+  \end{equation}
+  for some positive constant $C_2$, stating any assumptions
+  you make about $(K,\mathcal{P},\mathcal{N})$.
+  \exammarks{4}
+  \soln{\seen
+    \begin{align*}
+      |I_ku - u|_{H^k(K)}
+      &\leq |I_ku - Q_{k,B}u + Q_{k,B}u - u|_{H^k(K)}, \\
+      &\leq |I_ku - Q_{k,B}u|_{H^k(K)} + |Q_{k,B}u - u|_{H^k(K)}, \\
+      &= |I_k(u - Q_{k,B}u)|_{H^k(K)} + |Q_{k,B}u - u|_{H^k(K)}, \\
+      &\leq |I_k(u - Q_{k,B}u)|_{H^k(K)} + |Q_{k,B}u - u|_{H^k(K)}, \\
+      &\leq (C_1+1)|Q_{k,B}u - u|_{H^k(K)}, \\
+      &\leq (C_1+1)C_2|u|_{H^{k+1}(K)},
+    \end{align*}
+    as required, where we used that $\mathcal{P}$ contains all polynomials
+    of degree $k$ in the third line. In the last line we used the result
+    of part (b) with $|\beta|=i=k$, with $C_2=CN$ where $N$ is the number of
+    multi-indices $\beta$ with $|\beta|=k$.
+    So, $C_2 \leq (C_1 + 1)C_2$.
+  }
+  \EndParts
+\end{Question}
+\EndPage
+
+\begin{Question}{3}
+  Consider the following triple $(K,\mathcal{P},\mathcal{N})$.
+  \begin{itemize}
+  \item $K$ is a triangle with vertices $z_1$, $z_2$, $z_3$.
+  \item $\mathcal{P}$ are the polynomials of degree $\leq 3$.
+  \item $\mathcal{N}$ are dual variables given by evaluations at
+    $z_1 + (z_2-z_1)i/3 + (z_3-z_1)j/3$ for $0\leq i \leq j \leq 3$.
+  \end{itemize}
+  \BeginParts
+  \Part{a} 
+  Show that $\mathcal{N}$ determines $\mathcal{P}$.  \exammarks{10}
+  \soln{ \similar Let $p\in \mathcal{P}$ be mapped to zero by all dual
+    variables.  Restricted to $\Pi_1$, the line between $z_2$ and
+    $z_1$, $p$ is a degree 3 polynomial vanishing at 4 places, so it
+    is zero. Therefore $p=L_1(x)Q_1(x)$ where $L_1(x)$ is a non-degenerate
+    linear function vanishing on $\Pi_1$. Working through the other two
+    lines, we obtain that $p=cL_1(x)L_2(x)L_3(x)$, where none of the $L$
+    functions vanish away from the three edges of the triangle. But $p$
+    also vanishes at the centre of the triangle, so $c=0$ i.e. $p=0$
+    as required.}
+  \Part{b} Describe the geometric decomposition for this finite element,
+  and explain why it is a $C^0$ decomposition.  \exammarks{10} \soln{
+    \similar 
+    We associate the point evaluation at vertices to their
+    corresponding edges, point evaluation on edges away from vertices
+    to their corresponding edges, and point evaluation at the centre
+    to the triangle itself.  Being $C^0$ requires that when restricted
+    to a vertex, the function can be reconstructed purely from the
+    corresponding vertex node. This is clear because there is just one
+    point value to reconstruct. Being $C^0$ also requires that when
+    restricted to an edge, the function can be reconstructed purely
+    from nodal variables assigned to the closure of the edge. Since we
+    have 4 values along the edge including the two vertices, this
+    completely determines the cubic function along that edge.  }
+  \EndParts
+\end{Question}
+\EndPage
+
+\begin{Question}{4}
+  Consider the heat equation,
+  \begin{equation}
+    \label{eq:heat}
+    \pp{T}{t} = \kappa \nabla^2 T,
+  \end{equation}
+  solved for a time-dependent function $T$ on a closed simply-connected domain $\Omega$,
+  with boundary conditions $\pp{T}{n}=0$ on the boundary $\partial\Omega$.
+  \BeginParts
+  \Part{a} Given a $C^0$ finite element space, formulate a finite element
+  discretisation of the heat equation \eqref{eq:heat}.
+  \exammarks{5}
+  \soln{\unseen
+    The variational form is obtained by multiplying both sides by a test
+    function $v$ and integrating by parts to obtain
+    \[
+      \langle v, T_t \rangle_{L^2} = -\kappa \langle \nabla v, \nabla T
+      \rangle_{L^2}.
+    \]
+    The finite element discretisation is then find a time-dependent
+    $T\in V_h$ such that
+    \[
+      \langle v, T_t \rangle_{L^2} = -\kappa \langle \nabla v, \nabla T
+      \rangle_{L^2}, \quad \forall v \in V_h.
+    \]
+  }
+  \Part{b} Show that the discretisation can be written in the form
+  \begin{equation}
+    M\dot{\MM{T}} = K\MM{T},
+  \end{equation}
+  where $\MM{T}$ is the vector of basis coefficients for $T$ in the
+  finite element space $V_h$.
+  \exammarks{5}
+  \soln{\unseen 
+    Introducing basis expansions
+    \[
+    v = \sum_i v_i \phi_i(x), \quad T = \sum_i T_i(t) \phi(x),
+    \]
+    we get
+    \[
+      \sum_i v_i \sum_j\left(\langle \phi_i, \phi_j \rangle_{L^2}\dot{T}_j
+      + \kappa \langle \nabla \phi_i, \nabla \phi_j \rangle_{L^2} T_j\right)
+      = 0,
+      \]
+    but this equation must hold for arbitrary basis coefficients, so
+    \[
+    \sum_j\left(\underbrace{\langle \phi_i, \phi_j \rangle_{L^2}}_{=M_{ij}}\dot{T}_j
+      + \kappa\underbrace{\langle \nabla \phi_i, \nabla \phi_j \rangle_{L^2}}_{=K_{ij}} T_j\right)
+      = 0,
+      \]
+      as required.
+  }
+      \Part{c} Quoting results from lectures, show that
+      \begin{equation}
+        \frac{d}{dt} \int_{\Omega} T^2 \diff x \leq -C
+        \int_\Omega T^2 \diff x,
+      \end{equation}
+      providing an upper bound for the decay rate $C$.
+      \exammarks{5}
+      \soln{\unseen For Dirichlet boundary conditions we have the result
+        \[
+        \int_\Omega T^2 \diff x \leq C_p\int_\Omega |\nabla T|^2 \diff x.
+        \]
+        Then, taking $v=T$ in the variational form,
+        \begin{align*}
+          \frac{d}{dt} \int_\Omega T^2 \diff x & = 2\int_\Omega TT_t \diff x, \\
+          & = -2\kappa \int_\Omega |\nabla T|^2\diff x, \\
+          & \leq -\frac{2\kappa}{C_p} \int_\Omega T^2 \diff x.
+        \end{align*}
+      }
+      \Part{d} Explain why this means that the decay rate for the
+      finite element discretisation is larger than or equal to the
+      decay rate for the unapproximated equation.  \exammarks{5}
+      \soln{\unseen The Poincar\'e constant for $\mathring{H}^1$ is
+        \[
+        C^*_p = \sup_{T \in \mathring{H}^1(\Omega)}\frac
+        {\int_\Omega T^2 \diff x}{\int_\Omega |\nabla T|^2\diff x}.
+        \]
+        The Poincar\'e constant for $\mathring{V}_h \subset \mathring{H}^1$ is
+        \[
+        C^h_p = \sup_{T \in \mathring{V}_h}\frac{\int_\Omega T^2 \diff x}
+        {\int_\Omega |\nabla T|^2\diff x}
+        \leq 
+        \sup_{T \in \mathring{H}^1}
+        \frac{\int_\Omega |T|^2\diff x}{\int_\Omega |\nabla T|^2 \diff x}
+        = C^*_p,
+        \]
+        so $C^h_p \leq C^*_p$.
+      }
+  \EndParts
+\end{Question}
+\EndPage
+
+\begin{Question}{5}
+  This question is based upon the Mastery material ``From Functional Analysis to
+  Iterative Methods'' by RC Kirby.\\
+  Consider the partial differential equation
+  \begin{equation}
+    -\nabla\cdot (\gamma(x) \nabla u) = f, 
+  \end{equation}
+  on $\Omega$, with boundary conditions $u=0$ on $\partial\Omega$,
+  where $f$ is a known function with $\|f\|_{L^2(\Omega)}<\infty$,
+  and $\gamma$ is a known function with $c_1\leq \gamma \leq c_2$
+  for $c_1>0$, $c_2<\infty$. \\
+  \BeginParts
+  \Part{a}
+  Briefly formulate a finite element discretisation for this problem
+  using linear continuous finite elements,
+  and explain how the coercivity
+  and continuity constants of the variational problem depend on $c_1$ and $c_2$.
+  Give details on the function spaces involved and norms involved.
+  \exammarks{6}
+   \soln{\similar
+    The weak form is
+    \[
+    \int_\Omega \gamma \nabla v\cdot \nabla u \diff x
+    = \int_\Omega vf\diff x,
+    \]
+    with the variational problem defined on $\mathring{H}^1(\Omega)$,
+    the subspace of $H^1(\Omega)$ with traces satisfying the zero
+    Dirichlet boundary condition. Then the finite element
+    discretisation has the same weak form with $\mathring{V}\subset
+    \mathring{H}^1(\Omega)$.
+
+    The bilinear form is continuous since
+    \[
+    \int_\Omega \gamma \nabla v \cdot \nabla u \diff x
+    \leq b \|u\|_{H^1(\Omega)}\|v\|_{H^1(\Omega)},
+    \]
+    so  the continuity constant is $b$, 
+    and coercive since
+    \[
+    \int_\Omega \gamma |\nabla u|^2 \diff x
+    \geq a|u|^2_{H^1(\Omega)} \geq a(1+C)\|u\|^2_{H^1(\Omega)},
+    \]
+    where $C$ is constant for the Poincar\`e inequality, so the
+    coercivity constant is $a(1+C)$.
+   }
+   
+   \Part{b} A bilinear form $a$ on a finite element space $V_h$ defines
+   an operator $A_h:V_h\to V_h'$ into the dual space given by
+   \begin{equation}
+     (A_h f)[u] = a(f,u), \quad \forall f,u \in V_h.
+   \end{equation}
+   In the notation of the paper, the operator
+   $\mathcal{I}_h:\mathbb{R}^{\dim V_h} \to V_h$ maps a vector to the
+   function in $V_h$ with the vector entries as basis coefficients in
+   the nodal basis expansion. The operator
+   $\mathcal{I}'_h:\mathbb{R}^{\dim V_h} \to V_h'$ maps vectors to
+   linear functionals $F \in V_h'$ given by
+   \begin{equation}
+     (\mathcal{I}'_h\MM{f})[u] = \MM{f}^T(\mathcal{I}^{-1}_hu),
+     \quad \forall u \in V_h.
+   \end{equation}
+   \BeginParts
+   \Part{i}
+   Show that
+   \begin{equation}
+     A_h u = \mathcal{I}'_h(A\MM{u}), \quad \forall u \in V_h.
+   \end{equation}
+   where $A$ is the matrix corresponding to $A_h$ and
+   $\MM{u}$ is the vector of basis coefficients of $u$.
+   \exammarks{4}
+   \soln{\seen
+     Let $v=\mathcal{I}_h\MM{v}$. Then
+     \begin{align*}
+       \langle A_hu, v\rangle & = a(u,v), \\
+       &= a\left( \sum_i u_i \phi_i, \sum_j v_j\phi_j\right), \\
+       &= \sum_{i,j} u_iv_j a(\phi_i,\phi_j), \\
+       &= \sum_{i,j} u_iv_j A_{ij}, \\
+       &= (A\MM{u})^T\MM{v}, \\
+       &= (A\MM{u})^T(\mathcal{I}_h^{-1}\mathcal{I}_h\MM{v}), \\
+       &= \langle \mathcal{I}'_hA\MM{u},v \rangle, \quad
+       \forall v \in V_h,
+     \end{align*}
+     as required.
+   }
+   \Part{ii} Hence show that
+   \begin{equation}
+     A = (\mathcal{I}_h')^{-1}A_h \mathcal{I}_h.
+   \end{equation}
+   \exammarks{3}
+   \soln{\seen
+     We have $\mathcal{I}_h\MM{u}=u$, hence
+     \[
+     A\MM{u} = (\mathcal{I}')_h^{-1}A_hu = (\mathcal{I}')_h^{-1}A_h\mathcal{I}_h\MM{u},
+     \quad \forall \MM{u} \in V_h,
+     \]
+     as required.
+   }
+   \EndParts
+
+   \Part{c} Now consider a second bilinear form
+   \begin{equation}
+     b_h(u,v) = \int_{\Omega} uv + \nabla u \cdot \nabla v \diff x,
+   \end{equation}
+   with corresponding matrix $B$, and operator $B_h:V_h \to V_h'$.
+   \BeginParts
+   \Part{i} Show that
+   \begin{equation}
+     B^{-1}A = \mathcal{I}_h^{-1} B_h^{-1} A_h \mathcal{I}_h.
+   \end{equation}
+   \exammarks{4}
+   \soln{\seen
+     \begin{align*}
+       B^{-1}A & = ((\mathcal{I}_h')^{-1}B_h \mathcal{I}_h)^{-1}
+       (\mathcal{I}_h')^{-1}A_h \mathcal{I}_h, \\
+       & = (\mathcal{I}_h)^{-1}B_h^{-1} \mathcal{I}_h'
+       (\mathcal{I}_h')^{-1}A_h \mathcal{I}_h, \\
+       & = (\mathcal{I}_h)^{-1}B_h^{-1} 
+       A_h \mathcal{I}_h, 
+     \end{align*}
+     as required.
+   }
+   \Part{ii} Explain why $B_h^{-1}A_h$ has the same eigenvalues as $B^{-1}A$.
+   \exammarks{3} \soln{\seen $B^{-1}A$ is similar to $B_h^{-1}A_h$ and
+     so they have the same eigenvalues.
+   }  \EndParts \EndParts
+   \end{Question}
+
+\label{ptotal}
+\EndPage
+\end{document}

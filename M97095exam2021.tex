@@ -1,0 +1,508 @@
+
+\documentclass[12pt]{article}
+
+\usepackage{graphicx,amssymb,amsmath,nicefrac,ifthen,calc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Fill in the following details  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\coursenum}{MATH97095} %{e.g: MATH50001, or: MATH96057/MATH97006/MATH97171 for multiple year courses}
+\newcommand{\coursename}{Finite Elements} %{e.g: Mathematical Logic} 
+\newcommand{\setter}{Cotter}     % Insert surname(s) of exam setter(s) 
+\newcommand{\checker}{Ham} % Insert surname of exam checker 
+\newcommand{\editor}{Wu} % Insert surname of exam editor
+\newcommand{\external}{external} % Insert surname of external examiner
+\newboolean{tables}
+\setboolean{tables}{false} %set to true if statistical tables are provided and attach require tables
+
+% Choose an option for time allowed and number of questions %
+
+\newcommand{\examlength}%Uncomment one of the following 4 options, or adjust.
+%{2~Hours}
+%{2.5~Hours}
+{2 Hours for MATH96 paper; 2.5 Hours for MATH97 papers}
+%{3~Hours} %For 2-term modules
+
+\newcommand{\numQ}%Uncomment one of the following 4 options, or adjust.
+%{4~Questions}
+%{5~Questions}
+{4~Questions (MATH96 version); 5~Questions (MATH97~versions)}
+%{6~Questions} %For 2-term modules
+
+\newcommand{\version}% Uncomment one of the following, or adjust
+{Final Version}
+%{Version for External Examiner}
+%{Final version}
+
+
+\newcommand{\suitability}% Uncomment one of the options below
+{Is the paper suitable for resitting students from previous years:
+%Yes
+No, because the Mastery material is on a different topic in Question 5.
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%The following details about the difficulty level of the questions must be completed; also include this information on your mark-scheme.
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\CatA}% Indicate, with marks, the most straightforward 40 percent of the marks available in the non-mastery questions
+{1a:8, 1bi:6, 3a:6, 4a:6, 4b:8
+}
+\newcommand{\CatB}% Indicate the next most challenging 25 percent of the marks in the non-mastery questions
+{1bii:6, 2a:6, 2b:7
+}
+\newcommand{\CatC}%Indicate the next most challenging 15 percent of the marks in the non-mastery questions
+{2c:7, 4c:6
+}
+\newcommand{\CatD}% Indicate the most challenging 20 percent of marks on the paper in the non-mastery questions
+{3b:6, 3c:8
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Insert your macros %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\pp}[2]{\frac{\partial #1}{\partial #2}} 
+\newcommand{\dede}[2]{\frac{\delta #1}{\delta #2}}
+\newcommand{\dd}[2]{\frac{\diff#1}{\diff#2}}
+\newcommand{\dt}[1]{\diff\!#1}
+\def\MM#1{\boldsymbol{#1}}
+\DeclareMathOperator{\diff}{d}
+
+% Go to `Exam text starts from here' below to type in your questions. %
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ignore the following details     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\examyear}{2021}
+\newcommand{\exammonth}{May -- June} 
+\newcommand{\examdate}{Wednesday, 5th May 2021} %{Tuesday, 26th May 2021} 
+\newcommand{\examtime}{09:30 -- 11:30} 
+\newboolean{onebook}
+\setboolean{onebook}{true} %set to true if all answers should be in one answer book
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% setup a counter to count up marks in a question
+\newcounter{tmarks}
+\setcounter{tmarks}{0}
+
+% Define the command for formatting the marks available for the question
+
+
+\newcommand{\qmarks}[1]{\addtocounter{tmarks}{#1}\ifthenelse{\equal{#1}{1}}{\parbox{0.1in}{\ }\hfill{(#1 mark)}}{\parbox{0.1in}{\ }\hfill{(#1 marks)}}}
+
+\newcommand{\qqmarks}[1]{\addtocounter{tmarks}{#1}\ifthenelse{\equal{#1}{1}}{\newline\parbox{0.1in}{\ }\hfill{(#1 mark)}}{\newline\parbox{0.1in}{\ }\hfill{(#1 marks)}}}
+
+% define a total marks command for the end of the question
+\newcommand{\totmarks}{\ifthenelse{\equal{\value{tmarks}}{1}}{\parbox{0.1in}{\ }\hfill{(Total: \arabic{tmarks} mark)}}{\parbox{0.1in}{\ }\hfill{(Total: \arabic{tmarks} marks)}}}
+
+
+
+
+
+\pretolerance=100000
+\setlength{\topmargin}{-15mm}
+\setlength{\textheight}{245mm}
+\setlength{\textwidth}{178mm}
+\setlength{\oddsidemargin}{-10mm}
+\setlength{\evensidemargin}{-10mm}
+\setlength{\marginparwidth}{1cm}
+\setlength{\parskip}{1.1ex}
+\setlength{\parindent}{0ex}
+\renewcommand{\baselinestretch}{1.1}
+
+\pagestyle{empty}
+
+\newenvironment{Question}[1] 
+ {\begin{itemize} \item[\large #1.~~]}{\end{itemize}\totmarks\setcounter{tmarks}{0} \medskip}
+ 
+\newcommand{\EndPage}{
+	\vfill \coursenum ~ \coursename ~
+	(\examyear) \hfill Page \thepage \newpage
+	}
+
+%\newcommand{\ICLOGO}{
+%	\begin{minipage}{0.7\textwidth}
+%  \includegraphics[height= 1.4cm]{imperial.pdf} 
+%  \end{minipage}\hfill \parbox[r][1.4cm][t]{0.2\textwidth}{\hfill \coursenum} \par 
+%	}
+	
+\newcommand{\BeginParts}{\begin{itemize}} 
+\newcommand{\Part}[1]{\item [(#1)~~]} 
+\newcommand{\EndParts}{\end{itemize}} 
+
+%%%%
+% This requires imperial.pdf in the graphics input path eg 
+% h:/images/imperial.pdf 
+%%%% 
+
+\newcommand{\draft}{
+	\begin{flushleft} 
+	\begin{tabular}{ll}
+  Module:   & \coursenum\\ Setter:   & \setter \\
+  Checker:  & \checker \\  Editor:   & \editor \\
+  External: & \external \\ Date:     & \today\\
+  Version: & \version
+  \end{tabular} 
+  \end{flushleft} 
+  \vfill \par
+	}
+
+
+\newcommand{\fpagedraft}{  % FOR DRAFT FRONT PAGE with SIGS
+%	\ICLOGO
+	\begin{center} 
+	\draft
+	BSc, MSci and MSc EXAMINATIONS (MATHEMATICS) \par 
+	\exammonth~ \examyear 
+	
+	\medskip
+	
+	\large \coursenum \quad
+	\coursename 
+	\end{center}
+	\medskip
+	
+	\textit{The following information must be completed:}
+	
+	\medskip
+	
+	\textbf{\suitability}
+	
+	\medskip
+	
+	\textbf{Category A marks: available for basic, routine material (excluding any mastery question)\\(40 percent = 32/80 for 4 questions):}\newline
+	\CatA
+	
+	\medskip
+	
+	\textbf{Category B marks: Further 25 percent of marks (20/ 80 for  4 questions) for demonstration of a sound knowledge of a 
+	good part of the material and the solution of straightforward problems and examples with reasonable accuracy (excluding mastery question):} \newline
+	\CatB
+	
+	\medskip
+	
+	\textbf{Category C marks: the next 15 percent of the marks (= 12/80 for 4 questions)  for parts of questions at the high 2:1  or 1st class level (excluding mastery question):}\newline
+	\CatC
+	
+	\medskip
+	
+	\textbf{Category D marks: Most challenging 20 percent (16/80 marks for 4 questions) of the paper (excluding mastery question):}\newline
+	\CatD	
+	
+	
+	
+	 \vfill \par \normalsize
+	 
+	
+	
+	\textit{Signatures are required for the final version:}
+		\sigs  \par \vfill 
+	\copyright ~\examyear~ Imperial College London
+	\hfill \coursenum \hfill Temporary cover page
+	\newpage
+	}
+
+
+	
+	
+\newcommand{\sigs}{ % Signatures
+	\vfill \par 
+  \fbox{\begin{minipage}{0.98\textwidth}{~ \\[4mm]
+  \hspace*{3mm} Setter's signature \hfill
+  Checker's signature \hfill
+  Editor's signature~~~~ \\[4mm]
+  \hspace*{3mm} \dotfill \hfill \dotfill \hfill \dotfill ~~~~
+  \\[2mm] ~} \end{minipage}}
+	}
+	
+
+
+	
+\newcommand{\fpage}{ % FRONT PAGE 
+%	\ICLOGO
+%  
+\newlength{\myl}
+\settowidth{\myl}{\sc Temporary front page}
+\newlength{\myll}
+\setlength{\myll}{\textwidth - \myl}
+\begin{center}
+ \large{\sc \rule[4pt]{0.45\myll}{0.5pt}~Temporary front page~\rule[4pt]{0.45\myll}{0.5pt}}
+ \end{center}
+ %
+ \bigskip
+  \begin{center}
+  BSc, MSc and MSci EXAMINATIONS (MATHEMATICS) \par
+  \exammonth~ \examyear \bigskip \par
+  This paper is also taken for the relevant examination
+  for the Associateship of the \\ Royal College of Science. 
+	\end{center}
+	\begin{center}
+	\coursename
+	\end{center}
+	\renewcommand{\arraystretch}{1.3}
+	\vfill \par
+	\fbox{\parbox{\textwidth}{
+	\begin{tabular}{l}
+	Date: \examdate \\ 
+	Time: \examtime \\
+	Time Allowed: \examlength \\
+	This paper has {\em \numQ}. \\
+	%\ifthenelse{\boolean{onebook}}
+	%{Candidates should use ONE main answer book.}
+	%{Candidates should start their solutions to each question in a new main answer book.}\\
+	%Candidates should use ONE main answer book.\\
+	%Supplementary books may only be used after the relevant main book(s) are full. \\
+	\ifthenelse{\boolean{tables}}{Statistical tables are provided.}{Statistical tables will not be provided.}\\
+	\end{tabular}}}
+	\renewcommand{\arraystretch}{1.5}
+	\begin{itemize}
+	%\item DO NOT OPEN THIS PAPER UNTIL THE INVIGILATOR TELLS YOU TO.
+	%\item Affix one of the labels provided to each answer book that you use, 
+	%but DO NOT USE THE LABEL WITH YOUR NAME ON IT.
+	\item	Credit will be given for all questions attempted.
+	\item Each question carries equal weight.
+	%\item Calculators may not be used.
+	\end{itemize}
+	\vfill 
+	\copyright ~\examyear~ Imperial College London
+	\hfill \coursenum \hfill Page 1 of \pageref{ptotal}
+	\newpage
+	}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Exam text starts from here
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Use \begin{Question}{1} ... \end{Question} and
+%     \BeginParts \Part{a} \EndParts
+%
+% Avoid splitting a question across two pages
+%
+% Insert number of marks for each part or sub-part using \qmarks{}. Use \qqmarks{} if this results in a bad line break.
+%
+% Manually put in \EndPage at the end of every page for the correct footers.
+
+\begin{document}
+\sffamily
+\fpagedraft % this produces the signature page 
+\setcounter{page}{1}
+\fpage % this produces the front page with rubric
+
+
+\begin{Question}{1}
+\BeginParts
+\Part{a}
+Consider the finite element $(K,P,\mathcal{N})$ given by
+\begin{enumerate}
+\item $K$ is the $1\times 1$ square, with bottom-left corner at $(0,0)$.
+\item $P$ is the polynomial space spanned by $\{1,x,y,xy\}$.
+\item $\mathcal{N}=(N_1,N_2,N_3,N_4)$ where $N_i(p)=p(z_i)$ and
+  $(z_1,z_2,z_3,z_4)$ are the four corners of the square.
+\end{enumerate}
+Find the nodal basis for this finite element. (You may use a
+computational linear algebra package such as Numpy or Matlab to invert
+matrices but you must write the matrices that you are computing with
+in your solution.)
+\qmarks{8}
+\Part{b}
+Consider a finite element $(K,P,\mathcal{N})$ with 
+\begin{enumerate}
+\item $K$ is the triangle with vertices at $z_1=(0,0)$, $z_2=(1,0)$,
+  and $z_3=(0,1)$.
+\item $P$ is the polynomial space spanned by $\{1,x,y,xy(1-x-y)\}$,
+\end{enumerate}
+and nodal basis
+\begin{align} \nonumber
+  \psi_1 = x-9xy(1-x-y), \, \psi_2=y-9xy(1-x-y),\\ \psi_3=1-x-y-9xy(1-x-y), \, \psi_4=27xy(1-x-y).
+\end{align}
+\BeginParts
+\Part{i}
+Find a set of nodal variables $\mathcal{N}$ that corresponds
+to this nodal basis, justifying your answer.
+\qmarks{6}
+\Part{ii}
+Provide a $C^0$ geometric decomposition for this element, explaining
+why it has the specified continuity.
+\qmarks{6} \EndParts \EndParts
+\end{Question}
+
+\EndPage
+\begin{Question}{2}
+  In this question we consider the Poisson equation
+  \begin{equation}
+    -\nabla^2 u = f,
+  \end{equation}
+  on a convex domain $\Omega$ with $u=0$ on $\partial\Omega$. We
+  assume that $f$ is such that $u \in H^2(\Omega)$ but $u \notin
+  H^3(\Omega)$.
+  \BeginParts
+  \Part{a} Consider Theorem 5.30 of the notes. Explain why this theorem
+  is not sufficient for estimating the convergence rate for finite
+  element discretisation for this problem when $k=2$.
+  \qqmarks{6}
+  \Part{b} For $i=1$, propose and prove a modification of Lemma 5.28 for this case.
+  \qqmarks{7}
+  \Part{c} For $i=1$, propose and justify (referring to existing proofs in the notes) a modification of Theorem 5.30 for this case. Comment on the difference in the estimate
+  compared to the case $u\in H^3(\Omega)$.  \qmarks{7} \EndParts
+\end{Question}
+
+\EndPage
+
+\begin{Question}{3} 
+\BeginParts
+\Part{a}
+Write a finite element variational problem for the following equation,
+\begin{equation}
+  -\nabla^2 u = 0, \quad \frac{\partial u}{\partial n}=g \mbox{ on } \partial\Omega,
+\end{equation}
+describing the types of finite element spaces that should be used to
+ensure a unique solution.
+\qqmarks{6}
+\Part{b}
+Consider the finite element discretisation in the case where $\Omega$
+is a $1\times 1$ square and $g=\exp(\cos(x)\cos(y+x))$. Explain why
+your variational problem is not possible to implement exactly on a
+computer when using numerical quadrature, and propose a modification
+that is.  \qqmarks{6}
+\Part{c}
+Adjust the statement and proof of C\'ea's Lemma to accommodate your
+modification from (b), and comment on the conditions for convergence of the
+finite element solution to the exact solution as the mesh is refined.
+(Hints: start from the triangle inequality for
+$\|u-v+v-u_h\|_{H^1(\Omega)}$ for $v\in V_h$ and then work with
+the term $\|v-u_h\|_{H^1(\Omega)}$.)
+\qqmarks{8}
+\EndParts
+\end{Question}
+
+ \EndPage
+\begin{Question}{4}
+  In this question we consider the domain displayed in Figure
+  \ref{fig:boxbox}. The domain $\Omega$ is the entire square area
+  shaded grey, with outer boundary $\partial\Omega$ shown as a
+  continuous black line. Inside the domain is a smaller square,
+  denoted $\Omega_0$, with boundary $\Gamma$, shown as a dashed black
+  line. We define $\Omega_1$ to be the complement of $\Omega_0$ in
+  $\Omega$.
+
+  \begin{figure}
+    \centerline{\includegraphics[width=6cm]{boxbox}}
+    \caption{\label{fig:boxbox} Domain for Question 4.}
+  \end{figure}
+  
+  We consider the following problem: find $u$ such
+  that
+  \begin{align}
+    -\nabla^2 u = 0, \mbox{ in $\Omega_0$ and $\Omega_1$}, \\
+    u = 0, \mbox{ on $\partial\Omega$}, \\
+    \left.\frac{\partial u}{\partial n}\right|_{\partial\Omega_0}
+    + \left.\frac{\partial u}{\partial n}\right|_{\partial\Omega_1\cap \Gamma} = 2,
+  \end{align}
+  where for a domain $\Omega_i$, $\frac{\partial u}{\partial
+    n}|_{\Omega_i}$ is the value of the normal component of the
+  derivative restricted to $\Omega_i$, using the outward pointing
+  normal to $\partial\Omega_i$. Note that since the outward pointing
+  normals to $\partial\Omega_0$ and $\partial\Omega_1\cap \Gamma$ are
+  equal and opposite, this condition on $\Gamma$ indicates a
+  discontinuity in the normal derivative of $u$.
+  \BeginParts
+\Part{a}
+Using the continuous Lagrange finite element space of degree $k$,
+formulate a finite element discretisation for this problem.
+\qmarks{6}
+\Part{b}
+Show that the finite element discretisation has a unique solution, and
+provide a constant $\gamma$ such that the finite element solution satisfies
+\begin{equation}
+  \|u_h\|_{H^1(\Omega)} \leq \gamma,
+\end{equation}
+independently of $h$. You may quote results from the course notes
+without proof.
+\qmarks{8}
+\Part{c}
+Let $u_h$ be the numerical solution on a mesh consisting of squares
+subdivided into right angled triangles, with square edge length $h$,
+and let $u$ be the exact solution of the problem. Discuss the
+applicability of the bound on $\|u_h-u\|_{H^1(\Omega)}$ that we
+studied in the course.
+\qmarks{6} \EndParts
+\end{Question}
+
+
+%% If you have a Mastery Question, then this should be included as an additional question 
+%% on a new page. Otherwise, comment out the following three lines:
+\EndPage
+\begin{Question}{5}
+  \begin{figure}
+  \centerline{\includegraphics[width=6cm]{p1p1}}
+  \caption{\label{fig:p1p1} Example function values for Question 5.}
+\end{figure}
+ \BeginParts
+\Part{a}
+Let $V=(H^1(\Omega))^2$ and $Q=\mathring{L}^2(\Omega)$, where $\Omega$
+is a convex polygonal domain. Let $b:V\times Q\to \mathbb{R}$ be the
+bilinear form
+\begin{equation}
+  b(v,q) = \int_\Omega q\nabla\cdot v \diff x.
+\end{equation}
+Assuming the
+result that the divergence is surjective from $V$ to $Q$, show
+that $b$ satisfies the inf-sup condition
+\begin{equation}
+  \inf_{q\in Q}\sup_{v\in V}\frac{b(v,q)}{\|v\|_V\|q\|_Q} \geq \beta,
+\end{equation}
+for some constant $\beta$.
+\qqmarks{5}
+\Part{b}
+Define the operator $\delta:Q \to V$ by
+\begin{equation}
+  \int_{\Omega} w\cdot \delta q \diff x = b(w, q), \quad \forall w \in V.
+\end{equation}
+Show that the kernel of $\delta$, $\mathrm{Ker}(\delta)$, is empty.
+(Hint: find a suitable choice of test function.)
+\qqmarks{5}
+\Part{c}
+Let $V_h\subset V$ and $Q_h\subset Q$ be finite element spaces chosen for
+the discretisation of Stokes' equation.  Let $\Pi_h:V\to V_h$ satisfy
+condition 1 of Fortin's trick, i.e.
+\begin{align}
+  b(v-\Pi_hv, q) = 0, \quad \forall v\in V, \, q\in Q_h.
+\end{align}
+Define the discrete operator $\delta_h:Q_h \to V_h$ by
+\begin{equation}
+  \int_{\Omega} w\cdot \delta_h q \diff x = b(w, q), \quad \forall w \in V_h.
+\end{equation}
+Show that $\mathrm{Ker}(\delta_h)\subseteq \mathrm{Ker}(\delta)$.\\
+\qmarks{5}\\
+       (Question continues on the following page.)
+\Part{d}
+Consider a mesh consisting of squares subdividing into right angle
+triangles by joining the top left vertex and the bottom right vertex
+of each square, and consider the discretisation for Stokes with
+continuous linear Lagrange elements for each component of the velocity
+and continuous linear Lagrange elements for the pressure.
+
+By considering the function $p\in Q_h$ taking vertex values in an
+alternating pattern as indicated in Figure \ref{fig:p1p1}, show that
+$\mathrm{Ker}(\delta_h)\not\subseteq \mathrm{Ker}(\delta)$ in this
+case. \\
+Do $V_h$ and $Q_j$ satisfy condition 1 of Fortin's trick?
+\qmarks{5}
+\EndParts
+ \end{Question}
+
+
+\label{ptotal}
+\EndPage
+\end{document}

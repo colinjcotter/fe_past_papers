@@ -1,0 +1,587 @@
+
+\documentclass[12pt]{article}
+
+\usepackage{graphicx,amssymb,amsmath,nicefrac,ifthen,calc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Fill in the following details  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\coursenum}{M4A47/M5A47} %{e.g: M1S, or: M3S14/M4S14/M5S15 for multiple year courses}
+\newcommand{\coursename}{Finite elements: numerical analysis and implementation} %{e.g: Probability and Statistics} 
+\newcommand{\setter}{Cotter}     % Insert surname of exam setter 
+\newcommand{\checker}{Ham} % Insert surname of exam checker 
+\newcommand{\editor}{Walton} % Insert surname of exam editor
+\newcommand{\external}{external} % Insert surname of external examiner
+\newboolean{tables}
+\setboolean{tables}{false} %set to true if statistical tables are provided and attach require tables
+
+% Choose an option for time allowed and number of questions %
+
+\newcommand{\examlength}%Uncomment one of the following 3 options, or adjust.
+{2~Hours}
+
+\newcommand{\numQ}%Uncomment one of the following 3 options, or adjust.
+{4~Questions}
+
+\newcommand{\version}% Uncomment one of the following, or adjust
+{Draft version for checking}
+%{Version for External Examiner}
+%{Final version}
+
+
+\newcommand{\suitability}% Uncomment one of the options below
+{Is the paper suitable for resitting students from previous years:
+Yes
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%The following details about the difficulty level of the questions must be completed 
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\routine}% Indicate, with marks, the most straightforward 40 percent of the marks available in the non-mastery questions
+{1(a,b,c) 20 marks; 3(a,b) 8 marks; 4(a) 6 marks.
+}
+\newcommand{\medium}% Indicate the next most challenging 25 percent of the marks in the non-mastery questions
+{2(a) 10 marks, 3(c) 6 marks, 4(b) 6 marks
+}
+
+\newcommand{\hardest}% Indicate the most challenging 20 percent of marks on the paper in the non-mastery questions
+{2(b) 10 marks, 3(d) 6 marks, 4(c) 8 marks
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Insert your macros %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%uncomment \solnsfalse to remove solution set
+\newif\ifsolns
+\solnstrue
+%\solnsfalse
+\ifsolns
+% with solutions
+\usepackage{draftwatermark}
+\SetWatermarkText{Solutions}
+\SetWatermarkScale{0.6}
+\SetWatermarkLightness{0.9}
+\usepackage{color}
+\newcommand{\soln}[1]{{\bfseries Solution:} {\itshape \color{blue} #1}}
+\else
+% without solutions
+\newcommand{\soln}[1]{}
+\fi
+
+\newcommand{\exammarks}[1]{\begin{flushright}[#1 marks]\end{flushright}}%
+\DeclareMathOperator{\diff}{d}
+\newcommand{\pp}[2]{\frac{\partial #1}{\partial #2}} 
+\newcommand{\bookwork}{{\bfseries BOOKWORK\\}}
+\newcommand{\similar}{{\bfseries SIMILAR\\}}
+\newcommand{\unseen}{{\bfseries UNSEEN\\}}
+
+% Go to `Exam text starts from here' below to type in your questions. %
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ignore the following details     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\examyear}{2018}
+\newcommand{\exammonth}{May -- June} 
+\newcommand{\examdate}{??} %{Tuesday, 26th May 2018} 
+\newcommand{\examtime}{??} %{09:30 -- 11:30} 
+\newboolean{onebook}
+\setboolean{onebook}{false} %set to true if all answers should be in one answer book
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pretolerance=100000
+\setlength{\topmargin}{-15mm}
+\setlength{\textheight}{245mm}
+\setlength{\textwidth}{178mm}
+\setlength{\oddsidemargin}{-10mm}
+\setlength{\evensidemargin}{-10mm}
+\setlength{\marginparwidth}{1cm}
+\setlength{\parskip}{1.1ex}
+\setlength{\parindent}{0ex}
+\renewcommand{\baselinestretch}{1.1}
+
+\pagestyle{empty}
+
+\newenvironment{Question}[1] 
+ {\begin{itemize} \item[\large #1.~~]}{\end{itemize} \medskip}
+ 
+\newcommand{\EndPage}{
+	\vfill \coursenum ~ \coursename ~
+	(\examyear) \hfill Page \thepage \newpage
+	}
+
+%\newcommand{\ICLOGO}{
+%	\begin{minipage}{0.7\textwidth}
+%  \includegraphics[height= 1.4cm]{imperial.pdf} 
+%  \end{minipage}\hfill \parbox[r][1.4cm][t]{0.2\textwidth}{\hfill \coursenum} \par 
+%	}
+	
+\newcommand{\BeginParts}{\begin{itemize}} 
+\newcommand{\Part}[1]{\item [(#1)~~]} 
+\newcommand{\EndParts}{\end{itemize}} 
+
+%%%%
+% This requires imperial.pdf in the graphics input path eg 
+% h:/images/imperial.pdf 
+%%%% 
+
+\newcommand{\draft}{
+	\begin{flushleft} 
+	\begin{tabular}{ll}
+  Module:   & \coursenum\\ Setter:   & \setter \\
+  Checker:  & \checker \\  Editor:   & \editor \\
+  External: & \external \\ Date:     & \today\\
+  Version: & \version
+  \end{tabular} 
+  \end{flushleft} 
+  \vfill \par
+	}
+
+
+\newcommand{\fpagedraft}{  % FOR DRAFT FRONT PAGE with SIGS
+%	\ICLOGO
+	\begin{center} 
+	\draft
+	BSc, MSci and MSc EXAMINATIONS (MATHEMATICS) \par 
+	\exammonth~ \examyear 
+	
+	\medskip
+	
+	\large \coursenum \quad
+	\coursename 
+	\end{center}
+	\medskip
+	
+	\textit{The following information must be completed:}
+	
+	\medskip
+	
+	\textbf{\suitability}
+	
+	\medskip
+	
+	\textbf{Marks available for basic, routine material (excluding any mastery question)(40 percent = 32/80 for 4 questions):}\newline
+	\routine
+	
+	\medskip
+	
+	\textbf{Further 25 percent of marks (20/ 80 for  4 questions) for demonstration of a sound knowledge of a 
+	good part of the material and the solution of straightforward problems and examples with reasonable accuracy (excluding mastery question):} \newline
+	\medium
+	\medskip
+	
+	\textbf{Most challenging 20 percent (16/80 marks for 4 questions) of the paper (excluding mastery question):}\newline
+	\hardest
+	
+	
+	
+	
+	 \vfill \par \normalsize
+	 
+	
+	
+	\textit{Signatures are required for the final version:}
+		\sigs  \par \vfill 
+	\copyright ~\examyear~ Imperial College London
+	\hfill \coursenum \hfill Temporary cover page
+	\newpage
+	}
+
+
+	
+	
+\newcommand{\sigs}{ % Signatures
+	\vfill \par 
+  \fbox{\begin{minipage}{0.98\textwidth}{~ \\[4mm]
+  \hspace*{3mm} Setter's signature \hfill
+  Checker's signature \hfill
+  Editor's signature~~~~ \\[4mm]
+  \hspace*{3mm} \dotfill \hfill \dotfill \hfill \dotfill ~~~~
+  \\[2mm] ~} \end{minipage}}
+	}
+	
+
+
+	
+\newcommand{\fpage}{ % FRONT PAGE 
+%	\ICLOGO
+%  
+\newlength{\myl}
+\settowidth{\myl}{\sc Temporary front page}
+\newlength{\myll}
+\setlength{\myll}{\textwidth - \myl}
+\begin{center}
+ \large{\sc \rule[4pt]{0.45\myll}{0.5pt}~Temporary front page~\rule[4pt]{0.45\myll}{0.5pt}}
+ \end{center}
+ %
+ \bigskip
+  \begin{center}
+  BSc, MSc and MSci EXAMINATIONS (MATHEMATICS) \par
+  \exammonth~ \examyear \bigskip \par
+  This paper is also taken for the relevant examination
+  for the Associateship of the \\ Royal College of Science. 
+	\end{center}
+	\begin{center}
+	\coursename
+	\end{center}
+	\renewcommand{\arraystretch}{1.3}
+	\vfill \par
+	\fbox{\parbox{\textwidth}{
+	\begin{tabular}{l}
+	Date: \examdate \\ 
+	Time: \examtime \\
+	Time Allowed: \examlength \\
+	This paper has {\em \numQ}. \\
+	\ifthenelse{\boolean{onebook}}
+	{Candidates should use ONE main answer book.}
+	{Candidates should start their solutions to each question in a new main answer book.}\\
+	%Candidates should use ONE main answer book.\\
+	Supplementary books may only be used after the relevant main book(s) are full. \\
+	\ifthenelse{\boolean{tables}}{Statistical tables are provided.}{Statistical tables will not be provided.}\\
+	\end{tabular}}}
+	\renewcommand{\arraystretch}{1.5}
+	\begin{itemize}
+	\item DO NOT OPEN THIS PAPER UNTIL THE INVIGILATOR TELLS YOU TO.
+	\item Affix one of the labels provided to each answer book that you use, 
+	but DO NOT USE THE LABEL WITH YOUR NAME ON IT.
+	\item	Credit will be given for all questions attempted.
+	\item Each question carries equal weight.
+	\item Calculators may not be used.
+	\end{itemize}
+	\vfill 
+	\copyright ~\examyear~ Imperial College London
+	\hfill \coursenum \hfill Page 1 of \pageref{ptotal}
+	\newpage
+	}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Exam text starts from here
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% use \begin{Question}{1} ... \end{Question} and
+%     \BeginParts \Part{a} \EndParts
+%
+% manually put in \EndPage at the end of every page for the correct footers.
+
+\begin{document}
+\sffamily
+%\fpagedraft % this produces the signature page 
+\setcounter{page}{1}
+\fpage % this produces the front page with rubric
+
+\begin{Question}{1}
+    What is the choice of the geometric decomposition (allocation of
+    nodal variables to cell and vertex entities) that leads to the
+    maximum possible global continuity of finite element spaces
+    defined on the interval $[0,L]$ constructed from the following
+    one-dimensional elements $(K,P,N)$.  Justify your answer.
+    \BeginParts
+    \Part{a}
+     $K=[a,b]$, $P$ is linear polynomials, $N=(N_1,N_2)$
+      where $N_1[u]=u((a+b)/2)$, $N_2[u]=u'((a+b)/2)$.
+      \soln{\similar Since the local space is 2-dimensional, a $C^0$ geometric
+        decomposition would require one nodal variable allocated to
+        each of the two vertices.  We have
+        $u(a)=N_1[u]-(a-b)N_2[u]/2$, and
+        $u(b)=N_1[u]+(a-b)N_2[u]/2$. This means that both nodal
+        variables are required to determine $u$ at each end of the
+        interval. This means it is not possible to allocate one nodal
+        variable to each vertex such that the function value can only
+        be determined from nodal variables associated with that vertex.
+      }
+      \exammarks{6}
+          \Part{b}
+   $K=[a,b]$, $P$ is quadratic polynomials, $N=(N_1,N_2,N_3)$
+  where $N_1[u]=u(a)$, $N_2[u]=u(b)$, $N_3[u]=\int_a^b u \diff x$.
+  \soln{\similar 
+    A $C^1$ geometric decomposition
+    would require at least two nodal variables allocated to each vertex,
+    so that both the function and the derivative can be determined, but the
+    local space is 3 dimensional which does not give enough nodal variables.
+    Hence the global space is at most $C^0$. A $C^0$ decomposition allocates
+    $N_1$ to the vertex $a$, $N_2$ to the vertex $b$, and $N_3$ to the cell.
+    Clearly $u(a)$ can be determined from $N_1$ and $u(b)$ from $N_2$ as
+    required.  }
+  \exammarks{6}
+      \Part{c}
+  $K=[a,b]$, $P$ is quadratic polynomials, $N=(N_1,N_2,N_3)$
+  where $N_1[u]=u'(a)$, $N_2[u]=u'(b)$,$N_3[u]=u((a+b)/2)$.
+  \soln{\similar  The space must be at most $C^0$ by the arguments in the previous part.
+    We have $u(a)=N_3[u] + (a-b)(N_1[u]+N_2[u])/4$,
+    $u(b)=N_3[u] - (a-b)(N_1[u]+N_2[u])/4$, which means that all three
+    variables are required to determine the function values at each vertex.
+    By a similar argument to the first part, this means that a $C^0$
+    geometric decomposition is impossible.
+  }
+    \exammarks{7}
+\EndParts
+
+\end{Question}
+\EndPage
+
+\begin{Question}{2}
+\BeginParts
+\Part{a}
+Consider the finite element $(K,\mathcal{P},\mathcal{N})$, with 
+\begin{itemize}
+\item $K$ is a non-degenerate triangle,
+\item $\mathcal{P}$ is the space of polynomials on $K$ of degree $\leq 1$.
+\item $\mathcal{N}=(N_{1},N_{2},N_{3})$,
+where 
+\[
+N_i(u)= \int_{f_i} u\diff x,
+\]
+where $(f_1,f_2,f_3)$ are the edges of $K$, with $f_1$ joining
+vertices $1$ and $2$, $f_2$ joining vertices $2$ and $3$, and $f_3$
+joining vertices 3 and 1.
+\end{itemize}
+Show that $\mathcal{N}$ determines $\mathcal{P}$. \exammarks{10}
+\soln{\similar 
+  It suffices to show that if $u \in P$, then
+   $N_{i}(u)=0$ for all $i$ $\implies u=0$.
+
+   So, we assume that $u\in P$ with $N_{i}(u)=0$, looking to show that
+   $u = 0$. $N_i(u)=0$ means that the average of $u$ over the edge
+   $f_i$ is zero. Since $u$ is linear on $f_i$, this means that $u$
+   vanishes at the midpoint of each edge. These edges can be joined by
+   three lines $L_1$, $L_2$, $L_3$, and we iteratively conclude that
+   $u$ vanishes on $L_1$ and $L_2$, so that $u=cL_1(x)L_2(x)$, and u
+   vanishing on the third vertex not intersected by $L_1$ means that
+   $c=0$ (following the usual argument for linear Lagrange elements on
+   triangles), and hence $u=0$ everywhere.
+ }
+ \Part{b} 
+  Now consider the finite element $(K,\mathcal{P},\mathcal{N})$, with 
+\begin{itemize}
+\item $K$ is a non-degenerate triangle,
+\item $\mathcal{P}$ is the space of polynomials on $K$ of degree $\leq 2$.
+\item $\mathcal{N}=(N_{1,1},N_{1,2},N_{2,1},N_{2,2},N_{3,1},N_{3,2})$,
+where 
+\[
+N_{i,j}(u)= \int_{f_i}\phi_{i,j} u\diff x,
+\]
+where the edge test functions $\phi_{i,j}$ define
+a basis for linear functions restricted to $f_i$ such that $\phi_{1,1}=1$
+on vertex $1$ and 0 on vertex $2$, \emph{etc.}
+\end{itemize}
+Show that $\mathcal{N}$ does not determine $\mathcal{P}$.
+\exammarks{10}
+\soln{\unseen We show by counter example. We take the quadratic $q$ function that
+  is equal to $1/6$ on each vertex, and $-1/12$ at each edge midpoint
+  (this defines a unique quadratic function since these are the nodal
+  variables for the standard Lagrange quadratic element, which is
+  unisolvent). Consider one of the edges $f_i$, and choose a coordinate $s$
+  which is equal to 0 on one end of the edge, and 1 on the other end. On
+  that edge, $q|_{f_i}(s)=s^2-s + 1/6$. This function has mean zero, and
+  is symmetric, which means that
+  \[
+  \int_{f_i}\phi(s)q|_{f_i}(s)\diff s=0
+  \]
+  for any linear function $\phi(s)$, and hence $N_{i,j}(u)=0$, $j=1,2$.
+  This means that all the nodal variables vanish when applied to $u$, but
+  $u$ is not zero. Hence, $\mathcal{N}$ does not determine $\mathcal{P}$.
+} \EndParts
+\end{Question}
+\EndPage
+
+\begin{Question}{3}
+\BeginParts
+\Part{a}
+Let $b$ be a continuous, coercive bilinear form on $V$, and
+$F$ be a continuous linear form on $V$.
+Let $u\in V$ solve the linear variational problem
+\[
+b(u,v) = F(v) \quad \forall v \in V.
+\]
+Let $V_h$ be a finite dimensional subspace of $V$,
+and let $u_h \in V$ solve the Galerkin approximation
+\[
+b(u_h,v) = F(v) \quad \forall v \in V_h.
+\]
+Show that
+\[
+b(u-u_h,v) = 0, \quad \forall v \in V_h.
+\]
+\exammarks{4}
+\soln{\bookwork
+  Since $V_h \subset V$, we can take $v\in V_h$ in the variational
+  problem for $u$, to get
+  \[
+  b(u,v) = F(v) \quad \forall v \in V_h.
+  \]
+  Then, subtracting the Galerkin approximation, we have
+  \[
+  b(u,v) - b(u_h,v) = 0 \quad \forall v \in V_h.
+  \]
+  Finally, from bilinearity, we have
+    \[
+  b(u-u_h,v) = 0 \quad \forall v \in V_h.
+  \]
+}
+\Part{b}
+Hence, show that
+\[
+\|u-u_h\|_V \leq \frac{M}{\gamma}\max_{v\in V_h}\|u-v\|_V,
+\]
+where $\gamma$ and $M$ are the coercivity and continuity constants for
+$b$ respectively.
+\exammarks{4}
+\soln{\bookwork
+\begin{align*}
+  \gamma \|u-u_h\|_V^2 & \leq b(u-u_h,u-u_h), \quad \mbox{[coercivity]} \\
+  & = b(u-u_h,u-v+v-u_h) \quad \mbox{for any }v\in V_h, \\
+  & = b(u-u_h,u-v) + \underbrace{b(u-u_h,v-u_h)}_{=0\mbox{[by previous part]}},
+  \quad \mbox{[bilinearity]} \\
+  & \leq M\|u-u_h\|_V\|u-v\|_V. \quad \mbox{[continuity]}
+\end{align*}
+Dividing both sides by $\gamma\|u-u_h\|_V$ gives
+\[
+\|u-u_h\|_V \leq \frac{M}{\gamma}\|u-v\|_V.
+\]
+Since the left-hand side is independent of the choice of $v$, we
+can minimise over $v\in V_h$ to get the result.
+}
+\Part{c}Consider the variational problem of finding $u\in H^1([0,1])$
+such that
+\[
+\int_0^1 vu + v'u' \diff x = \int_0^1 vx \diff x + v(1) - v(0),
+\quad \forall v \in H^1([0,1]).
+\]
+After dividing the interval $[0,1]$ into $N$ equispaced cells and forming a $P1$ $C^0$ finite
+element space $V_N$, the error $\|u-u_h\|_{H^1}=0$ for any $N>0$.
+
+Explain why this is expected.
+\exammarks{6}
+\soln{\similar
+  The problem has the solution $u(x)=x$. Hence, $u\in V_N$ for any $N$,
+  and $\min_v \|v-u\|_{H^1([0,1])}=0$, hence $\|u-u_h\|_{H^1([0,1])}=0$
+  from the previous result.
+}
+\Part{d}
+Let $ \mathring{H}^1([0,1])$ be the subspace of $H^1([0,1])$ such that $u(0)=0$.
+Consider the variational problem of finding $u \in \mathring{H}^1([0,1])$  with
+\[
+\int_0^1 v'u' \diff x = \int_0^{1/2} v \diff x, \quad \forall v \in \mathring{H}([0,1]).
+\]
+The interval $[0,1]$ is divided into $3N$ equispaced cells (where $N$
+is a positive integer). After forming a $P1$ $C^0$ finite element
+space $V_N$, the error $\|u-u_h\|_{H^1}$ is found not to converge to
+zero. Explain why this is expected?
+\exammarks{6}
+\soln{\unseen
+  The solution is
+  \[
+  u(x) = \left\{
+  \begin{array}{c c}
+    \frac{x-x^2}{2} & x<1/2, \\
+    \frac{1}{8} & \mbox{otherwise.}
+  \end{array}
+  \right.
+  \]
+  This solution is not in $H^2$, and so the usual interpolation estimate
+  is not expected.
+  }
+\EndParts
+\end{Question}
+\EndPage
+
+\begin{Question}{4}
+The inhomogeneous Helmholtz equation in two dimensions is given by
+\begin{equation}
+\alpha(x)u - \nabla^2 u = f, \quad
+\pp{u}{n} = 0 \mbox{ on }\partial\Omega,
+\label{eq:helm}
+\end{equation}
+where $\partial\Omega$ is the boundary of the problem domain $\Omega$,
+and $\alpha(x)$ is a $C^\infty(\Omega)$ function with bounds $1 \leq
+\alpha(x) \leq 2$ for all $z\in \Omega$.
+\BeginParts
+\Part{a}
+Write down a variational formulation for this problem, in the form
+\[
+a(u, v) = F (v),
+\quad \forall v \in H^1(\Omega),
+\]
+and show that if $u$ solves the variational formulation, and $u\in
+H^2(\Omega)$ then $u$ solves \eqref{eq:helm} in an appropriate sense.
+\exammarks{6}
+\soln{\bookwork
+  We take
+  \[
+  a(u,v) = \int_\Omega \alpha uv + \nabla u\cdot \nabla v \diff x,
+  \quad F(v) = \int_\Omega vf\diff x.
+  \]
+  Taking $v\in C_0^\infty(\Omega)$, we have enough regularity for
+  integration by parts, and
+  \[
+  \int_\Omega v(\alpha u - \nabla^2 u - f)\diff x = 0.
+  \]
+  Picking a sequence of $v$s that converge to $\alpha u - \nabla^2 u - f$,
+  and passing to the limit gives $\|\alpha u - \nabla^2u -f \|_{L^2(\Omega)}$,
+  i.e. $\alpha u - \nabla^2u = f$ in $L^2(\Omega)$. Returning to
+  the variational form and using this fact gives
+  \begin{align*}
+    0 & = \int_\Omega \alpha uv + \nabla u\cdot \nabla v - vf\diff x,
+    \\ & = \int_\Omega \alpha uv + \nabla u\cdot \nabla v - v(\alpha u
+    - \nabla^2 u)\diff x, \\
+    & = \int_{\partial\Omega} \pp{u}{n} v \diff S, \quad \forall v \in H^1(\Omega),
+  \end{align*}
+  after using integration by parts. We may choose $v = \pp{u}{n}$ from
+  the trace theorem, and hence $\|\pp{u}{n}\|_{L^2(\Omega)}=0$ i.e.
+  $\pp{u}{n}=0$ in $L^2(\Omega)$.
+  }
+\Part{b} Show that $a(\cdot,\cdot)$ is continuous and coercive.
+\exammarks{6}
+\soln{\similar
+\[
+|a(u,v)| = |\int_\Omega \alpha uv + \nabla u\cdot \nabla v \diff x|
+\leq 2|\int_\Omega uv + \nabla u\cdot \nabla v \diff x| = 2|(u,v)|_{H^1(\Omega)}
+ \leq \|u\|_{H^1(\Omega)}\|v\|_{H^1(\Omega)},
+ \]
+ by the Schwartz inequality. Hence $a$ is continuous with continuity constant
+ $2$.
+ \[
+ a(u,u) = \int_\Omega \alpha u^2 + |\nabla u|^2 \diff x
+ \geq\int_\Omega u^2 + |\nabla u|^2 \diff x
+= \|u\|_{H^1(\Omega)}^2,
+\]
+hence $a$ is coercive with coercivity constant $1$.}
+\Part{c} Hence, show that the linear Lagrange finite element approximation
+satisfies
+\[
+\|u-u_h\|_{H^1(\Omega)} \leq Ch\|u\|_{H^2(\Omega)}.
+\]
+for $C > 0$, independent of $u$. (You may make use of the
+approximation theory estimate
+\[
+\|u-I_hu\|_{H^1(\Omega)} \leq \hat{C}h\|u\|_{H^2(\Omega)}.
+\]
+for $\hat{C} > 0$, independent of $u$, where $I_h$ is the nodal interpolation
+operator $I_h:H^2(\Omega)\to V_h$, where $V_h$ is the finite element space
+with mesh parameter $h$, and any other results from lectures.)
+\exammarks{8}
+\soln{\unseen
+  From C\`ea's Lemma (also proven in Q3) we have
+  \[
+  \|u-u_h\|_{H^1(\Omega)} \leq \frac{M=2}{\gamma=1}\max_{v\in V_h}
+  \|v-u\|_{H^1(\Omega)} \leq 2\|I_hu - u \|_{H^1(\Omega)}
+  \leq 2\hat{C}h\|u\|_{H^2(\Omega)}.
+  \]
+  }
+\EndParts
+\end{Question}
+\EndPage
+\label{ptotal}
+\end{document}
