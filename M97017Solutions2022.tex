@@ -284,14 +284,14 @@ marks}}
       u(v,v) = \epsilon \|v\|_{L^2}^2 + |v|_{H^1}^2
       \geq \epsilon\|v\|_{H^1}^2,
     \end{equation}
-    so the continuity constant is $\epsilon$.
+    so the coercivity constant is $\epsilon$.
     \amarks{6}
   \end{Part}
   \begin{Part}{c}\unseen
     Combining Ce\'a's lemma and the interpolation error
     estimate, we get
     \begin{equation}
-      \|u-u_h\|_{H^1}\leq \frac{2}{\epsilon}h\|u\|_{H^1}.
+      \|u-u_h\|_{H^1}\leq C\frac{2}{\epsilon}h\|u\|_{H^1}.
     \end{equation}
     As $\epsilon\to 0$, the error estimate becomes unbounded.
     \bmarks{8}
@@ -332,15 +332,15 @@ marks}}
     \begin{align}
       -\int_\Omega \phi Du \diff x & = -\sum_K \int_K
       \phi Du \diff x, \\
-      & = \sum_K \int_K \phi \nabla^\perp\cdot u \diff x
+      & = \sum_K \int_K  \nabla^\perp\phi\cdot u \diff x
       - \sum_K \int_{\partial K} \phi u\cdot n_K^\perp \diff S, \\
-     & = \int_\Omega \phi \nabla^\perp\cdot u \diff x
+     & = \int_\Omega  \nabla^\perp\phi\cdot u \diff x
       - \sum_K \int_{\partial K} \phi (u^+\cdot (n^+)^{\perp} + u^-\cdot (n^-)^{\perp}) \diff S, \\
-      & = \int_\Omega \phi \nabla^\perp\cdot u \diff x
+      & = \int_\Omega  \nabla^\perp\phi\cdot u\diff x
       - \int_{\partial \Omega} \underbrace{\phi=0}
       (u^+\cdot (n^+)^{\perp} + u^-\cdot (n^-)^{\perp}) \diff S, \\
       - \int_{\Gamma} \phi \underbrace{(u^+\cdot (n^+)^{\perp} + u^-\cdot (n^-)^{\perp})}_{=0} \diff S, \\
-      & = \int_\Omega \phi \nabla^\perp\cdot u \diff x,
+      & = \int_\Omega  \nabla^\perp\phi\cdot u \diff x,
     \end{align}
     where $n_K$ is the outward pointing normal to each triangle $K$,
     and the facet integrals vanish due to continuity of the tangential
@@ -443,7 +443,7 @@ marks}}
     (sharper estimates are possible but the question doesn't require them).
     Hence, from Lax-Milgram, we have
     \begin{equation}
-      \|\epsilon^{k+1}\|_{H^1} < 2\mu\beta x\|\epsilon^k\|_{H^1},
+      \|\epsilon^{k+1}\|_{H^1} < 2\mu\beta\|\epsilon^k\|_{H^1},
     \end{equation}
     and so the norm of the error is guaranteed to reduce if $0<\mu<1/(2\beta)$.
   \dmarks{8}

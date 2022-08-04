@@ -353,10 +353,10 @@ this error bound when $\epsilon$ is very small?  \qqmarks{8} \EndParts
 
  \EndPage
  \begin{Question}{3}
-     \begin{figure}
-    \centerline{\includegraphics[width=6cm]{BDM1_DOFs}}
-    \caption{\label{fig:BDM1} Nodal variables diagram for Question 4.}
-  \end{figure}
+     %\begin{figure}
+    %\centerline{\includegraphics[width=6cm]{BDM1_DOFs}}
+    %\caption{\label{fig:BDM1} Nodal variables diagram for Question 4.}
+ % \end{figure}
    In this question we consider the following finite element.
    \begin{itemize}
    \item $K$ is a triangle.
@@ -479,7 +479,7 @@ this error bound when $\epsilon$ is very small?  \qqmarks{8} \EndParts
  operator $\tilde{\nabla}:Q_h\to V_h$ such that
  \begin{equation}
    \int_\Omega w\cdot \tilde{\nabla}p\diff x
-   = \int_\Omega p\nabla\cdot u \diff x.
+   = \int_\Omega p\nabla\cdot w \diff x, \hspace{3 ex} \forall w \in V_h
  \end{equation}
  What does the inf-sup condition imply about the operator
  $\tilde{\nabla}$?
