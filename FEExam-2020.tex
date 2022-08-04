@@ -76,9 +76,9 @@ Yes
 
 %uncomment \solnsfalse to remove solution set
 \newif\ifsolns
-%\solnstrue
+\solnstrue
 %\solnsfalse
-\input{flags}
+%\input{flags}
 \ifsolns
 % with solutions
 \usepackage{color}
@@ -313,7 +313,7 @@ where:
 \Part{a} Derive a weak formulation of this equation for a solution
 $\phi\in H^1(\Omega)$ of the form
 \begin{equation}
-  a(q,\phi) = F(\phi), \quad \forall H^1(\Omega).
+  a(\phi,q) = F(q), \quad \forall q \in H^1(\Omega).
 \end{equation}
 \exammarks{5}
 \soln{\unseen
@@ -331,7 +331,7 @@ of $a(\cdot,\cdot)$.
 \soln{\unseen
   From Cauchy-Schwarz, 
   \begin{align*}
-    |a(q,\phi)| & = \int_{\Omega} cq\phi -q\phi\nabla\cdot\MM{u} - \phi\MM{u}\cdot
+    |a(\phi,q)| & = \int_{\Omega} cq\phi -q\phi\nabla\cdot\MM{u} - \phi\MM{u}\cdot
     \nabla q + \epsilon \nabla q \cdot \nabla \phi \diff x, \\
     & \leq c\|q\|_{L^2(\Omega)}\|\phi\|_{L^2(\Omega)}
     + C_0\|\nabla q\|_{L^2(\Omega)}\|\phi\|_{L^2(\Omega)}
