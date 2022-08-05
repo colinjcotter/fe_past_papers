@@ -170,10 +170,7 @@
 % manually put in \EndPage at the end of every page for the correct footers.
 
 \begin{document}
-\sffamily
-\fpagedraft % this produces the signature page 
-\setcounter{page}{1}
-\fpage % this produces the front page with rubric
+
 
 \begin{Question}{1}
 \BeginParts
@@ -187,7 +184,7 @@ N_1(u) = \int_K u \diff x, \quad
 N_2(u) = \pp{u}{x}, \quad N_3(u) = \pp{u}{y}.
 \]
 \end{enumerate}
-Find the nodal basis for $\mathcal{P}$ corresponding to $\mathcal{P}$
+Find the nodal basis for $\mathcal{P}$ corresponding to $\mathcal{N}$
 by expanding in the monomial basis
 \[
 \psi_1(x) = 1, \quad \psi_2(x) = x, \quad \psi_3(x) = y. 
@@ -404,7 +401,7 @@ which is a contradiction.
       \quad \forall v\in H^1_0([0,1]),
       \]
       where $H^1_0([0,1])$ is the subspace of $H^1([0,1])$ such that
-      $v(0)$.
+      $v(0) = 0$.
       }
     \Part{b} Show that the corresponding bilinear form is continuous
     and coercive in $H^1([0,1])$, and compute the continuity and
@@ -490,7 +487,7 @@ which is a contradiction.
       Dividing by $\|u-u_h\|_{H^1}$ and taking $v=\mathcal{I}_hu$ gives
       \[
       \|u-u_h\|_{H^1} \leq 3\|u-\mathcal{I}_hu\|_{H^1}
-      \leq 3h\|u\|_{H^2},
+      \leq 3Ch\|u\|_{H^2},
       \]
       where we quoted the property of $\mathcal{I}_h$ in the last inequality.
     }
