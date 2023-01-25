@@ -340,7 +340,7 @@ marks}}
   The modification to C\'ea's Lemma is
   \begin{align}
     \|u-u_h\|_{H^1(\Omega)} &\leq
-    (1+M/\gamma)\sup_{v\in V_h}\|u-v\|_{H^1(\Omega)} +
+    (1+M/\gamma)\inf_{v\in V_h}\|u-v\|_{H^1(\Omega)} +
     \frac{C}{\gamma}\|g-g_h\|_{L^2(\partial\Omega)},
   \end{align}
   so there are now two terms, a best approximation term of $u$ in $V_h$,
@@ -423,7 +423,7 @@ marks}}
 \begin{Part}{c} \unseen
   The bound studied in the course is
   \begin{equation}
-    \|u_h-u\|_{H^1(\Omega)} \leq h|u|_{H^2(\Omega)},
+    \|u_h-u\|_{H^1(\Omega)} \leq Ch|u|_{H^2(\Omega)},
   \end{equation}
   but the solution has a jump in the first derivative across $\Gamma$,
   so $|u|_{H^2(\Omega)}$ is not finite, so the bound does not
@@ -483,7 +483,7 @@ marks}}
     span $V_h$ (because of the zero boundary condition).
     The support of $w$ consists of 6 triangles with symmetry about
     a diagonal line from top-left to bottom-right. The divergence
-    of $w$ is antisymmetric about that line, whilst $p$ is symmetric,
+    of $w$ is symmetric about that line, whilst $p$ is antisymmetric,
     so the integral $b(w,p)$ vanishes. Hence, $p\in \ker(\delta_h)$.
     The previous result says that the Fortin Trick assumptions imply
     that the $\ker(\delta_h)$ is empty, $V_h,Q_h$ must fail to satisfy

@@ -373,8 +373,9 @@ where
 N_{i,j}(u)= \int_{f_i}\phi_{i,j} u\diff x,
 \]
 where the edge test functions $\phi_{i,j}$ define
-a basis for linear functions restricted to $f_i$ such that $\phi_{1,1}=1$
-on vertex $1$ and 0 on vertex $2$, \emph{etc.}
+a basis for linear functions restricted to $f_i$ such that $\phi_{i,1}=1$
+on vertex $1$ and 0 on vertex $2$, $\phi_{i,2}=1$
+on vertex $2$ and 0 on vertex $1$, \emph{etc.}
 \end{itemize}
 Show that $\mathcal{N}$ does not determine $\mathcal{P}$.
 \exammarks{10}
@@ -433,7 +434,7 @@ b(u-u_h,v) = 0, \quad \forall v \in V_h.
 \Part{b}
 Hence, show that
 \[
-\|u-u_h\|_V \leq \frac{M}{\gamma}\max_{v\in V_h}\|u-v\|_V,
+\|u-u_h\|_V \leq \frac{M}{\gamma}\min_{v\in V_h}\|u-v\|_V,
 \]
 where $\gamma$ and $M$ are the coercivity and continuity constants for
 $b$ respectively.
@@ -575,7 +576,7 @@ with mesh parameter $h$, and any other results from lectures.)
 \soln{\unseen
   From C\`ea's Lemma (also proven in Q3) we have
   \[
-  \|u-u_h\|_{H^1(\Omega)} \leq \frac{M=2}{\gamma=1}\max_{v\in V_h}
+  \|u-u_h\|_{H^1(\Omega)} \leq \frac{M=2}{\gamma=1}\min_{v\in V_h}
   \|v-u\|_{H^1(\Omega)} \leq 2\|I_hu - u \|_{H^1(\Omega)}
   \leq 2\hat{C}h\|u\|_{H^2(\Omega)}.
   \]
